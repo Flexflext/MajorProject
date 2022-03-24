@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum ESpiderLegs
@@ -38,13 +37,13 @@ public class GroundProzeduralAnimation : MonoBehaviour
     private Vector3[] previousAnimationTargetPosition;
     private float[] ranges;
     private bool[] moveingLegs;
-     
+
     private RaycastHit hit;
 
     private void Start()
     {
-        ikTargets = new Transform[]{ ikTargetLF, ikTargetLB, ikTargetRF, ikTargetRB};
-        animationRaycastOrigins = new Transform[]{ rayOriginLF, rayOriginLB, rayOriginRF, rayOriginRB };
+        ikTargets = new Transform[] { ikTargetLF, ikTargetLB, ikTargetRF, ikTargetRB };
+        animationRaycastOrigins = new Transform[] { rayOriginLF, rayOriginLB, rayOriginRF, rayOriginRB };
 
         currentAnimationTargetPosition = new Vector3[4];
         nextAnimationTargetPosition = new Vector3[4];
@@ -95,77 +94,75 @@ public class GroundProzeduralAnimation : MonoBehaviour
         {
             ranges[i] = (currentAnimationTargetPosition[i] - nextAnimationTargetPosition[i]).sqrMagnitude;
 
-            if (ranges[i] >= maxLegRange * maxLegRange)
-            {
-                if (!moveingLegs[i])
-                {
-                    //switch (i)
-                    //{
-                    //    case 3:
-                    //        {
-                    //            if (moveingLegs[2] || moveingLegs[1])
-                    //            {
-                    //                ikTargets[i].position = nextAnimationTargetPosition[i];
-                    //            }
-                    //        }
-                    //        break;
-                    //    case 1:
-                    //        {
-                    //            if (moveingLegs[3] || moveingLegs[0])
-                    //            {
-                    //                ikTargets[i].position = nextAnimationTargetPosition[i];
-                    //            }
-                    //        }
-                    //        break;
-                    //    default:
-                    //        break;
-                    //}
-
-                    moveingLegs[i] = true;
-                    SetNewTargetPosition(i);
-                    StartCoroutine(C_MoveLegCoroutine(i));
-                } 
-            }
-
             if (!moveingLegs[i])
             {
                 ikTargets[i].position = nextAnimationTargetPosition[i];
+
+                if (ranges[i] >= maxLegRange * maxLegRange)
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            {
+                                if (moveingLegs[2])
+                                {
+                                    ikTargets[i].position = nextAnimationTargetPosition[i];
+                                    continue;
+                                }
+                            }
+                            break;
+                        case 1:
+                            {
+                                if (moveingLegs[3] || moveingLegs[0])
+                                {
+                                    ikTargets[i].position = nextAnimationTargetPosition[i];
+                                    continue;
+                                }
+                            }
+                            break;
+                        case 2:
+                            {
+                                if (moveingLegs[0])
+                                {
+                                    ikTargets[i].position = nextAnimationTargetPosition[i];
+                                    continue;
+                                }
+                            }
+                            break;
+                        case 3:
+                            {
+                                if (moveingLegs[2] || moveingLegs[1])
+                                {
+                                    ikTargets[i].position = nextAnimationTargetPosition[i];
+                                    continue;
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+
+                    }
+
+                    MoveLeg(i);
+                }
             }
-
-
-            
         }
     }
 
-    private void MoveLeg()
+    private void MoveLeg(int _leg)
     {
-        for (int i = 0; i < moveingLegs.Length; i++)
-        {
-            if (moveingLegs[i])
-            {
-               
-
-                ikTargets[i].position = Vector3.MoveTowards(ikTargets[i].position, nextAnimationTargetPosition[i], legMovementTime * Time.deltaTime);
-
-                if ((nextAnimationTargetPosition[i] - ikTargets[i].position).sqrMagnitude <= 0.02f * 0.02f)
-                {
-                    moveingLegs[i] = false;
-                }
-            }
-            else
-            {
-                
-            }
-        }
+        moveingLegs[_leg] = true;
+        SetNewTargetPosition(_leg);
+        StartCoroutine(C_MoveLegCoroutine(_leg));
     }
 
     private IEnumerator C_MoveLegCoroutine(int _leg)
     {
         float passedTime = 0f;
 
-        while ((nextAnimationTargetPosition[_leg] - ikTargets[_leg].position).sqrMagnitude <= 0.02f * 0.02f)
+        while (passedTime <= legMovementTime)
         {
-            ikTargets[_leg].position = Vector3.MoveTowards(ikTargets[_leg].position, nextAnimationTargetPosition[_leg], passedTime / legMovementTime) + legMovementCurve.Evaluate(passedTime /legMovementTime) * Vector3.up;
+            ikTargets[_leg].position = Vector3.Lerp(ikTargets[_leg].position, nextAnimationTargetPosition[_leg], passedTime / legMovementTime) + legMovementCurve.Evaluate(passedTime / legMovementTime) * Vector3.up;
 
             passedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
@@ -181,7 +178,7 @@ public class GroundProzeduralAnimation : MonoBehaviour
         if (!Application.isPlaying) return;
         if (!ShowDebugBool) return;
 
-        
+
         for (int i = 0; i < currentAnimationTargetPosition.Length; i++)
         {
             Gizmos.color = Color.red;
