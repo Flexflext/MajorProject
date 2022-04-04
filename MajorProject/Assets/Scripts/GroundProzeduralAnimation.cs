@@ -17,6 +17,7 @@ public class GroundProzeduralAnimation : MonoBehaviour
     [SerializeField] private AnimationCurve legMovementCurve;
     [SerializeField] private float randomPositionRadius;
     [SerializeField] private float maxLegRange;
+    [SerializeField] private LayerMask layers;
 
 
     [SerializeField] private Transform ikTargetLF;
@@ -35,10 +36,13 @@ public class GroundProzeduralAnimation : MonoBehaviour
     private Vector3[] currentAnimationTargetPosition;
     private Vector3[] nextAnimationTargetPosition;
     private Vector3[] previousAnimationTargetPosition;
+    private Vector3[] targetUps;
     private float[] ranges;
     private bool[] moveingLegs;
 
     private RaycastHit hit;
+
+    private Vector3 bodyNormal;
 
     private void Start()
     {
@@ -48,6 +52,7 @@ public class GroundProzeduralAnimation : MonoBehaviour
         currentAnimationTargetPosition = new Vector3[4];
         nextAnimationTargetPosition = new Vector3[4];
         previousAnimationTargetPosition = new Vector3[4];
+        targetUps = new Vector3[4];
         ranges = new float[4];
         moveingLegs = new bool[4];
 
@@ -62,29 +67,28 @@ public class GroundProzeduralAnimation : MonoBehaviour
     {
         CalculateTargetPosition();
         CheckRange();
-        //MoveLeg();
+        AdjustBody();
     }
 
     private void CalculateTargetPosition()
     {
         for (int i = 0; i < animationRaycastOrigins.Length; i++)
         {
-            if (Physics.Raycast(animationRaycastOrigins[i].position, Vector3.down, out hit))
+            Debug.DrawRay(animationRaycastOrigins[i].position, animationRaycastOrigins[i].transform.up * -1);
+
+            if (Physics.Raycast(animationRaycastOrigins[i].position, animationRaycastOrigins[i].transform.up * -1, out hit, float.MaxValue, layers))
             {
                 currentAnimationTargetPosition[i] = hit.point;
+                targetUps[i] = hit.normal;
             }
         }
     }
 
     private void SetNewTargetPosition(int _legtomove)
     {
-        Vector3 randomizer = new Vector3(Random.Range(-randomPositionRadius, randomPositionRadius), 3, Random.Range(-randomPositionRadius, randomPositionRadius));
-
-        if (Physics.Raycast(currentAnimationTargetPosition[_legtomove] + randomizer, Vector3.down, out hit))
-        {
-            previousAnimationTargetPosition[_legtomove] = ikTargets[_legtomove].position;
-            nextAnimationTargetPosition[_legtomove] = hit.point;
-        }
+        previousAnimationTargetPosition[_legtomove] = ikTargets[_legtomove].position;
+        ikTargets[_legtomove].up = targetUps[_legtomove];
+        nextAnimationTargetPosition[_legtomove] = currentAnimationTargetPosition[_legtomove];
 
     }
 
@@ -162,13 +166,25 @@ public class GroundProzeduralAnimation : MonoBehaviour
 
         while (passedTime <= legMovementTime)
         {
-            ikTargets[_leg].position = Vector3.Lerp(ikTargets[_leg].position, nextAnimationTargetPosition[_leg], passedTime / legMovementTime) + legMovementCurve.Evaluate(passedTime / legMovementTime) * Vector3.up;
+            ikTargets[_leg].position = Vector3.Lerp(ikTargets[_leg].position, nextAnimationTargetPosition[_leg], passedTime / legMovementTime) + legMovementCurve.Evaluate(passedTime / legMovementTime) * transform.up;
 
             passedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
 
+        ikTargets[_leg].position = nextAnimationTargetPosition[_leg];
         moveingLegs[_leg] = false;
+    }
+
+    private void AdjustBody()
+    {
+        bodyNormal = Vector3.Cross((nextAnimationTargetPosition[3] - nextAnimationTargetPosition[0]), (nextAnimationTargetPosition[2] - nextAnimationTargetPosition[1]));
+        bodyNormal.Normalize();
+
+        //Will kick me in the ass
+        bodyNormal *= -1;
+
+        this.transform.rotation = Quaternion.LookRotation(transform.forward, Vector3.Lerp(this.transform.up, bodyNormal, 20 * Time.deltaTime));
     }
 
 
@@ -190,5 +206,8 @@ public class GroundProzeduralAnimation : MonoBehaviour
             Gizmos.color = Color.black;
             Gizmos.DrawWireSphere(currentAnimationTargetPosition[i], maxLegRange);
         }
+
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawRay(this.transform.position, bodyNormal);
     }
 }
