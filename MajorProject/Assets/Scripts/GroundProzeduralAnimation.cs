@@ -209,5 +209,7 @@ public class GroundProzeduralAnimation : MonoBehaviour
 
         Gizmos.color = Color.magenta;
         Gizmos.DrawRay(this.transform.position, bodyNormal);
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(this.transform.position, transform.up);
     }
 }

@@ -13,7 +13,7 @@ public class SpiderController : MonoBehaviour
     public float Lenght;
     public LayerMask layers;
 
-    public Transform test;
+    private Vector3 rotatedForward;
 
     Vector3[] innerPositions;
     Vector3[] outerPositions;
@@ -24,35 +24,25 @@ public class SpiderController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
         Vector3[] up = GetCurrentMedians(transform.position, Points, InnerRadius, OuterRadius, OuterDeg, InnerDeg, Lenght, layers);
-        Debug.DrawRay(transform.position, up[1]);
+        Debug.DrawLine(transform.position, transform.position + up[1]);
+
+        up[1] = Vector3.Lerp(transform.up, up[1], 20 * Time.deltaTime);
+
+        rotatedForward = Quaternion.FromToRotation(transform.up, up[1]) * transform.forward;
+        this.transform.rotation = Quaternion.LookRotation(rotatedForward, up[1]);
 
 
-        Debug.Log(up[1]);
-        Debug.Log("Vorher: " + test.rotation);
-
-        //test.up = up[1];
+        //Debug.Log("Rot: " + rot.eulerAngles);
 
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            test.forward = test.right;
-
-            
-        }
-
-        this.transform.rotation = Quaternion.LookRotation(transform.forward, Vector3.Lerp(this.transform.up, up[1], 20 * Time.deltaTime));
-
-        Debug.Log("Nachher: " + test.rotation);
-
-
-        Debug.DrawRay(transform.position, test.up, Color.yellow);
+        Debug.DrawLine(transform.position, transform.position + transform.up, Color.yellow);
     }
 
     private Vector3[] GetCurrentMedians(Vector3 _origin, int _points, float _innerr, float _outerr, float _outerdeg, float _innerdeg, float _raylength, LayerMask _layermask)
@@ -73,8 +63,8 @@ public class SpiderController : MonoBehaviour
 
         for (int i = 0; i < _points; i++)
         {
-            curPoint.z = Mathf.Sin(curDeg * Mathf.Deg2Rad);
-            curPoint.x = Mathf.Cos(curDeg * Mathf.Deg2Rad);
+            curPoint = Quaternion.AngleAxis(curDeg, transform.up) * transform.right;
+
 
             innerPositions[i] = curPoint * _innerr;
             outerPositions[i] = curPoint * _outerr;
