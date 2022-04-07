@@ -30,6 +30,10 @@ public class GroundProzeduralAnimation : MonoBehaviour
     [SerializeField] private Transform rayOriginRF;
     [SerializeField] private Transform rayOriginRB;
 
+    [SerializeField] private int legRayNum;
+    [SerializeField] private float deg;
+    [SerializeField] private float radius;
+
 
     private Transform[] ikTargets;
     private Transform[] animationRaycastOrigins;
@@ -74,13 +78,48 @@ public class GroundProzeduralAnimation : MonoBehaviour
     {
         for (int i = 0; i < animationRaycastOrigins.Length; i++)
         {
-            Debug.DrawRay(animationRaycastOrigins[i].position, animationRaycastOrigins[i].transform.up * -1);
+            float deltaDeg = 360f / legRayNum;
+            float curDeg = 0;
 
-            if (Physics.Raycast(animationRaycastOrigins[i].position, animationRaycastOrigins[i].transform.up * -1, out hit, float.MaxValue, layers))
+            Vector3 curPoint = Vector3.zero;
+            Vector3 closestPoint = Vector3.zero;
+
+            for (int j = 0; j < legRayNum; j++)
             {
-                currentAnimationTargetPosition[i] = hit.point;
-                targetUps[i] = hit.normal;
+                curPoint = Quaternion.AngleAxis(curDeg, animationRaycastOrigins[i].up) * animationRaycastOrigins[i].right;
+                curPoint = curPoint * radius;
+
+                Vector3 t = -animationRaycastOrigins[i].up * Mathf.Tan(deg * Mathf.Deg2Rad) * curPoint.magnitude;
+                Vector3 dir = (t - curPoint).normalized;
+
+                Debug.DrawRay(animationRaycastOrigins[i].position + curPoint, dir);
+
+                if (Physics.Raycast(animationRaycastOrigins[i].position + curPoint, dir, out hit, float.MaxValue, layers))
+                {
+                    if (closestPoint == Vector3.zero)
+                    {
+                        closestPoint = hit.point;
+                        currentAnimationTargetPosition[i] = hit.point;
+                        targetUps[i] = hit.normal;
+                    }
+                    else if((hit.point - transform.position).sqrMagnitude <= (closestPoint - transform.position).sqrMagnitude)
+                    {
+                        closestPoint = hit.point;
+                        currentAnimationTargetPosition[i] = hit.point;
+                        targetUps[i] = hit.normal;
+                    }
+                }
+
+                curDeg += deltaDeg;
             }
+
+            //Debug.DrawRay(animationRaycastOrigins[i].position, animationRaycastOrigins[i].transform.up * -1);
+
+            //if (Physics.Raycast(animationRaycastOrigins[i].position, animationRaycastOrigins[i].transform.up * -1, out hit, float.MaxValue, layers))
+            //{
+            //    currentAnimationTargetPosition[i] = hit.point;
+            //    targetUps[i] = hit.normal;
+            //}
         }
     }
 
