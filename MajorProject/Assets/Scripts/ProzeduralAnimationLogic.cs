@@ -1,73 +1,81 @@
 using System.Collections;
 using UnityEngine;
 
-public enum ESpiderLegs
+public class ProzeduralAnimationLogic : MonoBehaviour
 {
-    LegLF,
-    LegLB,
-    LegRF,
-    LegRB,
-}
+    [SerializeField] private bool showDebugGizmos = true;
 
-public class GroundProzeduralAnimation : MonoBehaviour
-{
-    public bool ShowDebugBool = true;
-
+    [Header("Movement Animation")]
+    [Tooltip("Time in wich the Leg Moves from old to new Position")]
     [SerializeField] private float legMovementTime;
+    [Tooltip("Curve in wich the leg Moves up")]
     [SerializeField] private AnimationCurve legMovementCurve;
-    [SerializeField] private float randomPositionRadius;
+    [Tooltip("Maximum Range of that the leg can be before moveing to new Position")]
     [SerializeField] private float maxLegRange;
-    [SerializeField] private LayerMask layers;
 
+    [Header("Leg Movement Raycasts")]
+    [Tooltip("Number of Rays to CHeck the Leg Position")]
+    [SerializeField] private int legRayNumber;
+    [Tooltip("Degree in wich the Rays are Tilted")]
+    [SerializeField] private float legRayTiltDegree;
+    [Tooltip("Radius in wich the Leg Rays are distributed around the Origin")]
+    [SerializeField] private float legRayPositionradius;
+    [Tooltip("Length of Leg Rays")]
+    [SerializeField] private float legRaylength;
+    [Tooltip("Length wich the Leg Rays can hit")]
+    [SerializeField] private LayerMask raycastHitLayers;
 
-    [SerializeField] private Transform ikTargetLF;
-    [SerializeField] private Transform ikTargetLB;
-    [SerializeField] private Transform ikTargetRF;
-    [SerializeField] private Transform ikTargetRB;
+    //[Header(" First all Left Legs than all Right Legs --> Front to Back")]
+    [Header("Leg Targets and Ray Origins")] //--> First all Left Legs than right Legs
+    [Tooltip("IK Targets of the Different Legs --> front to back --> first all left legs than all right legs")]
+    [SerializeField] private Transform[] ikTargets;
+    [Tooltip("Animation Raycast Targets of the Different Legs --> front to back --> first all left legs than all right legs")]
+    [SerializeField] private Transform[] animationRaycastOrigins;
 
-    [SerializeField] private Transform rayOriginLF;
-    [SerializeField] private Transform rayOriginLB;
-    [SerializeField] private Transform rayOriginRF;
-    [SerializeField] private Transform rayOriginRB;
-
-    [SerializeField] private int legRayNum;
-    [SerializeField] private float deg;
-    [SerializeField] private float radius;
-    [SerializeField] private float length;
-
-    private Transform[] ikTargets;
-    private Transform[] animationRaycastOrigins;
+    //The Current Animation Target Position --> always updated
     private Vector3[] currentAnimationTargetPosition;
+    //The Next Animation Target Position --> updated when the leg is supposed to be moved
     private Vector3[] nextAnimationTargetPosition;
-    private Vector3[] previousAnimationTargetPosition;
+    //Up Vector to be Set for the Leg IK Target
     private Vector3[] targetUps;
-    private float[] ranges;
+    //Current Range from legs current Position to Calculated Position
+    private float ranges;
+    //Bool if wich legs are currently moving
     private bool[] moveingLegs;
 
+    //Raycast hit for Legs Raycasts
     private RaycastHit hit;
-
+    //bodynormal to calcluate the up Vector of the Body
     private Vector3 bodyNormal;
 
-    private bool moveing;
+    private float deltaDeg;
+    private float curDeg;
+    private Vector3 curPoint;
+    private Vector3 closestPoint;
+    private Vector3 tiltedVector;
+    private Vector3 rayDir;
 
     private void Start()
     {
-        ikTargets = new Transform[] { ikTargetLF, ikTargetLB, ikTargetRF, ikTargetRB };
-        animationRaycastOrigins = new Transform[] { rayOriginLF, rayOriginLB, rayOriginRF, rayOriginRB };
+        //Check ik targets and Raycast Origins are the same Length
+        if (ikTargets.Length != animationRaycastOrigins.Length)
+        {
+            Debug.LogError("IK Targets Array and Animation Raycast Origins Array isnt the Same Size");
+            Debug.Break();
+        }
 
-        currentAnimationTargetPosition = new Vector3[4];
-        nextAnimationTargetPosition = new Vector3[4];
-        previousAnimationTargetPosition = new Vector3[4];
-        targetUps = new Vector3[4];
-        ranges = new float[4];
-        moveingLegs = new bool[4];
+        //Initialize Arrays with the correct Length
+        currentAnimationTargetPosition = new Vector3[ikTargets.Length];
+        nextAnimationTargetPosition = new Vector3[ikTargets.Length];
+        targetUps = new Vector3[ikTargets.Length];
+        moveingLegs = new bool[ikTargets.Length];
 
+        //Set the Initial Leg target Position Data
         for (int i = 0; i < ikTargets.Length; i++)
         {
             nextAnimationTargetPosition[i] = ikTargets[i].position;
         }
     }
-
 
     private void Update()
     {
@@ -78,25 +86,37 @@ public class GroundProzeduralAnimation : MonoBehaviour
 
     private void CalculateTargetPosition()
     {
+        //Check all Legs
         for (int i = 0; i < animationRaycastOrigins.Length; i++)
         {
-            float deltaDeg = 360f / legRayNum;
-            float curDeg = 0;
+            //Set the delta Degree -> degree per point
+            deltaDeg = 360f / legRayNumber;
+            //Reset Current Degree
+            curDeg = 0;
 
-            Vector3 curPoint = Vector3.zero;
-            Vector3 closestPoint = Vector3.zero;
+            //Reset CurrentPoint
+            curPoint = Vector3.zero;
+            //Reset ClosestPoint
+            closestPoint = Vector3.zero;
 
-            for (int j = 0; j < legRayNum; j++)
+            //Create Ray for each legnum
+            for (int j = 0; j < legRayNumber; j++)
             {
+                //Set the CurrentPoint with the Rotated right Vector around the up Vector with the current Angle
                 curPoint = Quaternion.AngleAxis(curDeg, animationRaycastOrigins[i].up) * animationRaycastOrigins[i].right;
-                curPoint = curPoint * radius;
+                //Set the leg Ray Radius
+                curPoint = curPoint * legRayPositionradius;
 
-                Vector3 t = -animationRaycastOrigins[i].up * Mathf.Tan(deg * Mathf.Deg2Rad) * curPoint.magnitude;
-                Vector3 dir = (t - curPoint).normalized;
+                //Tilt the Vector by the Tilt Degree
+                tiltedVector = -animationRaycastOrigins[i].up * Mathf.Tan(legRayTiltDegree * Mathf.Deg2Rad) * curPoint.magnitude;
+                //Set Ray Direction
+                rayDir = (tiltedVector - curPoint).normalized;
 
-                Debug.DrawLine(animationRaycastOrigins[i].position + curPoint, animationRaycastOrigins[i].position + curPoint + dir * length);
+                Debug.DrawLine(animationRaycastOrigins[i].position + curPoint, animationRaycastOrigins[i].position + curPoint + rayDir * legRaylength);
 
-                if (Physics.Raycast(animationRaycastOrigins[i].position + curPoint, dir, out hit, length, layers))
+
+                //Check the íf the Ray hit anything
+                if (Physics.Raycast(animationRaycastOrigins[i].position + curPoint, rayDir, out hit, legRaylength, raycastHitLayers))
                 {
                     if (closestPoint == Vector3.zero)
                     {
@@ -114,20 +134,11 @@ public class GroundProzeduralAnimation : MonoBehaviour
 
                 curDeg += deltaDeg;
             }
-
-            //Debug.DrawRay(animationRaycastOrigins[i].position, animationRaycastOrigins[i].transform.up * -1);
-
-            //if (Physics.Raycast(animationRaycastOrigins[i].position, animationRaycastOrigins[i].transform.up * -1, out hit, float.MaxValue, layers))
-            //{
-            //    currentAnimationTargetPosition[i] = hit.point;
-            //    targetUps[i] = hit.normal;
-            //}
         }
     }
 
     private void SetNewTargetPosition(int _legtomove)
     {
-        previousAnimationTargetPosition[_legtomove] = ikTargets[_legtomove].position;
         ikTargets[_legtomove].up = targetUps[_legtomove];
         nextAnimationTargetPosition[_legtomove] = currentAnimationTargetPosition[_legtomove];
 
@@ -137,15 +148,15 @@ public class GroundProzeduralAnimation : MonoBehaviour
     {
         for (int i = 0; i < ikTargets.Length; i++)
         {
-            ranges[i] = (currentAnimationTargetPosition[i] - nextAnimationTargetPosition[i]).sqrMagnitude;
+            ranges = (currentAnimationTargetPosition[i] - nextAnimationTargetPosition[i]).sqrMagnitude;
 
             if (!moveingLegs[i])
             {
                 ikTargets[i].position = nextAnimationTargetPosition[i];
 
-                if (ranges[i] >= maxLegRange * maxLegRange)
+                if (ranges >= maxLegRange * maxLegRange)
                 {
-                    //Check Edge Cases with at Position 0 and half
+                    //Check Edge Cases with at Position 0 or half
                     if (i == 0 || i == moveingLegs.Length / 2)
                     {
                         if (i == 0)
@@ -190,6 +201,7 @@ public class GroundProzeduralAnimation : MonoBehaviour
                     }
 
                     MoveLeg(i);
+
                 }
             }
         }
@@ -197,7 +209,6 @@ public class GroundProzeduralAnimation : MonoBehaviour
 
     private void MoveLeg(int _leg)
     {
-        moveing = true;
         moveingLegs[_leg] = true;
         SetNewTargetPosition(_leg);
         StartCoroutine(C_MoveLegCoroutine(_leg));
@@ -223,7 +234,7 @@ public class GroundProzeduralAnimation : MonoBehaviour
 
     private void AdjustBody()
     {
-        bodyNormal = Vector3.Cross((nextAnimationTargetPosition[3] - nextAnimationTargetPosition[0]), (nextAnimationTargetPosition[2] - nextAnimationTargetPosition[1]));
+        bodyNormal = Vector3.Cross((nextAnimationTargetPosition[nextAnimationTargetPosition.Length-1] - nextAnimationTargetPosition[0]), (nextAnimationTargetPosition[nextAnimationTargetPosition.Length/2] - nextAnimationTargetPosition[nextAnimationTargetPosition.Length/2-1]));
         bodyNormal.Normalize();
 
         //Will kick me in the ass
@@ -232,12 +243,10 @@ public class GroundProzeduralAnimation : MonoBehaviour
         this.transform.rotation = Quaternion.LookRotation(transform.forward, Vector3.Lerp(this.transform.up, bodyNormal, 20 * Time.deltaTime));
     }
 
-
-
     private void OnDrawGizmos()
     {
         if (!Application.isPlaying) return;
-        if (!ShowDebugBool) return;
+        if (!showDebugGizmos) return;
 
 
         for (int i = 0; i < currentAnimationTargetPosition.Length; i++)
@@ -245,8 +254,11 @@ public class GroundProzeduralAnimation : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(currentAnimationTargetPosition[i], 0.1f);
 
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(ikTargets[i].position, 0.1f);
+
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(currentAnimationTargetPosition[i], randomPositionRadius);
+            Gizmos.DrawSphere(animationRaycastOrigins[i].position, 0.1f);
 
             Gizmos.color = Color.black;
             Gizmos.DrawWireSphere(currentAnimationTargetPosition[i], maxLegRange);

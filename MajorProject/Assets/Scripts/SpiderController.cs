@@ -77,6 +77,10 @@ public class SpiderController : MonoBehaviour
             rotatedForward = Quaternion.FromToRotation(transform.up, results[1]) * transform.forward;
             this.transform.rotation = Quaternion.LookRotation(rotatedForward, results[1]);
         }
+        else
+        {
+            Debug.Log("HUHU");
+        }
     }
 
     private void SetDistanceToGround(Vector3 _averagepos)
