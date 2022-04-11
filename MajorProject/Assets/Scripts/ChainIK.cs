@@ -6,7 +6,13 @@ using UnityEditor;
 public class ChainIK : MonoBehaviour
 {
     public bool DebugGizmos = true;
-    [Space]
+
+
+    [Header("Performance Mode")]
+    [Tooltip("Parameter to Activate or Deactivate Performce Mode of the Chain")]
+    [SerializeField] private bool performanceMode;
+    [Tooltip("Parameter to set the Distance till the Chain Resolves IK Again")]
+    [SerializeField] private float performanceMargain;
 
     [Header("Chain Paramters")]
     [Tooltip("The Lenght of the Chain")]
@@ -151,6 +157,8 @@ public class ChainIK : MonoBehaviour
         //Flags to Check if Chain is Okay and if Target os Filled
         if (target == null) return;
         if (boneLenghts.Length != chainLength) InitializeChain();
+        if (performanceMode && ((bones[bones.Length - 1].position - target.position).sqrMagnitude <= performanceMargain * performanceMargain)) return;
+
 
         //Get the Current Position
         for (int i = 0; i < bones.Length; i++) currentPositions[i] = bones[i].position;

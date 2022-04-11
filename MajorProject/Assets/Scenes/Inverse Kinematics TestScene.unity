@@ -476,6 +476,8 @@ MonoBehaviour:
   layers:
     serializedVersion: 2
     m_Bits: 55
+  innerRayWeight: 0
+  outerRayWeight: 0
 --- !u!65 &282270164
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -956,6 +958,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugGizmos: 1
+  performanceMode: 1
+  performanceMargain: 0.02
   chainLength: 3
   target: {fileID: 1639426762}
   hint: {fileID: 1511332047}
@@ -1448,6 +1452,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugGizmos: 1
+  performanceMode: 1
+  performanceMargain: 0.02
   chainLength: 3
   target: {fileID: 1652520277}
   hint: {fileID: 1061139060}
@@ -1613,6 +1619,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugGizmos: 1
+  performanceMode: 1
+  performanceMargain: 0.02
   chainLength: 3
   target: {fileID: 1790890443}
   hint: {fileID: 1347206564}
@@ -3071,6 +3079,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugGizmos: 1
+  performanceMode: 0
+  performanceMargain: 0
   chainLength: 3
   target: {fileID: 230534342}
   hint: {fileID: 1296337900}
@@ -3907,7 +3917,7 @@ MonoBehaviour:
   rayOriginLB: {fileID: 1485214317}
   rayOriginRF: {fileID: 2104417345}
   rayOriginRB: {fileID: 2018853950}
-  legRayNum: 4
+  legRayNum: 6
   deg: 70
   radius: 0.1
 --- !u!23 &1430697253
@@ -4415,12 +4425,14 @@ MonoBehaviour:
   InnerDeg: 57.1
   OuterDeg: 311.57
   Offset: 0
-  Lenght: 5
+  Lenght: 2
   Speed: 1.8
-  distanceToGround: 0.91
+  distanceToGround: 1
   layers:
     serializedVersion: 2
     m_Bits: 55
+  innerRayWeight: 1
+  outerRayWeight: 1
 --- !u!1 &1601728311
 GameObject:
   m_ObjectHideFlags: 0
@@ -5775,6 +5787,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugGizmos: 1
+  performanceMode: 1
+  performanceMargain: 0.02
   chainLength: 3
   target: {fileID: 1256664934}
   hint: {fileID: 1384123368}

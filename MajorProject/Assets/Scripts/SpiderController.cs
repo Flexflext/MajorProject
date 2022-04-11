@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpiderController : MonoBehaviour
@@ -14,6 +12,9 @@ public class SpiderController : MonoBehaviour
     public float Speed;
     public float distanceToGround;
     public LayerMask layers;
+    [SerializeField] private float minDifferance = 0.1f;
+    [SerializeField, Min(0)] private float innerRayWeight;
+    [SerializeField, Min(0)] private float outerRayWeight;
 
     private Vector3 rotatedForward;
 
@@ -24,6 +25,8 @@ public class SpiderController : MonoBehaviour
     Ray[] outerRays = new Ray[0];
 
     private Vector3 input;
+    private Vector3 previous;
+    private Vector3 previousprevious;
 
     // Start is called before the first frame update
     void Start()
@@ -34,13 +37,13 @@ public class SpiderController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RotateSpider();
+        
         HandlePlayerInput();
-        SetDistanceToGround();
     }
 
     private void FixedUpdate()
     {
+        RotateSpider();
         MoveSpider();
     }
 
@@ -61,26 +64,30 @@ public class SpiderController : MonoBehaviour
 
     private void RotateSpider()
     {
-        Vector3 up = GetCurrentMedians(transform.position, Points, InnerRadius, OuterRadius, OuterDeg, InnerDeg, Lenght, layers);
+        Vector3[] results = GetCurrentMedians(transform.position, Points, InnerRadius, OuterRadius, OuterDeg, InnerDeg, Lenght, layers);
+        SetDistanceToGround(results[0]);
 
-        up = Vector3.Lerp(transform.up, up, 20 * Time.deltaTime);
+        results[1] = Vector3.Lerp(transform.up, results[1], 20 * Time.fixedDeltaTime);
 
-        rotatedForward = Quaternion.FromToRotation(transform.up, up) * transform.forward;
-        this.transform.rotation = Quaternion.LookRotation(rotatedForward, up);
-    }
-
-    private void SetDistanceToGround()
-    {
-        Ray ray = new Ray(transform.position, -transform.up);
-        RaycastHit hit = new RaycastHit();
-
-        if (Physics.Raycast(ray, out hit, float.MaxValue, layers))
+        if (!Vector3.Equals(previousprevious, results[1]))
         {
-            transform.position = Vector3.Lerp(transform.position, hit.point + transform.up * distanceToGround, 20 * Time.deltaTime);
+            previousprevious = previous;
+            previous = results[1];
+
+            rotatedForward = Quaternion.FromToRotation(transform.up, results[1]) * transform.forward;
+            this.transform.rotation = Quaternion.LookRotation(rotatedForward, results[1]);
         }
     }
 
-    private Vector3 GetCurrentMedians(Vector3 _origin, int _points, float _innerr, float _outerr, float _outerdeg, float _innerdeg, float _raylength, LayerMask _layermask)
+    private void SetDistanceToGround(Vector3 _averagepos)
+    {
+        Vector3 direction = transform.position - _averagepos;
+        direction.Normalize();
+
+        transform.position = Vector3.Lerp(transform.position, _averagepos + direction * distanceToGround * distanceToGround, 20 * Time.fixedDeltaTime);
+    }
+
+    private Vector3[] GetCurrentMedians(Vector3 _origin, int _points, float _innerr, float _outerr, float _outerdeg, float _innerdeg, float _raylength, LayerMask _layermask)
     {
         _origin += this.transform.up * Offset;
 
@@ -125,7 +132,7 @@ public class SpiderController : MonoBehaviour
             //Gizmos.DrawLine(_origin + outerPositions[i], _origin + outerPositions[i] + dir * _raylength);
         }
 
-        Vector3 results = new Vector3();
+        Vector3[] results = new Vector3[2];
         int hits = 0;
 
         for (int i = 0; i < innerRays.Length; i++)
@@ -133,20 +140,20 @@ public class SpiderController : MonoBehaviour
             if (Physics.Raycast(innerRays[i], out RaycastHit hit, _raylength, _layermask))
             {
                 hits++;
-                results += hit.normal;
+                results[1] += hit.normal * innerRayWeight;
+                results[0] += hit.point;
             }
-        }
 
-        for (int i = 0; i < outerRays.Length; i++)
-        {
-            if (Physics.Raycast(outerRays[i], out RaycastHit hit, _raylength, _layermask))
+            if (Physics.Raycast(outerRays[i], out hit, _raylength, _layermask))
             {
                 hits++;
-                results += hit.normal;
+                results[1] += hit.normal * outerRayWeight;
+                results[0] += hit.point;
             }
         }
 
-        results /= hits;
+        results[0] /= hits;
+        results[1] /= hits;
 
         return results;
 

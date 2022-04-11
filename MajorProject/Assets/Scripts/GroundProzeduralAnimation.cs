@@ -79,7 +79,7 @@ public class GroundProzeduralAnimation : MonoBehaviour
         for (int i = 0; i < animationRaycastOrigins.Length; i++)
         {
             float deltaDeg = 360f / legRayNum;
-            float curDeg = 0;
+            float curDeg = 0;  
 
             Vector3 curPoint = Vector3.zero;
             Vector3 closestPoint = Vector3.zero;
