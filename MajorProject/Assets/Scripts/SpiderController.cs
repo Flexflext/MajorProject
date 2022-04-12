@@ -27,17 +27,20 @@ public class SpiderController : MonoBehaviour
     private Vector3 input;
     private Vector3 previous;
     private Vector3 previousprevious;
+    private Vector3[,] previousInnerRayResults;
+    private Vector3[,] previousOuterRayResults;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        previousInnerRayResults = new Vector3[Points, 2];
+        previousOuterRayResults = new Vector3[Points, 2];
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
         HandlePlayerInput();
     }
 
@@ -69,18 +72,20 @@ public class SpiderController : MonoBehaviour
 
         results[1] = Vector3.Lerp(transform.up, results[1], 20 * Time.fixedDeltaTime);
 
-        if (!Vector3.Equals(previousprevious, results[1]))
-        {
-            previousprevious = previous;
-            previous = results[1];
 
-            rotatedForward = Quaternion.FromToRotation(transform.up, results[1]) * transform.forward;
-            this.transform.rotation = Quaternion.LookRotation(rotatedForward, results[1]);
-        }
-        else
-        {
-            Debug.Log("HUHU");
-        }
+        previousprevious = previous;
+        previous = results[1];
+
+        rotatedForward = Quaternion.FromToRotation(transform.up, results[1]) * transform.forward;
+
+        //if (Mathf.Abs(Quaternion.FromToRotation(transform.up, results[1]).eulerAngles.sqrMagnitude - transform.rotation.eulerAngles.sqrMagnitude) > minDifferance)
+        //{
+        //    return;
+        //}
+
+        
+
+        this.transform.rotation = Quaternion.LookRotation(rotatedForward, results[1]);
     }
 
     private void SetDistanceToGround(Vector3 _averagepos)
@@ -143,16 +148,45 @@ public class SpiderController : MonoBehaviour
         {
             if (Physics.Raycast(innerRays[i], out RaycastHit hit, _raylength, _layermask))
             {
+
+
+                if (previousInnerRayResults[i, 0] == hit.point)
+                {
+                    if (previousInnerRayResults[i, 1] != hit.normal)
+                    {
+                        continue;
+                    }
+                }
+
                 hits++;
                 results[1] += hit.normal * innerRayWeight;
                 results[0] += hit.point;
+
+                previousInnerRayResults[i, 0] = hit.point;
+                previousInnerRayResults[i, 1] = hit.normal;
             }
 
             if (Physics.Raycast(outerRays[i], out hit, _raylength, _layermask))
             {
+                //if (Mathf.Abs(previousOuterRayResults[i, 1].sqrMagnitude - hit.normal.sqrMagnitude) > minDifferance)
+                //{
+                //    continue;
+                //}
+
+                //if (previousOuterRayResults[i, 0] == hit.point)
+                //{
+                //    if (previousOuterRayResults[i, 1] != hit.normal)
+                //    {
+                //        continue;
+                //    }
+                //}
+
                 hits++;
                 results[1] += hit.normal * outerRayWeight;
                 results[0] += hit.point;
+
+                previousOuterRayResults[i, 0] = hit.point;
+                previousOuterRayResults[i, 1] = hit.normal;
             }
         }
 
