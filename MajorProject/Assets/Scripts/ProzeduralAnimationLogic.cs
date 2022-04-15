@@ -43,6 +43,9 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     //Bool if wich legs are currently moving
     private bool[] moveingLegs;
 
+    //Bool if leg is On Move Delay -> Not only one leg can move again and again
+    private bool[] isOnMoveDelay;
+
     //Raycast hit for Legs Raycasts
     private RaycastHit hit;
     //bodynormal to calcluate the up Vector of the Body
@@ -54,6 +57,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     private Vector3 closestPoint;
     private Vector3 tiltedVector;
     private Vector3 rayDir;
+    private bool first;
 
     private void Start()
     {
@@ -69,6 +73,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         nextAnimationTargetPosition = new Vector3[ikTargets.Length];
         targetUps = new Vector3[ikTargets.Length];
         moveingLegs = new bool[ikTargets.Length];
+        isOnMoveDelay = new bool[ikTargets.Length];
 
         //Set the Initial Leg target Position Data
         for (int i = 0; i < ikTargets.Length; i++)
@@ -84,6 +89,9 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         AdjustBody();
     }
 
+    /// <summary>
+    /// Calculate the the currentAnimationTargetPositions each Frame for all Legs
+    /// </summary>
     private void CalculateTargetPosition()
     {
         //Check all Legs
@@ -98,6 +106,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour
             curPoint = Vector3.zero;
             //Reset ClosestPoint
             closestPoint = Vector3.zero;
+            first = true;
+
 
             //Create Ray for each legnum
             for (int j = 0; j < legRayNumber; j++)
@@ -112,134 +122,187 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                 //Set Ray Direction
                 rayDir = (tiltedVector - curPoint).normalized;
 
-                Debug.DrawLine(animationRaycastOrigins[i].position + curPoint, animationRaycastOrigins[i].position + curPoint + rayDir * legRaylength);
-
-
                 //Check the íf the Ray hit anything
                 if (Physics.Raycast(animationRaycastOrigins[i].position + curPoint, rayDir, out hit, legRaylength, raycastHitLayers))
                 {
-                    if (closestPoint == Vector3.zero)
+                    //Check what the closest Point is + set the first Ray as the first Closest Point
+                    if (first)
                     {
+                        //Set ClosestPoint
                         closestPoint = hit.point;
                         currentAnimationTargetPosition[i] = hit.point;
                         targetUps[i] = hit.normal;
+                        first = false;
                     }
+                    //Check if Closer than the Current Closest Point
                     else if ((hit.point - transform.position).sqrMagnitude <= (closestPoint - transform.position).sqrMagnitude)
                     {
+                        //Set ClosestPoint
                         closestPoint = hit.point;
                         currentAnimationTargetPosition[i] = hit.point;
                         targetUps[i] = hit.normal;
                     }
                 }
 
+                //Add Degree for Next Ray
                 curDeg += deltaDeg;
             }
         }
     }
 
+    /// <summary>
+    /// Set the NextAnimationTargetPosition to the currentAnimationTargetPosition for a given Leg
+    /// </summary>
+    /// <param name="_legtomove"></param>
     private void SetNewTargetPosition(int _legtomove)
     {
+        //Set the Up Vector
         ikTargets[_legtomove].up = targetUps[_legtomove];
+        //Set the new AnimationTarget Position
         nextAnimationTargetPosition[_legtomove] = currentAnimationTargetPosition[_legtomove];
 
     }
 
+    /// <summary>
+    /// Check the Ranges of Each Leg --> And Invokes Move for that Leg
+    /// </summary>
     private void CheckRange()
     {
         for (int i = 0; i < ikTargets.Length; i++)
         {
-            ranges = (currentAnimationTargetPosition[i] - nextAnimationTargetPosition[i]).sqrMagnitude;
-
+            //Check if the Current Leg isnt already Moving
             if (!moveingLegs[i])
             {
+                
+
+                //Calculate the Squared Lenght from the Old Animation Target to the current Animation Target
+                ranges = (currentAnimationTargetPosition[i] - nextAnimationTargetPosition[i]).sqrMagnitude;
+
+                //Reset the Target Position
                 ikTargets[i].position = nextAnimationTargetPosition[i];
 
+                if (isOnMoveDelay[i])
+                {
+                    continue;
+                }
+
+                //Check if the Calculated Range is greater than the maxLegRange
                 if (ranges >= maxLegRange * maxLegRange)
                 {
                     //Check Edge Cases with at Position 0 or half
                     if (i == 0 || i == moveingLegs.Length / 2)
                     {
+                        //Check the First Leg (Front Left) (Edge Case)
                         if (i == 0)
                         {
                             //Check that the Previous Leg or the Leg on the Other Side is not Moving
                             if (moveingLegs[moveingLegs.Length / 2])
                             {
-                                ikTargets[i].position = nextAnimationTargetPosition[i];
+                                //ikTargets[i].position = nextAnimationTargetPosition[i];
                                 continue;
                             }
                         }
+                        //Check the Leg on the Other Side of the First Leg (Front Right)
                         else
                         {
                             if (moveingLegs[0])
                             {
-                                ikTargets[i].position = nextAnimationTargetPosition[i];
+                                //ikTargets[i].position = nextAnimationTargetPosition[i];
                                 continue;
                             }
                         }
                     }
                     else
                     {
-                        //Check if Left Side Leg or Right Side Leg
+                        //Check if Left Side Leg or Right Side Leg //-> Left Side
                         if (i < moveingLegs.Length / 2)
                         {
                             //Check that the Previous Leg or the Leg on the Other Side is not Moving
                             if (moveingLegs[i - 1] || moveingLegs[i + moveingLegs.Length / 2 - 1])
                             {
-                                ikTargets[i].position = nextAnimationTargetPosition[i];
+                                //ikTargets[i].position = nextAnimationTargetPosition[i];
                                 continue;
                             }
                         }
-                        else
+                        else //-> Right Side
                         {
                             //Check that the Previous Leg or the Leg on the Other Side is not Moving
                             if (moveingLegs[i - 1] || moveingLegs[i - moveingLegs.Length / 2])
                             {
-                                ikTargets[i].position = nextAnimationTargetPosition[i];
+                                //ikTargets[i].position = nextAnimationTargetPosition[i];
                                 continue;
                             }
                         }
                     }
 
-                    MoveLeg(i);
 
+                    //Move the Leg at the Index
+                    MoveLeg(i);
                 }
             }
         }
     }
 
+    /// <summary>
+    /// Move the Leg at the given Index
+    /// </summary>
+    /// <param name="_leg"></param>
     private void MoveLeg(int _leg)
     {
+        //Set Flag
         moveingLegs[_leg] = true;
+        isOnMoveDelay[_leg] = true;
+        //Set the new Target Position
         SetNewTargetPosition(_leg);
+        //Start the Move Coroutine
         StartCoroutine(C_MoveLegCoroutine(_leg));
     }
 
+    /// <summary>
+    /// Coroutine to Move a given Leg to its new Position
+    /// </summary>
+    /// <param name="_leg"></param>
+    /// <returns></returns>
     private IEnumerator C_MoveLegCoroutine(int _leg)
     {
         float passedTime = 0f;
 
+        //Move the Leg for the Given Time
         while (passedTime <= legMovementTime)
         {
+            //Lerp the Target Position and add the Evaluated Curve to it
             ikTargets[_leg].position = Vector3.Lerp(ikTargets[_leg].position, nextAnimationTargetPosition[_leg], passedTime / legMovementTime) + legMovementCurve.Evaluate(passedTime / legMovementTime) * transform.up;
 
+            //Add deltaTime and Wait for next Frame
             passedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
 
+        //Set Position
         ikTargets[_leg].position = nextAnimationTargetPosition[_leg];
+
+        //Reset Flag
         moveingLegs[_leg] = false;
 
-        //moveing = false;
+        yield return new WaitForSeconds(legMovementTime / 2);
+
+        isOnMoveDelay[_leg] = false;
     }
 
+    /// <summary>
+    /// Adjust the Body Rotation amd Position
+    /// </summary>
     private void AdjustBody()
     {
+        //Calculate the Cross Vector from the Outermost Legs
         bodyNormal = Vector3.Cross((nextAnimationTargetPosition[nextAnimationTargetPosition.Length-1] - nextAnimationTargetPosition[0]), (nextAnimationTargetPosition[nextAnimationTargetPosition.Length/2] - nextAnimationTargetPosition[nextAnimationTargetPosition.Length/2-1]));
+        //Normalize the Vector
         bodyNormal.Normalize();
 
-        //Will kick me in the ass
+        //Will kick me in the ass --> Invert so that the VEctor is up
         bodyNormal *= -1;
 
+        //Set the Rotation
         this.transform.rotation = Quaternion.LookRotation(transform.forward, Vector3.Lerp(this.transform.up, bodyNormal, 20 * Time.deltaTime));
     }
 
@@ -254,14 +317,41 @@ public class ProzeduralAnimationLogic : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(currentAnimationTargetPosition[i], 0.1f);
 
-            Gizmos.color = Color.green;
-            Gizmos.DrawSphere(ikTargets[i].position, 0.1f);
-
-            Gizmos.color = Color.blue;
+            Gizmos.color = Color.yellow;
             Gizmos.DrawSphere(animationRaycastOrigins[i].position, 0.1f);
 
             Gizmos.color = Color.black;
             Gizmos.DrawWireSphere(currentAnimationTargetPosition[i], maxLegRange);
+        }
+
+        for (int i = 0; i < animationRaycastOrigins.Length; i++)
+        {
+            //Set the delta Degree -> degree per point
+            deltaDeg = 360f / legRayNumber;
+            //Reset Current Degree
+            curDeg = 0;
+
+            //Reset CurrentPoint
+            curPoint = Vector3.zero;
+
+            //Create Ray for each legnum
+            for (int j = 0; j < legRayNumber; j++)
+            {
+                //Set the CurrentPoint with the Rotated right Vector around the up Vector with the current Angle
+                curPoint = Quaternion.AngleAxis(curDeg, animationRaycastOrigins[i].up) * animationRaycastOrigins[i].right;
+                //Set the leg Ray Radius
+                curPoint = curPoint * legRayPositionradius;
+
+                //Tilt the Vector by the Tilt Degree
+                tiltedVector = -animationRaycastOrigins[i].up * Mathf.Tan(legRayTiltDegree * Mathf.Deg2Rad) * curPoint.magnitude;
+                //Set Ray Direction
+                rayDir = (tiltedVector - curPoint).normalized;
+
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawLine(animationRaycastOrigins[i].position + curPoint, animationRaycastOrigins[i].position + curPoint + rayDir * legRaylength);
+
+                curDeg += deltaDeg;
+            }
         }
 
         Gizmos.color = Color.magenta;

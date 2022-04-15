@@ -15,6 +15,9 @@ public class SpiderController : MonoBehaviour
     [SerializeField] private float minDifferance = 0.1f;
     [SerializeField, Min(0)] private float innerRayWeight;
     [SerializeField, Min(0)] private float outerRayWeight;
+    [SerializeField] private float forwardOriginMultiplier;
+
+    [SerializeField] private Transform origins;
 
     private Vector3 rotatedForward;
 
@@ -30,6 +33,8 @@ public class SpiderController : MonoBehaviour
     private Vector3[,] previousInnerRayResults;
     private Vector3[,] previousOuterRayResults;
 
+    private Vector3 originStartPosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,13 +45,12 @@ public class SpiderController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         HandlePlayerInput();
     }
 
     private void FixedUpdate()
     {
-        RotateSpider();
+        //RotateSpider();
         MoveSpider();
     }
 
@@ -62,6 +66,8 @@ public class SpiderController : MonoBehaviour
 
     private void MoveSpider()
     {
+        origins.position = Vector3.Lerp(origins.position, transform.position + input * forwardOriginMultiplier, 20 * Time.deltaTime);
+        //Debug.DrawRay(transform.position, input);
         transform.position += input * Time.fixedDeltaTime * Speed;
     }
 

@@ -6,6 +6,7 @@ using UnityEditor;
 public class ChainIK : MonoBehaviour
 {
     public bool DebugGizmos = true;
+    [SerializeField] private float gizmosRadius = 0.1f;
 
 
     [Header("Performance Mode")]
@@ -271,7 +272,6 @@ public class ChainIK : MonoBehaviour
         }
     }
 
-
     private void OnDrawGizmos()
     {
         if (DebugGizmos)
@@ -285,6 +285,15 @@ public class ChainIK : MonoBehaviour
                 Handles.DrawWireCube(Vector3.up * 0.5f, Vector3.one);
                 current = current.parent;
             }
+
+
+            Gizmos.color = Color.green;
+            if (target != null)
+                Gizmos.DrawSphere(target.position, gizmosRadius);
+
+            Gizmos.color = Color.blue;
+            if (hint != null) 
+                Gizmos.DrawSphere(hint.position, gizmosRadius);
         }
     }
 }
