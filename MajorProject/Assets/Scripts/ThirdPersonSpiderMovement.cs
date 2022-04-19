@@ -2,18 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SpiderBodyRotationController))]
 public class ThirdPersonSpiderMovement : MonoBehaviour
 {
+    [SerializeField] private float rotationSpeed = 20.0f;
+
     [SerializeField] private float spiderMovementSpeed;
     [SerializeField] private float predictionMultiplier;
     [SerializeField] private float predictionSmoothing = 20;
     [SerializeField] private Transform rayOriginsAndHints;
 
+    private SpiderBodyRotationController controller;
+
+    private float mouseInput;
     private Vector3 input;
 
     // Start is called before the first frame update
     void Start()
     {
+        controller = GetComponent<SpiderBodyRotationController>();
+        Cursor.lockState = CursorLockMode.Locked;
         
     }
 
@@ -21,18 +29,19 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
     void Update()
     {
         HandlePlayerInput();
+        RotateSpider();
+        MoveSpider();
     }
 
-    private void FixedUpdate()
+    private void RotateSpider()
     {
-        MoveSpider();
+        controller.SetPlayerInputRotation(mouseInput * rotationSpeed);
     }
 
     private void MoveSpider()
     {
         rayOriginsAndHints.position = Vector3.Lerp(rayOriginsAndHints.position, transform.position + input * predictionMultiplier, predictionSmoothing * Time.deltaTime);
-
-        transform.position += input * Time.fixedDeltaTime * spiderMovementSpeed;
+        controller.SetPlayerMovementInput(input * spiderMovementSpeed);
     }
 
     private void HandlePlayerInput()
@@ -41,6 +50,8 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
 
         input += Input.GetAxis("Horizontal") * transform.right;
         input += Input.GetAxis("Vertical") * transform.forward;
+
+        mouseInput = Input.GetAxis("Mouse X");
 
         input.Normalize();
     }

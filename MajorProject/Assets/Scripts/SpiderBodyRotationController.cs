@@ -8,6 +8,8 @@ public class SpiderBodyRotationController : MonoBehaviour
 {
     [SerializeField] private bool showDebugGizmos = true;
 
+    
+
     [Header("Ray Paramters")]
     [Tooltip("Amount of Rays to be Shot for the Ground Detection")]
     [SerializeField] private int rayAmount = 8;
@@ -16,8 +18,10 @@ public class SpiderBodyRotationController : MonoBehaviour
     [Tooltip("Radius of the Ray Circle (OuterRays)")]
     [SerializeField] private float outerRayPositionRadius = 0.4f;
     [Tooltip("Tilt of the inner Rays")]
+    [Range(-90, 90)]
     [SerializeField] private float innerRayTiltDegree = 57;
     [Tooltip("Tilt of the outer Rays")]
+    [Range(-90, 90)]
     [SerializeField] private float outerRayTiltDegree = 311;
     [Tooltip("Offset of all Rays")]
     [SerializeField] private float rayOriginUpOffset = 0;
@@ -31,6 +35,15 @@ public class SpiderBodyRotationController : MonoBehaviour
     [SerializeField, Min(0)] private float innerRayWeight = 1;
     [Tooltip("Weight of the OuterRays")]
     [SerializeField, Min(0)] private float outerRayWeight = 1;
+
+    [Header("Movement Rays")]
+    [SerializeField] private int movementRayAmount = 3;
+    [SerializeField] private float movementRayWeight = 1;
+    [SerializeField] private float angleBetweenMovementRays = 5;
+    [Range(-90, 90)]
+    [SerializeField] private float movementRayTilt = 5;
+    [SerializeField] private float movementRayRadius = 1;
+    [SerializeField] private float movementRayRotationSmoothing = 20;
 
     [Header("Smoothing")]
     [Tooltip("Lerp Smoothing of the Rotation")]
@@ -52,6 +65,12 @@ public class SpiderBodyRotationController : MonoBehaviour
     private Ray[] outerRays = new Ray[0];
     private AveragePositionAndUp currentAverages;
 
+    private Ray[] moveRays = new Ray[0];
+    private Vector3[] movePositions = new Vector3[0];
+    private Quaternion moveRotater = Quaternion.identity;
+
+    private float currentPlayerRotationInput;
+    private Vector3 currentMovementInput;
 
     struct AveragePositionAndUp
     {
@@ -68,14 +87,28 @@ public class SpiderBodyRotationController : MonoBehaviour
 
     private void Start()
     {
+        //initialize all Arrays
         InitializeRays(rayAmount);
+        InitializeMovementRays();
     }
 
     private void Update()
     {
+        //Get the Current Averages
+        currentAverages = GetCurrentPositionAndNormalsAvergage(transform.position, rayAmount, innerRayPositionRadius, outerRayPositionRadius, outerRayTiltDegree, innerRayTiltDegree, rayLength, rayHitLayers);
+
+        //Set the Spider Rotation
         RotateSpider();
+
+        //Sets the Distance to the Ground Dependend on the Calculated Avergage Position Vector
+        SetDistanceToGround(currentAverages.AveragePosition);
+
     }
 
+    /// <summary>
+    /// Initialize the Normal Ray and Position Arrays
+    /// </summary>
+    /// <param name="_points"></param>
     private void InitializeRays(int _points)
     {
         innerPositions = new Vector3[_points];
@@ -85,26 +118,53 @@ public class SpiderBodyRotationController : MonoBehaviour
         outerRays = new Ray[_points];
     }
 
+    /// <summary>
+    /// initialize Movement Ray and Position Array and Check that only odd Numbers are Allowed
+    /// </summary>
+    private void InitializeMovementRays()
+    {
+        if (movementRayAmount % 2 == 0)
+        {
+            movementRayAmount++;
+        }
+
+        movePositions = new Vector3[movementRayAmount];
+        moveRays = new Ray[movementRayAmount];
+    }
+
+    /// <summary>
+    /// Set the current input for the Horizontal Rotation of the Creature
+    /// </summary>
+    /// <param name="_rotationangle"></param>
+    public void SetPlayerInputRotation(float _rotationangle)
+    {
+        currentPlayerRotationInput = _rotationangle;
+    }
+
+    /// <summary>
+    /// Set the Movement Input 
+    /// </summary>
+    /// <param name="_moveinput"></param>
+    public void SetPlayerMovementInput(Vector3 _moveinput)
+    {
+        currentMovementInput = _moveinput;
+    }
 
     /// <summary>
     /// Rotates the Whole Spider so that the Calculates up Vector is the CUrrent Transform Up Vector
     /// </summary>
     private void RotateSpider()
-    {
-        //Get the Current Average Up and Position Vector that was Scanned by the Rays
-        currentAverages = GetCurrentPositionAndNormalsAvergage(transform.position, rayAmount, innerRayPositionRadius, outerRayPositionRadius, outerRayTiltDegree, innerRayTiltDegree, rayLength, rayHitLayers);
-
-        //Sets the Distance to the Ground Dependend on the Calculated Avergage Position Vector
-        SetDistanceToGround(currentAverages.AveragePosition);
-
+    { 
         //Lerps the Up Vector -> Smooth Transitions
         currentAverages.AverageUp = Vector3.Lerp(transform.up, currentAverages.AverageUp, rotationSmoothing * Time.deltaTime);
 
         //Calculates the Rotation From the Previous Up Vector to the Calculated One -> Rotzates the Forward Vector with this Rotation
         rotatedForward = Quaternion.FromToRotation(transform.up, currentAverages.AverageUp) * transform.forward;
+        //RotateAround for Player Input
+        rotatedForward = Quaternion.AngleAxis(currentPlayerRotationInput * Time.deltaTime, currentAverages.AverageUp) * rotatedForward;
 
         //Calculates a new Rotation from the new Up Vector and the Rotated Forward Vector
-        this.transform.rotation = Quaternion.LookRotation(rotatedForward, currentAverages.AverageUp);
+        this.transform.rotation = Quaternion.LookRotation(rotatedForward, currentAverages.AverageUp);  
     }
 
     /// <summary>
@@ -120,6 +180,8 @@ public class SpiderBodyRotationController : MonoBehaviour
 
         //Calculate a new Position with a given Distance from the Average Position
         transform.position = Vector3.Lerp(transform.position, _averagepos + averagePositionToPositionDirection * bodyDistanceToGround * bodyDistanceToGround, positionSmoothing * Time.deltaTime);
+
+        transform.position += currentMovementInput * Time.deltaTime;
     }
 
     /// <summary>
@@ -178,6 +240,7 @@ public class SpiderBodyRotationController : MonoBehaviour
             CheckAverage(innerRays[i], innerRayWeight, _raylength, _layermask, ref currentAverages);
 
 
+
             //Outer Rays
             //Calculate the Ray Direction with the Tilt for the Outer Rays
             tiltPosition = -this.transform.up * Mathf.Tan(_outerdeg * Mathf.Deg2Rad) * outerPositions[i].magnitude;
@@ -189,10 +252,69 @@ public class SpiderBodyRotationController : MonoBehaviour
             CheckAverage(outerRays[i], outerRayWeight, _raylength, _layermask, ref currentAverages);
         }
 
+        //Movement Rays
+        MovementRayCheck(_origin, _raylength, _layermask);
+
         //Calaculate the Medians
         currentAverages.MakeMedians();
 
         return currentAverages;
+    }
+
+    /// <summary>
+    /// Check Each Movemenmt Ray to Anticipate Rotation in movement Direction
+    /// </summary>
+    /// <param name="_origin"></param>
+    /// <param name="_raylength"></param>
+    /// <param name="_layermask"></param>
+    private void MovementRayCheck(Vector3 _origin, float _raylength, LayerMask _layermask)
+    {
+        //Check if Rays have to be Reinitialized -> Only Odd numbers are allowed
+        if (movePositions.Length != movementRayAmount)
+        {
+            InitializeMovementRays();
+        }
+
+        //Check if movement is Zero to set to Identity
+        if (currentMovementInput != Vector3.zero)
+        {
+            //Lerp Rotater Smooth
+            moveRotater = Quaternion.Lerp(moveRotater, Quaternion.FromToRotation(transform.forward, currentMovementInput), movementRayRotationSmoothing);
+        }
+        else
+        {
+            //Set Identity 
+            moveRotater = Quaternion.identity;
+        }
+
+        //Reset Current Degrees
+        curDeg = 0;
+        //Calculate first position
+        movePositions[0] = (Quaternion.AngleAxis(curDeg, transform.up) * moveRotater * transform.forward) * movementRayRadius;
+
+        //Set Every Other Position 
+        for (int i = 1; i < movementRayAmount; i += 2)
+        {
+            //Add angle
+            curDeg += angleBetweenMovementRays;
+
+            //Add minus and Plus Ray in each direction
+            movePositions[i] = (Quaternion.AngleAxis(curDeg, transform.up) * moveRotater * transform.forward) * movementRayRadius;
+            movePositions[i + 1] = (Quaternion.AngleAxis(-curDeg, transform.up) * moveRotater * transform.forward) * movementRayRadius;
+        }
+
+        //Calculate Ray for Every Position
+        for (int i = 0; i < movementRayAmount; i++)
+        {
+            //Calculate Ray Tilt
+            tiltPosition = -this.transform.up * Mathf.Tan(movementRayTilt * Mathf.Deg2Rad) * movePositions[i].magnitude;
+            currentRayDirection = (movePositions[i] - tiltPosition).normalized;
+            //Set the Ray
+            moveRays[i] = new Ray(_origin + movePositions[i], currentRayDirection.normalized * _raylength);
+
+            //Check and Add the Average Position and Up for the outerRays
+            CheckAverage(moveRays[i], movementRayWeight, _raylength, _layermask, ref currentAverages);
+        }
     }
 
     /// <summary>
@@ -219,7 +341,7 @@ public class SpiderBodyRotationController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (!showDebugGizmos) return;
+        if (!showDebugGizmos || !Application.isPlaying) return;
 
         for (int i = 0; i < innerRays.Length; i++)
         {
@@ -228,6 +350,12 @@ public class SpiderBodyRotationController : MonoBehaviour
 
             Gizmos.color = Color.cyan;
             Gizmos.DrawLine(outerRays[i].origin, outerRays[i].origin + outerRays[i].direction * rayLength);
+        }
+
+        for (int i = 0; i < movePositions.Length; i++)
+        {
+            Gizmos.color = Color.black;
+            Gizmos.DrawLine(moveRays[i].origin, moveRays[i].origin + moveRays[i].direction * rayLength);
         }
     }
 }
