@@ -99,6 +99,8 @@ public class ChainIK : MonoBehaviour
 
     #endregion
 
+    public Transform rootRotation;
+
 
     private void Awake()
     {
@@ -147,7 +149,7 @@ public class ChainIK : MonoBehaviour
             currentBone = currentBone.parent;
         }
 
-        startRotationRoot = bones[0].rotation;
+        startRotationRoot = (bones[0].parent != null) ? bones[0].parent.rotation : Quaternion.identity;
     }
 
     /// <summary>
@@ -166,10 +168,7 @@ public class ChainIK : MonoBehaviour
 
         FabricAlgortihm();
 
-        if (hint != null)
-        {
-            AddHintOffset(ref currentPositions);
-        }
+        if (hint != null) AddHintOffset(ref currentPositions);
 
         //Apply the Current Position and Rotation
         for (int i = 0; i < currentPositions.Length; i++)
@@ -177,13 +176,15 @@ public class ChainIK : MonoBehaviour
             if (i == currentPositions.Length - 1)
             {
                 //Multiplies the the target rotation with the Inverse of the startrotation of the target // --> get the Difference of the Rotation to the Start with Multiply of the current and the Original Rotation
-                bones[i].rotation = target.rotation * Quaternion.Inverse(startRotationTarget) * startRotationBone[i];
+                //bones[i].rotation = target.rotation * Quaternion.Inverse(startRotationTarget) * startRotationBone[i]; //* Quaternion.Inverse(bones[i].rotation);
+                bones[i].rotation = Quaternion.FromToRotation(startdirectionsSucc[i], target.position - currentPositions[i]) * startRotationBone[i];
             }
             else
             {
                 //Word Rotation from the Original Direction of the Bone to the Direction to the next Bone + Multiplies with start direction to get the Local Rotation
-                bones[i].rotation = Quaternion.FromToRotation(startdirectionsSucc[i], currentPositions[i + 1] - currentPositions[i]) * startRotationBone[i];
+                bones[i].rotation =  Quaternion.FromToRotation(startdirectionsSucc[i], currentPositions[i + 1] - currentPositions[i]) * startRotationBone[i];// * Quaternion.Inverse(bones[i].rotation);
             }
+
 
             //Set Transform Position
             bones[i].position = currentPositions[i];

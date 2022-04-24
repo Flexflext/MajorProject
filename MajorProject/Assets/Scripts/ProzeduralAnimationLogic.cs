@@ -12,6 +12,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     [SerializeField] private AnimationCurve legMovementCurve;
     [Tooltip("Maximum Range of that the leg can be before moveing to new Position")]
     [SerializeField] private float maxLegRange;
+    [Tooltip("Use the Closeset Possible or the Farthest Posssible Position")]
+    [SerializeField] private bool useFarthestPoint;
 
     [Header("Leg Movement Raycasts")]
     [Tooltip("Number of Rays to CHeck the Leg Position")]
@@ -135,7 +137,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                         first = false;
                     }
                     //Check if Closer than the Current Closest Point
-                    else if ((hit.point - transform.position).sqrMagnitude <= (closestPoint - transform.position).sqrMagnitude)
+                    else if ((hit.point - transform.position).sqrMagnitude >= (closestPoint - transform.position).sqrMagnitude && useFarthestPoint || (hit.point - transform.position).sqrMagnitude <= (closestPoint - transform.position).sqrMagnitude && !useFarthestPoint)
                     {
                         //Set ClosestPoint
                         closestPoint = hit.point;
@@ -173,8 +175,6 @@ public class ProzeduralAnimationLogic : MonoBehaviour
             //Check if the Current Leg isnt already Moving
             if (!moveingLegs[i])
             {
-                
-
                 //Calculate the Squared Lenght from the Old Animation Target to the current Animation Target
                 ranges = (currentAnimationTargetPosition[i] - nextAnimationTargetPosition[i]).sqrMagnitude;
 
@@ -299,8 +299,12 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         //Normalize the Vector
         bodyNormal.Normalize();
 
-        //Will kick me in the ass --> Invert so that the VEctor is up
-        bodyNormal *= -1;
+        //Check that the Calculated Vector is pointing in the same up Direction
+        if (Vector3.Dot(bodyNormal, transform.parent.up) < 0)
+        {
+            bodyNormal *= -1;
+        }
+        
 
         //Set the Rotation
         this.transform.rotation = Quaternion.LookRotation(transform.forward, Vector3.Lerp(this.transform.up, bodyNormal, 20 * Time.deltaTime));
