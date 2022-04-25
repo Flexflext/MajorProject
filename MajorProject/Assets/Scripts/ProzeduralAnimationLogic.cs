@@ -14,6 +14,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     [SerializeField] private float maxLegRange;
     [Tooltip("Use the Closeset Possible or the Farthest Posssible Position")]
     [SerializeField] private bool useFarthestPoint;
+    [SerializeField] private bool adjustBodyRotation;
+    [SerializeField] private bool adjustLastLimbToNormal;
 
     [Header("Leg Movement Raycasts")]
     [Tooltip("Number of Rays to CHeck the Leg Position")]
@@ -88,7 +90,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     {
         CalculateTargetPosition();
         CheckRange();
-        AdjustBody();
+        if (adjustBodyRotation) AdjustBody();
+
     }
 
     /// <summary>
@@ -159,7 +162,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     private void SetNewTargetPosition(int _legtomove)
     {
         //Set the Up Vector
-        ikTargets[_legtomove].up = targetUps[_legtomove];
+        if (adjustLastLimbToNormal) ikTargets[_legtomove].up = targetUps[_legtomove];
         //Set the new AnimationTarget Position
         nextAnimationTargetPosition[_legtomove] = currentAnimationTargetPosition[_legtomove];
 
