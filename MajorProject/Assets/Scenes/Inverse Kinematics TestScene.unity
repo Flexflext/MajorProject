@@ -4889,7 +4889,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &682410156
 Transform:
   m_ObjectHideFlags: 0
@@ -7757,6 +7757,7 @@ GameObject:
   - component: {fileID: 1101475834}
   - component: {fileID: 1101475833}
   - component: {fileID: 1101475836}
+  - component: {fileID: 1101475837}
   m_Layer: 0
   m_Name: Sphere (3)
   m_TagString: Untagged
@@ -7856,7 +7857,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101475831}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7152bad4521e0b43801ef1a2db0c3b6, type: 3}
   m_Name: 
@@ -7872,6 +7873,31 @@ MonoBehaviour:
   errorMargain: 0.01
   snapbackStrenght: 0
   rootRotation: {fileID: 0}
+--- !u!114 &1101475837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101475831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e54606e22f8643498c15ed1efcbc907, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugGizmos: 1
+  gizmosRadius: 0.1
+  performanceMode: 0
+  performanceMargain: 0
+  chainLength: 2
+  target: {fileID: 0}
+  hint: {fileID: 0}
+  maxIterations: 1
+  errorMargain: 0.01
+  snapbackStrenght: 1
+  constraines:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
 --- !u!1 &1128620814
 GameObject:
   m_ObjectHideFlags: 0
