@@ -97,10 +97,31 @@ public class LocalChainIK : MonoBehaviour
 
     #endregion
 
+    private Vector3[] testingVecs;
+
 
     private void Start()
     {
         InitializeChain();
+    }
+
+    private void Update()
+    {
+        for (int i = bones.Length - 1; i >= 0; i--)
+        {
+            startRotationBone[i] = bones[i].rotation;
+
+            if (i != bones.Length - 1)
+            {
+                boneLenghts[i] = (bones[i + 1].position - bones[i].position).magnitude;
+                completeLenght += boneLenghts[i];
+                testingVecs[i] = bones[i + 1].position - bones[i].position;
+            }
+            else
+            {
+                testingVecs[i] = target.position - bones[i].position;
+            }
+        }
     }
 
     private void LateUpdate()
@@ -116,6 +137,7 @@ public class LocalChainIK : MonoBehaviour
         //Initialize the Array Sizes and Initial Variables
         bones = new Transform[chainLength + 1];
         currentPositions = new Vector3[chainLength + 1];
+        testingVecs = new Vector3[chainLength + 1];
         boneLenghts = new float[chainLength];
         completeLenght = 0;
         startRotationBone = new Quaternion[chainLength + 1];
@@ -132,6 +154,11 @@ public class LocalChainIK : MonoBehaviour
             {
                 boneLenghts[i] = (bones[i + 1].position - currentBone.position).magnitude;
                 completeLenght += boneLenghts[i];
+                testingVecs[i] = bones[i + 1].position - bones[i].position;
+            }
+            else
+            {
+                testingVecs[i] = target.position - bones[i].position;
             }
 
             currentBone = currentBone.parent;
@@ -158,18 +185,22 @@ public class LocalChainIK : MonoBehaviour
 
         if (hint != null) AddHintOffset(ref currentPositions);
 
+        
+
         //Apply the Current Position and Rotation
         for (int i = 0; i < currentPositions.Length; i++)
         {
             if (i == currentPositions.Length - 1)
             {
                 //Multiplies the the target rotation with the Inverse of the startrotation of the target // --> get the Difference of the Rotation to the Start with Multiply of the current and the Original Rotation
-                bones[i].rotation = Quaternion.FromToRotation(target.position - bones[i].position, target.position - currentPositions[i]) * bones[i].rotation;
+                
+                bones[i].rotation = Quaternion.FromToRotation(testingVecs[i], target.position - currentPositions[i]) * startRotationBone[i];
             }
             else
             {
                 //Word Rotation from the Original Direction of the Bone to the Direction to the next Bone + Multiplies with start direction to get the Local Rotation
-                bones[i].rotation = Quaternion.FromToRotation(bones[i + 1].position - bones[i].position, currentPositions[i + 1] - currentPositions[i]) * bones[i].rotation;// * Quaternion.Inverse(bones[i].rotation);
+                //testingVecs[i] = bones[i + 1].position - bones[i].position;
+                bones[i].rotation = Quaternion.FromToRotation(testingVecs[i], currentPositions[i + 1] - currentPositions[i]) * startRotationBone[i];// * Quaternion.Inverse(bones[i].rotation);
             }
 
 
@@ -237,11 +268,16 @@ public class LocalChainIK : MonoBehaviour
                 //Backwords
                 for (int i = currentPositions.Length - 1; i > 0; i--)
                 {
-                    if (i == currentPositions.Length - 1) currentPositions[i] = target.position;
+                    if (i == currentPositions.Length - 1)
+                    {
+                        currentPositions[i] = target.position;
+                        
+                    }
                     else
                     {
                         //Set to Positon of the Next Chain Component + the Direction to the old position * the startlenght
                         currentPositions[i] = currentPositions[i + 1] + (currentPositions[i] - currentPositions[i + 1]).normalized * boneLenghts[i];
+                        
                     }
                 }
 
