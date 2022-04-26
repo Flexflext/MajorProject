@@ -17,6 +17,38 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     [SerializeField] private bool adjustBodyRotation;
     [SerializeField] private bool adjustLastLimbToNormal;
 
+
+    [Header("Body Animation")]
+    [SerializeField] private BodyAnimation xAnimation;
+    [SerializeField] private BodyAnimation yAnimation;
+    [SerializeField] private BodyAnimation zAnimation;
+
+
+    [Header("Curves")]
+
+    [SerializeField] private AnimationCurve xPositionCurve;
+    [Min(0)]
+    [SerializeField] private int xFrequency = 2;
+    [SerializeField] private float xAmplitude = 1;
+    [SerializeField] private float xSeed = 0f;
+    [SerializeField] private float xRandomScale = 0.2f;
+
+    [SerializeField] private AnimationCurve yPositionCurve;
+    [Min(0)]
+    [SerializeField] private int yFrequency = 2;
+    [SerializeField] private float yAmplitude = 1;
+    [SerializeField] private float ySeed = 0f;
+    [SerializeField] private float yRandomScale = 0.2f;
+
+    [SerializeField] private AnimationCurve zPositionCurve;
+    [Min(0)]
+    [SerializeField] private int zFrequency = 2;
+    [SerializeField] private float zAmplitude = 1;
+    [SerializeField] private float zSeed = 0f;
+    [SerializeField] private float zRandomScale = 0.2f;
+
+
+
     [Header("Leg Movement Raycasts")]
     [Tooltip("Number of Rays to CHeck the Leg Position")]
     [SerializeField] private int legRayNumber;
@@ -63,8 +95,38 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     private Vector3 rayDir;
     private bool first;
 
+    private Vector3 startLocalPosition;
+
+    [System.Serializable]
+    struct AnimParam
+    {
+        public bool useAnimation;
+        public float heightMultiplier;
+        public float timeMultiplier;
+    }
+
+    [System.Serializable]
+    struct AnimCurve
+    {
+        public AnimationCurve positionCurve;
+        [Min(0)]
+        public int frequency;
+        public float amplitude;
+        public float seed;
+        public float randomScale;
+    }
+
+    [System.Serializable]
+    struct BodyAnimation
+    {
+        public AnimParam AnimationParameter;
+        public AnimCurve AnimationCurveSettings;
+    }
+
     private void Start()
     {
+        startLocalPosition = transform.localPosition;
+
         //Check ik targets and Raycast Origins are the same Length
         if (ikTargets.Length != animationRaycastOrigins.Length)
         {
@@ -86,11 +148,19 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         }
     }
 
+    private void OnValidate()
+    {
+        xPositionCurve = GenerateAnimationCurve(xFrequency, xAmplitude, xSeed, xRandomScale);
+        yPositionCurve = GenerateAnimationCurve(yFrequency, yAmplitude, ySeed, yRandomScale);
+        zPositionCurve = GenerateAnimationCurve(zFrequency, zAmplitude, zSeed, zRandomScale);
+    }
+
     private void Update()
     {
         CalculateTargetPosition();
         CheckRange();
         if (adjustBodyRotation) AdjustBody();
+        AnimateBody();
 
     }
 
@@ -311,6 +381,51 @@ public class ProzeduralAnimationLogic : MonoBehaviour
 
         //Set the Rotation
         this.transform.rotation = Quaternion.LookRotation(transform.forward, Vector3.Lerp(this.transform.up, bodyNormal, 20 * Time.deltaTime));
+    }
+
+    private void AnimateBody()
+    {
+        Vector3 add = new Vector3();
+
+        if (xAnimation.AnimationParameter.useAnimation)
+        {
+            add.x  = xPositionCurve.Evaluate(Time.time / xAnimation.AnimationParameter.timeMultiplier) * xAnimation.AnimationParameter.heightMultiplier;
+        }
+
+        if (yAnimation.AnimationParameter.useAnimation)
+        {
+            add.y = yPositionCurve.Evaluate(Time.time / yAnimation.AnimationParameter.timeMultiplier) * yAnimation.AnimationParameter.heightMultiplier;
+        }
+
+        if (zAnimation.AnimationParameter.useAnimation)
+        {
+            add.z = zPositionCurve.Evaluate(Time.time / zAnimation.AnimationParameter.timeMultiplier) * zAnimation.AnimationParameter.heightMultiplier;
+        }
+
+        transform.localPosition = add + startLocalPosition;
+    }
+
+    private AnimationCurve GenerateAnimationCurve(int _frequency, float _amplitude, float _seed, float _randomscale)
+    {
+        AnimationCurve curve = new AnimationCurve();
+        curve.preWrapMode = WrapMode.PingPong;
+        curve.postWrapMode = WrapMode.PingPong;
+
+        int keys = _frequency;
+        float multiplier = 1;
+
+        float delta = (1.0f / keys);
+
+        for (int i = 0; i < keys + 1; i++)
+        {
+            Keyframe keyframe = new Keyframe((delta * i) - delta, multiplier*(_amplitude + Mathf.PerlinNoise(_seed, i) * (_randomscale * multiplier)/*(Random.Range(_minrandom, _maxrandom))*/));
+
+            curve.AddKey(keyframe);
+
+            multiplier *= -1;
+        }
+
+        return curve;
     }
 
     private void OnDrawGizmos()

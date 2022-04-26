@@ -107,21 +107,22 @@ public class LocalChainIK : MonoBehaviour
 
     private void Update()
     {
-        for (int i = bones.Length - 1; i >= 0; i--)
-        {
-            startRotationBone[i] = bones[i].rotation;
+        //for (int i = bones.Length - 1; i >= 0; i--)
+        //{
+        //    startRotationBone[i] = bones[i].rotation;
 
-            if (i != bones.Length - 1)
-            {
-                boneLenghts[i] = (bones[i + 1].position - bones[i].position).magnitude;
-                completeLenght += boneLenghts[i];
-                testingVecs[i] = bones[i + 1].position - bones[i].position;
-            }
-            else
-            {
-                testingVecs[i] = target.position - bones[i].position;
-            }
-        }
+        //    if (i != bones.Length - 1)
+        //    {
+        //        boneLenghts[i] = (bones[i + 1].position - bones[i].position).magnitude;
+        //        completeLenght += boneLenghts[i];
+        //        testingVecs[i] = bones[i + 1].position - bones[i].position;
+        //    }
+        //    else
+        //    {
+        //        testingVecs[i] = target.position - bones[i].position;
+        //    }
+        //}
+        InitializeChain();
     }
 
     private void LateUpdate()
