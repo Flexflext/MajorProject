@@ -51,6 +51,10 @@ public class SpiderBodyRotationController : MonoBehaviour
     [Tooltip("Lerp Smoothing of the Position")]
     [SerializeField] private float positionSmoothing = 20;
 
+    [SerializeField] private bool useCoyoteTimer = true;
+    [SerializeField] private float rotationCoyoteTimer = 0.01f;
+    private float currotationCoyoteTimer = 0.01f;
+
     private Vector3 rotatedForward;
     private Vector3 curPoint;
     private Vector3 currentRayDirection;
@@ -97,12 +101,17 @@ public class SpiderBodyRotationController : MonoBehaviour
         //Get the Current Averages
         currentAverages = GetCurrentPositionAndNormalsAvergage(transform.position, rayAmount, innerRayPositionRadius, outerRayPositionRadius, outerRayTiltDegree, innerRayTiltDegree, rayLength, rayHitLayers);
 
-        //Set the Spider Rotation
-        RotateSpider();
+        
 
         //Sets the Distance to the Ground Dependend on the Calculated Avergage Position Vector
         SetDistanceToGround(currentAverages.AveragePosition);
 
+    }
+
+    private void LateUpdate()
+    {
+        //Set the Spider Rotation
+        RotateSpider();
     }
 
     /// <summary>
@@ -154,12 +163,32 @@ public class SpiderBodyRotationController : MonoBehaviour
     /// Rotates the Whole Spider so that the Calculates up Vector is the CUrrent Transform Up Vector
     /// </summary>
     private void RotateSpider()
-    { 
+    {
+        if (useCoyoteTimer)
+        {
+            if (currentMovementInput == Vector3.zero && currentPlayerRotationInput == 0)
+            {
+                if (currotationCoyoteTimer >= 0)
+                {
+                    currotationCoyoteTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                currotationCoyoteTimer = rotationCoyoteTimer;
+            }
+        }
+
         //Lerps the Up Vector -> Smooth Transitions
         currentAverages.AverageUp = Vector3.Lerp(transform.up, currentAverages.AverageUp, rotationSmoothing * Time.deltaTime);
 
         //Calculates the Rotation From the Previous Up Vector to the Calculated One -> Rotzates the Forward Vector with this Rotation
         rotatedForward = Quaternion.FromToRotation(transform.up, currentAverages.AverageUp) * transform.forward;
+
         //RotateAround for Player Input
         rotatedForward = Quaternion.AngleAxis(currentPlayerRotationInput * Time.deltaTime, currentAverages.AverageUp) * rotatedForward;
 

@@ -17,6 +17,8 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
     private float mouseInput;
     private Vector3 input;
 
+    private bool DebugUseCameraMovement = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,8 +31,13 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
     void Update()
     {
         HandlePlayerInput();
-        RotateSpider();
+        if (DebugUseCameraMovement) RotateSpider();
         MoveSpider();
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            DebugUseCameraMovement = !DebugUseCameraMovement;
+        }
     }
 
     private void RotateSpider()

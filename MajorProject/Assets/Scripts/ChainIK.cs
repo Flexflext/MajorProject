@@ -176,8 +176,8 @@ public class ChainIK : MonoBehaviour
             if (i == currentPositions.Length - 1)
             {
                 //Multiplies the the target rotation with the Inverse of the startrotation of the target // --> get the Difference of the Rotation to the Start with Multiply of the current and the Original Rotation
-                //bones[i].rotation = target.rotation * Quaternion.Inverse(startRotationTarget) * startRotationBone[i]; //* Quaternion.Inverse(bones[i].rotation);
-                bones[i].rotation = Quaternion.FromToRotation(startdirectionsSucc[i], target.position - currentPositions[i]) * startRotationBone[i];
+                bones[i].rotation = target.rotation * Quaternion.Inverse(startRotationTarget) * startRotationBone[i]; //* Quaternion.Inverse(bones[i].rotation);
+                //bones[i].rotation = Quaternion.FromToRotation(startdirectionsSucc[i], target.position - currentPositions[i]) * startRotationBone[i];
             }
             else
             {

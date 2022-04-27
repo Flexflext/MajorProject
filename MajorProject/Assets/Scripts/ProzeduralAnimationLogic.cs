@@ -4,6 +4,7 @@ using UnityEngine;
 public class ProzeduralAnimationLogic : MonoBehaviour
 {
     [SerializeField] private bool showDebugGizmos = true;
+    [SerializeField] private float added;
 
     [Header("Movement Animation")]
     [Tooltip("Time in wich the Leg Moves from old to new Position")]
@@ -12,41 +13,23 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     [SerializeField] private AnimationCurve legMovementCurve;
     [Tooltip("Maximum Range of that the leg can be before moveing to new Position")]
     [SerializeField] private float maxLegRange;
+
+    [Header("Additional Leg Position Flags")]
     [Tooltip("Use the Closeset Possible or the Farthest Posssible Position")]
     [SerializeField] private bool useFarthestPoint;
+    [SerializeField] private bool additionalLegRangeCheck;
+    [Tooltip("Max Length that the new Position can be from the Body")]
+    [SerializeField] private float maxLegLength;
     [SerializeField] private bool adjustBodyRotation;
     [SerializeField] private bool adjustLastLimbToNormal;
+    [SerializeField] private bool additionalLegCollisionCheck;
 
 
     [Header("Body Animation")]
+    [SerializeField] private bool animateBody = true;
     [SerializeField] private BodyAnimation xAnimation;
     [SerializeField] private BodyAnimation yAnimation;
     [SerializeField] private BodyAnimation zAnimation;
-
-
-    [Header("Curves")]
-
-    [SerializeField] private AnimationCurve xPositionCurve;
-    [Min(0)]
-    [SerializeField] private int xFrequency = 2;
-    [SerializeField] private float xAmplitude = 1;
-    [SerializeField] private float xSeed = 0f;
-    [SerializeField] private float xRandomScale = 0.2f;
-
-    [SerializeField] private AnimationCurve yPositionCurve;
-    [Min(0)]
-    [SerializeField] private int yFrequency = 2;
-    [SerializeField] private float yAmplitude = 1;
-    [SerializeField] private float ySeed = 0f;
-    [SerializeField] private float yRandomScale = 0.2f;
-
-    [SerializeField] private AnimationCurve zPositionCurve;
-    [Min(0)]
-    [SerializeField] private int zFrequency = 2;
-    [SerializeField] private float zAmplitude = 1;
-    [SerializeField] private float zSeed = 0f;
-    [SerializeField] private float zRandomScale = 0.2f;
-
 
 
     [Header("Leg Movement Raycasts")]
@@ -84,6 +67,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour
 
     //Raycast hit for Legs Raycasts
     private RaycastHit hit;
+    //Raycast hit for Second Check Leg Raycasts
+    private RaycastHit secondhit;
     //bodynormal to calcluate the up Vector of the Body
     private Vector3 bodyNormal;
 
@@ -94,6 +79,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     private Vector3 tiltedVector;
     private Vector3 rayDir;
     private bool first;
+
+    private float curLength;
 
     private Vector3 startLocalPosition;
 
@@ -150,9 +137,12 @@ public class ProzeduralAnimationLogic : MonoBehaviour
 
     private void OnValidate()
     {
-        xPositionCurve = GenerateAnimationCurve(xFrequency, xAmplitude, xSeed, xRandomScale);
-        yPositionCurve = GenerateAnimationCurve(yFrequency, yAmplitude, ySeed, yRandomScale);
-        zPositionCurve = GenerateAnimationCurve(zFrequency, zAmplitude, zSeed, zRandomScale);
+        if (animateBody)
+        {
+            xAnimation.AnimationCurveSettings.positionCurve = GenerateAnimationCurve(xAnimation.AnimationCurveSettings.frequency, xAnimation.AnimationCurveSettings.amplitude, xAnimation.AnimationCurveSettings.seed, xAnimation.AnimationCurveSettings.randomScale);
+            yAnimation.AnimationCurveSettings.positionCurve = GenerateAnimationCurve(yAnimation.AnimationCurveSettings.frequency, yAnimation.AnimationCurveSettings.amplitude, yAnimation.AnimationCurveSettings.seed, yAnimation.AnimationCurveSettings.randomScale);
+            zAnimation.AnimationCurveSettings.positionCurve = GenerateAnimationCurve(zAnimation.AnimationCurveSettings.frequency, zAnimation.AnimationCurveSettings.amplitude, zAnimation.AnimationCurveSettings.seed, zAnimation.AnimationCurveSettings.randomScale);
+        }
     }
 
     private void Update()
@@ -160,7 +150,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         CalculateTargetPosition();
         CheckRange();
         if (adjustBodyRotation) AdjustBody();
-        AnimateBody();
+        if (animateBody) AnimateBody();
 
     }
 
@@ -197,25 +187,32 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                 //Set Ray Direction
                 rayDir = (tiltedVector - curPoint).normalized;
 
+                //hit = new RaycastHit();
+
                 //Check the íf the Ray hit anything
                 if (Physics.Raycast(animationRaycastOrigins[i].position + curPoint, rayDir, out hit, legRaylength, raycastHitLayers))
                 {
+                    curLength = (hit.point - transform.root.position).sqrMagnitude;
+
                     //Check what the closest Point is + set the first Ray as the first Closest Point
                     if (first)
                     {
                         //Set ClosestPoint
-                        closestPoint = hit.point;
-                        currentAnimationTargetPosition[i] = hit.point;
-                        targetUps[i] = hit.normal;
-                        first = false;
+                        SetClosestPoint(hit, i);
                     }
                     //Check if Closer than the Current Closest Point
-                    else if ((hit.point - transform.position).sqrMagnitude >= (closestPoint - transform.position).sqrMagnitude && useFarthestPoint || (hit.point - transform.position).sqrMagnitude <= (closestPoint - transform.position).sqrMagnitude && !useFarthestPoint)
+                    else if (curLength >= (closestPoint - transform.root.position).sqrMagnitude && useFarthestPoint || (hit.point - transform.root.position).sqrMagnitude <= curLength && !useFarthestPoint)
                     {
-                        //Set ClosestPoint
-                        closestPoint = hit.point;
-                        currentAnimationTargetPosition[i] = hit.point;
-                        targetUps[i] = hit.normal;
+                        if (!additionalLegCollisionCheck || (additionalLegCollisionCheck && Physics.Raycast(transform.root.position, hit.point - transform.root.position, out secondhit, float.MaxValue, raycastHitLayers)))
+                        {
+                            if (additionalLegCollisionCheck && secondhit.point != hit.point)
+                            {
+                                continue;
+                            }
+
+                            //Set ClosestPoint
+                            SetClosestPoint(hit, i);
+                        }
                     }
                 }
 
@@ -223,6 +220,17 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                 curDeg += deltaDeg;
             }
         }
+    }
+
+    private void SetClosestPoint(RaycastHit _hit, int _idx)
+    {
+        if (!additionalLegRangeCheck || (additionalLegRangeCheck && (curLength <= maxLegLength * maxLegRange)))
+        {
+            closestPoint = _hit.point;
+            currentAnimationTargetPosition[_idx] = _hit.point;
+            targetUps[_idx] = _hit.normal;
+            first = false;
+        }   
     }
 
     /// <summary>
@@ -368,19 +376,22 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     private void AdjustBody()
     {
         //Calculate the Cross Vector from the Outermost Legs
-        bodyNormal = Vector3.Cross((nextAnimationTargetPosition[nextAnimationTargetPosition.Length-1] - nextAnimationTargetPosition[0]), (nextAnimationTargetPosition[nextAnimationTargetPosition.Length/2] - nextAnimationTargetPosition[nextAnimationTargetPosition.Length/2-1]));
+        bodyNormal = Vector3.Cross((ikTargets[nextAnimationTargetPosition.Length-1].position - ikTargets[0].position), (ikTargets[nextAnimationTargetPosition.Length/2].position - ikTargets[nextAnimationTargetPosition.Length/2-1].position));
         //Normalize the Vector
         bodyNormal.Normalize();
+
 
         //Check that the Calculated Vector is pointing in the same up Direction
         if (Vector3.Dot(bodyNormal, transform.parent.up) < 0)
         {
             bodyNormal *= -1;
         }
+
+        bodyNormal = Vector3.Lerp(this.transform.up, bodyNormal, 20 * Time.deltaTime);
         
 
         //Set the Rotation
-        this.transform.rotation = Quaternion.LookRotation(transform.forward, Vector3.Lerp(this.transform.up, bodyNormal, 20 * Time.deltaTime));
+        this.transform.rotation = Quaternion.LookRotation(transform.forward, bodyNormal);
     }
 
     private void AnimateBody()
@@ -389,20 +400,28 @@ public class ProzeduralAnimationLogic : MonoBehaviour
 
         if (xAnimation.AnimationParameter.useAnimation)
         {
-            add.x  = xPositionCurve.Evaluate(Time.time / xAnimation.AnimationParameter.timeMultiplier) * xAnimation.AnimationParameter.heightMultiplier;
+            add.x = xAnimation.AnimationCurveSettings.positionCurve.Evaluate(Time.time / xAnimation.AnimationParameter.timeMultiplier) * xAnimation.AnimationParameter.heightMultiplier;
         }
 
         if (yAnimation.AnimationParameter.useAnimation)
         {
-            add.y = yPositionCurve.Evaluate(Time.time / yAnimation.AnimationParameter.timeMultiplier) * yAnimation.AnimationParameter.heightMultiplier;
+            add.y = yAnimation.AnimationCurveSettings.positionCurve.Evaluate(Time.time / yAnimation.AnimationParameter.timeMultiplier) * yAnimation.AnimationParameter.heightMultiplier;
         }
 
         if (zAnimation.AnimationParameter.useAnimation)
         {
-            add.z = zPositionCurve.Evaluate(Time.time / zAnimation.AnimationParameter.timeMultiplier) * zAnimation.AnimationParameter.heightMultiplier;
+            add.z = zAnimation.AnimationCurveSettings.positionCurve.Evaluate(Time.time / zAnimation.AnimationParameter.timeMultiplier) * zAnimation.AnimationParameter.heightMultiplier;
         }
 
-        transform.localPosition = add + startLocalPosition;
+        Vector3 newLocalPosition = Vector3.zero;
+
+        newLocalPosition += add.x * Vector3.right; // startLocalPosition;
+        newLocalPosition += add.y * Vector3.up; // startLocalPosition;
+        newLocalPosition += add.z * Vector3.forward; // startLocalPosition;
+
+
+
+        transform.localPosition = newLocalPosition + startLocalPosition;
     }
 
     private AnimationCurve GenerateAnimationCurve(int _frequency, float _amplitude, float _seed, float _randomscale)
