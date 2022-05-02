@@ -31,6 +31,16 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     [SerializeField] private BodyAnimation yAnimation;
     [SerializeField] private BodyAnimation zAnimation;
 
+    [Header("ExtraLegAnimation")]
+    [SerializeField] private bool[] brokenLegs;
+    [SerializeField] private float bodySmoothing = 8;
+    [SerializeField] private float hightAddMultiplier = 0.35f;
+    [SerializeField] private float originBackwardsMultiplier = 0.35f;
+    [SerializeField] private float hintBackwardsMultiplier = 0.35f;
+    private bool[] alreadyBrokenLegs;
+    private Vector3[] hintLocalStartPosition;
+    private Vector3[] originLocalStartPosition;
+
 
     [Header("Leg Movement Raycasts")]
     [Tooltip("Number of Rays to CHeck the Leg Position")]
@@ -50,6 +60,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     [SerializeField] private Transform[] ikTargets;
     [Tooltip("Animation Raycast Targets of the Different Legs --> front to back --> first all left legs than all right legs")]
     [SerializeField] private Transform[] animationRaycastOrigins;
+    [Tooltip("Hint Position for Each Leg --> front to back --> first all left legs than all right legs")]
+    [SerializeField] private Transform[] animationHints;
 
     //The Current Animation Target Position --> always updated
     private Vector3[] currentAnimationTargetPosition;
@@ -84,6 +96,10 @@ public class ProzeduralAnimationLogic : MonoBehaviour
 
     private Vector3 startLocalPosition;
 
+    private Quaternion toRot = Quaternion.identity;
+    private Quaternion startRot;
+    private Quaternion newRot = Quaternion.identity;
+
     [System.Serializable]
     struct AnimParam
     {
@@ -113,6 +129,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     private void Start()
     {
         startLocalPosition = transform.localPosition;
+        startRot = transform.localRotation;
+        newRot = startRot;
 
         //Check ik targets and Raycast Origins are the same Length
         if (ikTargets.Length != animationRaycastOrigins.Length)
@@ -124,6 +142,10 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         //Initialize Arrays with the correct Length
         currentAnimationTargetPosition = new Vector3[ikTargets.Length];
         nextAnimationTargetPosition = new Vector3[ikTargets.Length];
+        hintLocalStartPosition = new Vector3[ikTargets.Length];
+        originLocalStartPosition = new Vector3[ikTargets.Length];
+        brokenLegs = new bool[ikTargets.Length];
+        alreadyBrokenLegs = new bool[ikTargets.Length];
         targetUps = new Vector3[ikTargets.Length];
         moveingLegs = new bool[ikTargets.Length];
         isOnMoveDelay = new bool[ikTargets.Length];
@@ -132,6 +154,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         for (int i = 0; i < ikTargets.Length; i++)
         {
             nextAnimationTargetPosition[i] = ikTargets[i].position;
+            hintLocalStartPosition[i] = animationHints[i].localPosition;
+            originLocalStartPosition[i] = animationRaycastOrigins[i].localPosition;
         }
     }
 
@@ -152,6 +176,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         if (adjustBodyRotation) AdjustBody();
         if (animateBody) AnimateBody();
 
+
+        this.transform.localRotation = Quaternion.Lerp(transform.localRotation, newRot , bodySmoothing * Time.deltaTime);
     }
 
     /// <summary>
@@ -230,7 +256,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
             currentAnimationTargetPosition[_idx] = _hit.point;
             targetUps[_idx] = _hit.normal;
             first = false;
-        }   
+        }
     }
 
     /// <summary>
@@ -347,12 +373,14 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     private IEnumerator C_MoveLegCoroutine(int _leg)
     {
         float passedTime = 0f;
+        
+        AdjustBrokenLeg(_leg);
 
         //Move the Leg for the Given Time
         while (passedTime <= legMovementTime)
         {
             //Lerp the Target Position and add the Evaluated Curve to it
-            ikTargets[_leg].position = Vector3.Lerp(ikTargets[_leg].position, nextAnimationTargetPosition[_leg], passedTime / legMovementTime) + legMovementCurve.Evaluate(passedTime / legMovementTime) * transform.up;
+            ikTargets[_leg].position = Vector3.Lerp(ikTargets[_leg].position, nextAnimationTargetPosition[_leg], passedTime / legMovementTime) + (brokenLegs[_leg] ? Vector3.zero : (legMovementCurve.Evaluate(passedTime / legMovementTime) * transform.up));
 
             //Add deltaTime and Wait for next Frame
             passedTime += Time.deltaTime;
@@ -368,6 +396,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         yield return new WaitForSeconds(legMovementTime / 2);
 
         isOnMoveDelay[_leg] = false;
+
+        newRot = startRot;
     }
 
     /// <summary>
@@ -376,7 +406,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     private void AdjustBody()
     {
         //Calculate the Cross Vector from the Outermost Legs
-        bodyNormal = Vector3.Cross((ikTargets[nextAnimationTargetPosition.Length-1].position - ikTargets[0].position), (ikTargets[nextAnimationTargetPosition.Length/2].position - ikTargets[nextAnimationTargetPosition.Length/2-1].position));
+        bodyNormal = Vector3.Cross((ikTargets[nextAnimationTargetPosition.Length - 1].position - ikTargets[0].position), (ikTargets[nextAnimationTargetPosition.Length / 2].position - ikTargets[nextAnimationTargetPosition.Length / 2 - 1].position));
         //Normalize the Vector
         bodyNormal.Normalize();
 
@@ -388,10 +418,13 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         }
 
         bodyNormal = Vector3.Lerp(this.transform.up, bodyNormal, 20 * Time.deltaTime);
-        
+
 
         //Set the Rotation
         this.transform.rotation = Quaternion.LookRotation(transform.forward, bodyNormal);
+
+        
+
     }
 
     private void AnimateBody()
@@ -424,6 +457,39 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         transform.localPosition = newLocalPosition + startLocalPosition;
     }
 
+    private void AdjustBrokenLeg(int _leg)
+    {
+        if (brokenLegs[_leg])
+        {
+            Plane plane = new Plane(transform.up, transform.position);
+
+            Vector3 pos = plane.ClosestPointOnPlane(ikTargets[_leg].position);
+
+            toRot = Quaternion.FromToRotation((transform.InverseTransformPoint(pos) - transform.localPosition), (transform.InverseTransformPoint((ikTargets[_leg].position + transform.up * hightAddMultiplier)) - transform.localPosition));
+
+            newRot = transform.localRotation * Quaternion.Inverse(toRot);
+
+
+            if (!alreadyBrokenLegs[_leg])
+            {
+                animationRaycastOrigins[_leg].localPosition += Vector3.left * originBackwardsMultiplier;
+                animationHints[_leg].localPosition += transform.localRotation * (animationHints[_leg].InverseTransformPoint(pos) - animationHints[_leg].InverseTransformPoint(transform.localPosition)).normalized * hintBackwardsMultiplier;
+                alreadyBrokenLegs[_leg] = true;
+            }
+        }
+        else
+        {
+            if (alreadyBrokenLegs[_leg])
+            {
+                animationHints[_leg].localPosition = hintLocalStartPosition[_leg];
+                animationRaycastOrigins[_leg].localPosition = originLocalStartPosition[_leg];
+                alreadyBrokenLegs[_leg] = false;
+            }
+        }
+
+        
+    }
+
     private AnimationCurve GenerateAnimationCurve(int _frequency, float _amplitude, float _seed, float _randomscale)
     {
         AnimationCurve curve = new AnimationCurve();
@@ -437,7 +503,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
 
         for (int i = 0; i < keys + 1; i++)
         {
-            Keyframe keyframe = new Keyframe((delta * i) - delta, multiplier*(_amplitude + Mathf.PerlinNoise(_seed, i) * (_randomscale * multiplier)/*(Random.Range(_minrandom, _maxrandom))*/));
+            Keyframe keyframe = new Keyframe((delta * i) - delta, multiplier * (_amplitude + Mathf.PerlinNoise(_seed, i) * (_randomscale * multiplier)/*(Random.Range(_minrandom, _maxrandom))*/));
 
             curve.AddKey(keyframe);
 

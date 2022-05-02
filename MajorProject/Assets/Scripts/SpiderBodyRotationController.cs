@@ -89,23 +89,47 @@ public class SpiderBodyRotationController : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         //initialize all Arrays
         InitializeRays(rayAmount);
         InitializeMovementRays();
+
+        currentAverages.AveragePosition = transform.position;
+        currentAverages.AverageUp = transform.up;
+        rotatedForward = transform.forward;
+
+        currentAverages = GetCurrentPositionAndNormalsAvergage(transform.position, rayAmount, innerRayPositionRadius, outerRayPositionRadius, outerRayTiltDegree, innerRayTiltDegree, rayLength, rayHitLayers);
     }
 
     private void Update()
     {
-        //Get the Current Averages
-        currentAverages = GetCurrentPositionAndNormalsAvergage(transform.position, rayAmount, innerRayPositionRadius, outerRayPositionRadius, outerRayTiltDegree, innerRayTiltDegree, rayLength, rayHitLayers);
 
-        
+        //Check Coyote Timer Time
+        if (useCoyoteTimer)
+        {
+            if (currentMovementInput == Vector3.zero && currentPlayerRotationInput == 0)
+            {
+                if (currotationCoyoteTimer >= 0)
+                {
+                    currotationCoyoteTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                currotationCoyoteTimer = rotationCoyoteTimer;
+            }
+        }
+
+        //Get the Current Averages
+        currentAverages = GetCurrentPositionAndNormalsAvergage(transform.position, rayAmount, innerRayPositionRadius, outerRayPositionRadius, outerRayTiltDegree, innerRayTiltDegree, rayLength, rayHitLayers); 
 
         //Sets the Distance to the Ground Dependend on the Calculated Avergage Position Vector
         SetDistanceToGround(currentAverages.AveragePosition);
-
     }
 
     private void LateUpdate()
@@ -164,25 +188,6 @@ public class SpiderBodyRotationController : MonoBehaviour
     /// </summary>
     private void RotateSpider()
     {
-        if (useCoyoteTimer)
-        {
-            if (currentMovementInput == Vector3.zero && currentPlayerRotationInput == 0)
-            {
-                if (currotationCoyoteTimer >= 0)
-                {
-                    currotationCoyoteTimer -= Time.deltaTime;
-                }
-                else
-                {
-                    return;
-                }
-            }
-            else
-            {
-                currotationCoyoteTimer = rotationCoyoteTimer;
-            }
-        }
-
         //Lerps the Up Vector -> Smooth Transitions
         currentAverages.AverageUp = Vector3.Lerp(transform.up, currentAverages.AverageUp, rotationSmoothing * Time.deltaTime);
 
