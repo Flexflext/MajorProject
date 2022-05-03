@@ -473,7 +473,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
             if (!alreadyBrokenLegs[_leg])
             {
                 animationRaycastOrigins[_leg].localPosition += Vector3.left * originBackwardsMultiplier;
-                animationHints[_leg].localPosition += transform.localRotation * (animationHints[_leg].InverseTransformPoint(pos) - animationHints[_leg].InverseTransformPoint(transform.localPosition)).normalized * hintBackwardsMultiplier;
+                animationHints[_leg].position += ((transform.position) - (animationHints[_leg].position)).normalized * hintBackwardsMultiplier;
                 alreadyBrokenLegs[_leg] = true;
             }
         }
@@ -503,7 +503,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
 
         for (int i = 0; i < keys + 1; i++)
         {
-            Keyframe keyframe = new Keyframe((delta * i) - delta, multiplier * (_amplitude + Mathf.PerlinNoise(_seed, i) * (_randomscale * multiplier)/*(Random.Range(_minrandom, _maxrandom))*/));
+            Keyframe keyframe = new Keyframe((delta * i) - delta, multiplier * (_amplitude + Mathf.PerlinNoise(_seed, i) * (_randomscale * multiplier)));
 
             curve.AddKey(keyframe);
 
