@@ -36,7 +36,10 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     [SerializeField] private float bodySmoothing = 8;
     [SerializeField] private float hightAddMultiplier = 0.35f;
     [SerializeField] private float originBackwardsMultiplier = 0.35f;
+    [SerializeField] private Vector3 originLocalBack = Vector3.left;
     [SerializeField] private float hintBackwardsMultiplier = 0.35f;
+    [SerializeField] private float downAddPerBrokenLeg = 0.1f;
+    [SerializeField] private float percentOfLegHightMovement = 0.1f;
     private bool[] alreadyBrokenLegs;
     private Vector3[] hintLocalStartPosition;
     private Vector3[] originLocalStartPosition;
@@ -133,7 +136,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         newRot = startRot;
 
         //Check ik targets and Raycast Origins are the same Length
-        if (ikTargets.Length != animationRaycastOrigins.Length)
+        if (ikTargets.Length != animationRaycastOrigins.Length || ikTargets.Length != animationHints.Length)
         {
             Debug.LogError("IK Targets Array and Animation Raycast Origins Array isnt the Same Size");
             Debug.Break();
@@ -174,7 +177,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         CalculateTargetPosition();
         CheckRange();
         if (adjustBodyRotation) AdjustBody();
-        if (animateBody) AnimateBody();
+        AnimateBody();
 
 
         this.transform.localRotation = Quaternion.Lerp(transform.localRotation, newRot , bodySmoothing * Time.deltaTime);
@@ -305,7 +308,6 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                             //Check that the Previous Leg or the Leg on the Other Side is not Moving
                             if (moveingLegs[moveingLegs.Length / 2])
                             {
-                                //ikTargets[i].position = nextAnimationTargetPosition[i];
                                 continue;
                             }
                         }
@@ -314,7 +316,6 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                         {
                             if (moveingLegs[0])
                             {
-                                //ikTargets[i].position = nextAnimationTargetPosition[i];
                                 continue;
                             }
                         }
@@ -327,7 +328,6 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                             //Check that the Previous Leg or the Leg on the Other Side is not Moving
                             if (moveingLegs[i - 1] || moveingLegs[i + moveingLegs.Length / 2 - 1])
                             {
-                                //ikTargets[i].position = nextAnimationTargetPosition[i];
                                 continue;
                             }
                         }
@@ -336,7 +336,6 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                             //Check that the Previous Leg or the Leg on the Other Side is not Moving
                             if (moveingLegs[i - 1] || moveingLegs[i - moveingLegs.Length / 2])
                             {
-                                //ikTargets[i].position = nextAnimationTargetPosition[i];
                                 continue;
                             }
                         }
@@ -380,7 +379,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         while (passedTime <= legMovementTime)
         {
             //Lerp the Target Position and add the Evaluated Curve to it
-            ikTargets[_leg].position = Vector3.Lerp(ikTargets[_leg].position, nextAnimationTargetPosition[_leg], passedTime / legMovementTime) + (brokenLegs[_leg] ? Vector3.zero : (legMovementCurve.Evaluate(passedTime / legMovementTime) * transform.up));
+            ikTargets[_leg].position = Vector3.Lerp(ikTargets[_leg].position, nextAnimationTargetPosition[_leg], passedTime / legMovementTime) + legMovementCurve.Evaluate(passedTime / legMovementTime) * (transform.up * (!brokenLegs[_leg] ? 1 : percentOfLegHightMovement));
 
             //Add deltaTime and Wait for next Frame
             passedTime += Time.deltaTime;
@@ -431,20 +430,25 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     {
         Vector3 add = new Vector3();
 
-        if (xAnimation.AnimationParameter.useAnimation)
+        if (animateBody)
         {
-            add.x = xAnimation.AnimationCurveSettings.positionCurve.Evaluate(Time.time / xAnimation.AnimationParameter.timeMultiplier) * xAnimation.AnimationParameter.heightMultiplier;
+            if (xAnimation.AnimationParameter.useAnimation)
+            {
+                add.x = xAnimation.AnimationCurveSettings.positionCurve.Evaluate(Time.time / xAnimation.AnimationParameter.timeMultiplier) * xAnimation.AnimationParameter.heightMultiplier;
+            }
+
+            if (yAnimation.AnimationParameter.useAnimation)
+            {
+                add.y = yAnimation.AnimationCurveSettings.positionCurve.Evaluate(Time.time / yAnimation.AnimationParameter.timeMultiplier) * yAnimation.AnimationParameter.heightMultiplier;
+            }
+
+            if (zAnimation.AnimationParameter.useAnimation)
+            {
+                add.z = zAnimation.AnimationCurveSettings.positionCurve.Evaluate(Time.time / zAnimation.AnimationParameter.timeMultiplier) * zAnimation.AnimationParameter.heightMultiplier;
+            }
         }
 
-        if (yAnimation.AnimationParameter.useAnimation)
-        {
-            add.y = yAnimation.AnimationCurveSettings.positionCurve.Evaluate(Time.time / yAnimation.AnimationParameter.timeMultiplier) * yAnimation.AnimationParameter.heightMultiplier;
-        }
-
-        if (zAnimation.AnimationParameter.useAnimation)
-        {
-            add.z = zAnimation.AnimationCurveSettings.positionCurve.Evaluate(Time.time / zAnimation.AnimationParameter.timeMultiplier) * zAnimation.AnimationParameter.heightMultiplier;
-        }
+        
 
         Vector3 newLocalPosition = Vector3.zero;
 
@@ -472,9 +476,10 @@ public class ProzeduralAnimationLogic : MonoBehaviour
 
             if (!alreadyBrokenLegs[_leg])
             {
-                animationRaycastOrigins[_leg].localPosition += Vector3.left * originBackwardsMultiplier;
+                animationRaycastOrigins[_leg].localPosition += originLocalBack.normalized * originBackwardsMultiplier;
                 animationHints[_leg].position += ((transform.position) - (animationHints[_leg].position)).normalized * hintBackwardsMultiplier;
                 alreadyBrokenLegs[_leg] = true;
+                startLocalPosition += Vector3.down * downAddPerBrokenLeg;
             }
         }
         else
@@ -484,6 +489,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                 animationHints[_leg].localPosition = hintLocalStartPosition[_leg];
                 animationRaycastOrigins[_leg].localPosition = originLocalStartPosition[_leg];
                 alreadyBrokenLegs[_leg] = false;
+                startLocalPosition += Vector3.up * downAddPerBrokenLeg;
             }
         }
 

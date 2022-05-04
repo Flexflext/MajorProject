@@ -11606,7 +11606,10 @@ MonoBehaviour:
   bodySmoothing: 8
   hightAddMultiplier: 0.35
   originBackwardsMultiplier: 0.2
+  originLocalBack: {x: -1, y: 0, z: 0}
   hintBackwardsMultiplier: 1
+  downAddPerBrokenLeg: 0.1
+  percentOfLegHightMovement: 0.15
   legRayNumber: 6
   legRayTiltDegree: 70
   legRayPositionradius: 0.1
@@ -15332,7 +15335,10 @@ MonoBehaviour:
   bodySmoothing: 8
   hightAddMultiplier: 8
   originBackwardsMultiplier: 0.35
+  originLocalBack: {x: -1, y: 0, z: 0}
   hintBackwardsMultiplier: 0.35
+  downAddPerBrokenLeg: 0.1
+  percentOfLegHightMovement: 0.1
   legRayNumber: 6
   legRayTiltDegree: 70
   legRayPositionradius: 0.1
@@ -16652,7 +16658,10 @@ MonoBehaviour:
   bodySmoothing: 8
   hightAddMultiplier: 8
   originBackwardsMultiplier: 0.35
+  originLocalBack: {x: -1, y: 0, z: 0}
   hintBackwardsMultiplier: 0.35
+  downAddPerBrokenLeg: 0.1
+  percentOfLegHightMovement: 0.1
   legRayNumber: 6
   legRayTiltDegree: 70
   legRayPositionradius: 0.1
