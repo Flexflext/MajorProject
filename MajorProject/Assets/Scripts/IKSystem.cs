@@ -8,7 +8,6 @@ public class IKSystem : MonoBehaviour
     [SerializeField] private bool debugGizmos = true;
     [SerializeField] private float gizmosRadius = 0.1f;
 
-
     [Header("Performance Mode")]
     [Tooltip("Parameter to Activate or Deactivate Performce Mode of the Chain")]
     [SerializeField] private bool performanceMode;
@@ -102,7 +101,7 @@ public class IKSystem : MonoBehaviour
     public Transform rootRotation;
 
 
-    private void Start()
+    private void Awake()
     {
         InitializeChain();
     }
@@ -110,6 +109,21 @@ public class IKSystem : MonoBehaviour
     private void LateUpdate()
     {
         ResolveIK();
+    }
+
+    public Transform GetTarget()
+    {
+        return target;
+    }
+
+    public Transform GetHint()
+    {
+        return hint;
+    }
+
+    public float GetMaxRangeOfChain()
+    {
+        return completeLenght;
     }
 
     /// <summary>

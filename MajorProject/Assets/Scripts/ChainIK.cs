@@ -99,8 +99,6 @@ public class ChainIK : MonoBehaviour
 
     #endregion
 
-    public Transform rootRotation;
-
 
     private void Awake()
     {

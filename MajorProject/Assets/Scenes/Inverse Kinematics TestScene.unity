@@ -236,7 +236,7 @@ Transform:
   - {fileID: 916944200}
   - {fileID: 79155278}
   m_Father: {fileID: 1638407515}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9013352
 MonoBehaviour:
@@ -374,7 +374,7 @@ Transform:
   - {fileID: 2049175124}
   - {fileID: 1807112782}
   m_Father: {fileID: 1638407515}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &29112913
 MonoBehaviour:
@@ -453,7 +453,6 @@ MonoBehaviour:
   maxIterations: 10
   errorMargain: 0.01
   snapbackStrenght: 0
-  rootRotation: {fileID: 0}
 --- !u!114 &32183515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1807,7 +1806,6 @@ MonoBehaviour:
   maxIterations: 10
   errorMargain: 0.01
   snapbackStrenght: 0
-  rootRotation: {fileID: 0}
 --- !u!1 &238415449
 GameObject:
   m_ObjectHideFlags: 0
@@ -3028,7 +3026,6 @@ MonoBehaviour:
   maxIterations: 10
   errorMargain: 0.01
   snapbackStrenght: 0
-  rootRotation: {fileID: 0}
 --- !u!114 &420616356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3195,7 +3192,7 @@ Transform:
   - {fileID: 1942908692}
   - {fileID: 187078983}
   m_Father: {fileID: 1638407515}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &425382320
 MonoBehaviour:
@@ -4129,7 +4126,6 @@ MonoBehaviour:
   maxIterations: 10
   errorMargain: 0.01
   snapbackStrenght: 0
-  rootRotation: {fileID: 0}
 --- !u!114 &513508346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4701,7 +4697,6 @@ MonoBehaviour:
   maxIterations: 10
   errorMargain: 0.01
   snapbackStrenght: 0
-  rootRotation: {fileID: 0}
 --- !u!114 &598310232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6460,7 +6455,6 @@ MonoBehaviour:
   maxIterations: 10
   errorMargain: 0.01
   snapbackStrenght: 0
-  rootRotation: {fileID: 0}
 --- !u!1 &844592571
 GameObject:
   m_ObjectHideFlags: 0
@@ -6707,7 +6701,6 @@ MonoBehaviour:
   maxIterations: 10
   errorMargain: 0.01
   snapbackStrenght: 0
-  rootRotation: {fileID: 0}
 --- !u!1 &871306609
 GameObject:
   m_ObjectHideFlags: 0
@@ -7494,7 +7487,6 @@ MonoBehaviour:
   maxIterations: 10
   errorMargain: 0.01
   snapbackStrenght: 0
-  rootRotation: {fileID: 0}
 --- !u!1 &984266349
 GameObject:
   m_ObjectHideFlags: 0
@@ -8492,7 +8484,6 @@ MonoBehaviour:
   maxIterations: 10
   errorMargain: 0.01
   snapbackStrenght: 0
-  rootRotation: {fileID: 0}
 --- !u!1 &1059409984
 GameObject:
   m_ObjectHideFlags: 0
@@ -8901,7 +8892,6 @@ MonoBehaviour:
   maxIterations: 10
   errorMargain: 0.01
   snapbackStrenght: 0
-  rootRotation: {fileID: 0}
 --- !u!1 &1101475831
 GameObject:
   m_ObjectHideFlags: 0
@@ -9727,7 +9717,6 @@ MonoBehaviour:
   maxIterations: 10
   errorMargain: 0.01
   snapbackStrenght: 0
-  rootRotation: {fileID: 0}
 --- !u!1 &1239782325
 GameObject:
   m_ObjectHideFlags: 0
@@ -11099,7 +11088,6 @@ MonoBehaviour:
   maxLegRange: 0.45
   useFarthestPoint: 1
   additionalLegRangeCheck: 1
-  maxLegLength: 5.5
   adjustBodyRotation: 0
   adjustLastLimbToNormal: 1
   additionalLegCollisionCheck: 1
@@ -11617,13 +11605,13 @@ MonoBehaviour:
   raycastHitLayers:
     serializedVersion: 2
     m_Bits: 1
-  ikTargets:
-  - {fileID: 1639426762}
-  - {fileID: 1677392536}
-  - {fileID: 1256664934}
-  - {fileID: 1652520277}
-  - {fileID: 128593604}
-  - {fileID: 1790890443}
+  legIKSystems:
+  - {fileID: 1290693218}
+  - {fileID: 425382320}
+  - {fileID: 9013352}
+  - {fileID: 1955526958}
+  - {fileID: 1481764538}
+  - {fileID: 29112913}
   animationRaycastOrigins:
   - {fileID: 559959344}
   - {fileID: 1271373158}
@@ -11631,13 +11619,6 @@ MonoBehaviour:
   - {fileID: 2104417345}
   - {fileID: 162373990}
   - {fileID: 2018853950}
-  animationHints:
-  - {fileID: 1511332047}
-  - {fileID: 1566155420}
-  - {fileID: 1384123368}
-  - {fileID: 1061139060}
-  - {fileID: 162373990}
-  - {fileID: 1347206564}
 --- !u!1 &1436996418
 GameObject:
   m_ObjectHideFlags: 0
@@ -11918,7 +11899,6 @@ MonoBehaviour:
   maxIterations: 10
   errorMargain: 0.01
   snapbackStrenght: 0
-  rootRotation: {fileID: 0}
 --- !u!1 &1481764536
 GameObject:
   m_ObjectHideFlags: 0
@@ -11951,7 +11931,7 @@ Transform:
   - {fileID: 64218329}
   - {fileID: 684146862}
   m_Father: {fileID: 1638407515}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &1481764538
 MonoBehaviour:
@@ -13169,11 +13149,11 @@ Transform:
   m_LocalScale: {x: 1.6666665, y: 2.5, z: 2}
   m_Children:
   - {fileID: 1290693217}
-  - {fileID: 9013351}
   - {fileID: 425382319}
+  - {fileID: 9013351}
   - {fileID: 1955526957}
-  - {fileID: 29112912}
   - {fileID: 1481764537}
+  - {fileID: 29112912}
   m_Father: {fileID: 1430697251}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14859,7 +14839,6 @@ MonoBehaviour:
   maxIterations: 10
   errorMargain: 0.01
   snapbackStrenght: 0
-  rootRotation: {fileID: 0}
 --- !u!114 &1932430646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15251,7 +15230,6 @@ MonoBehaviour:
   maxLegRange: 0.45
   useFarthestPoint: 1
   additionalLegRangeCheck: 0
-  maxLegLength: 0
   adjustBodyRotation: 0
   adjustLastLimbToNormal: 0
   additionalLegCollisionCheck: 0
@@ -15346,17 +15324,12 @@ MonoBehaviour:
   raycastHitLayers:
     serializedVersion: 2
     m_Bits: 1
-  ikTargets:
-  - {fileID: 233035804}
-  - {fileID: 949818634}
-  - {fileID: 1408503923}
-  - {fileID: 1841389845}
+  legIKSystems: []
   animationRaycastOrigins:
   - {fileID: 1251545584}
   - {fileID: 774522813}
   - {fileID: 1011098415}
   - {fileID: 1197156505}
-  animationHints: []
 --- !u!1 &1977894773
 GameObject:
   m_ObjectHideFlags: 0
@@ -15590,7 +15563,6 @@ MonoBehaviour:
   maxIterations: 10
   errorMargain: 0.01
   snapbackStrenght: 0
-  rootRotation: {fileID: 0}
 --- !u!114 &1998387243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16160,7 +16132,6 @@ MonoBehaviour:
   maxIterations: 10
   errorMargain: 0.01
   snapbackStrenght: 0
-  rootRotation: {fileID: 0}
 --- !u!114 &2057005329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16574,7 +16545,6 @@ MonoBehaviour:
   maxLegRange: 0.45
   useFarthestPoint: 0
   additionalLegRangeCheck: 0
-  maxLegLength: 0
   adjustBodyRotation: 0
   adjustLastLimbToNormal: 0
   additionalLegCollisionCheck: 0
@@ -16669,13 +16639,7 @@ MonoBehaviour:
   raycastHitLayers:
     serializedVersion: 2
     m_Bits: 1
-  ikTargets:
-  - {fileID: 518536954}
-  - {fileID: 485659614}
-  - {fileID: 1725346833}
-  - {fileID: 762402962}
-  - {fileID: 223240875}
-  - {fileID: 984266350}
+  legIKSystems: []
   animationRaycastOrigins:
   - {fileID: 550652939}
   - {fileID: 1790706675}
@@ -16683,7 +16647,6 @@ MonoBehaviour:
   - {fileID: 1710093847}
   - {fileID: 1940196844}
   - {fileID: 987949921}
-  animationHints: []
 --- !u!23 &2142211538
 MeshRenderer:
   m_ObjectHideFlags: 0

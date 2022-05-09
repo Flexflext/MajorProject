@@ -1,16 +1,26 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class ProzeduralAnimationLogic : MonoBehaviour
+public enum ELegStages
+{
+    LS_Normal,
+    LS_Limping,
+    LS_LimpingHalfLeg,
+    LS_Broken,
+}
+
+public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
 {
     [SerializeField] private bool showDebugGizmos = true;
-    [SerializeField] private float added;
 
     [Header("Movement Animation")]
     [Tooltip("Time in wich the Leg Moves from old to new Position")]
     [SerializeField] private float legMovementTime;
+    public float LegMovementTime { get { return legMovementTime; } }
     [Tooltip("Curve in wich the leg Moves up")]
     [SerializeField] private AnimationCurve legMovementCurve;
+    public AnimationCurve LegMovementCurve { get { return legMovementCurve; } }
     [Tooltip("Maximum Range of that the leg can be before moveing to new Position")]
     [SerializeField] private float maxLegRange;
 
@@ -18,8 +28,6 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     [Tooltip("Use the Closeset Possible or the Farthest Posssible Position")]
     [SerializeField] private bool useFarthestPoint;
     [SerializeField] private bool additionalLegRangeCheck;
-    [Tooltip("Max Length that the new Position can be from the Body")]
-    [SerializeField] private float maxLegLength;
     [SerializeField] private bool adjustBodyRotation;
     [SerializeField] private bool adjustLastLimbToNormal;
     [SerializeField] private bool additionalLegCollisionCheck;
@@ -32,17 +40,18 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     [SerializeField] private BodyAnimation zAnimation;
 
     [Header("ExtraLegAnimation")]
-    [SerializeField] private bool[] brokenLegs;
+    [SerializeField] private ELegStages[] legState;
     [SerializeField] private float bodySmoothing = 8;
     [SerializeField] private float hightAddMultiplier = 0.35f;
     [SerializeField] private float originBackwardsMultiplier = 0.35f;
+    public float OriginBackwardsMultiplier { get { return originBackwardsMultiplier; } }
     [SerializeField] private Vector3 originLocalBack = Vector3.left;
+    public Vector3 OriginLocalBack { get { return originLocalBack; } }
     [SerializeField] private float hintBackwardsMultiplier = 0.35f;
+    public float HintBackwardsMultiplier { get { return hintBackwardsMultiplier; } }
     [SerializeField] private float downAddPerBrokenLeg = 0.1f;
+    public float DownAddPerBrokenLeg { get { return downAddPerBrokenLeg; } }
     [SerializeField] private float percentOfLegHightMovement = 0.1f;
-    private bool[] alreadyBrokenLegs;
-    private Vector3[] hintLocalStartPosition;
-    private Vector3[] originLocalStartPosition;
 
 
     [Header("Leg Movement Raycasts")]
@@ -57,19 +66,30 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     [Tooltip("Length wich the Leg Rays can hit")]
     [SerializeField] private LayerMask raycastHitLayers;
 
-    //[Header(" First all Left Legs than all Right Legs --> Front to Back")]
+
     [Header("Leg Targets and Ray Origins")] //--> First all Left Legs than right Legs
-    [Tooltip("IK Targets of the Different Legs --> front to back --> first all left legs than all right legs")]
-    [SerializeField] private Transform[] ikTargets;
+    [Tooltip("IK Systems of the Different Legs --> front to back --> first all left legs than all right legs")]
+    [SerializeField] private IKSystem[] legIKSystems;
     [Tooltip("Animation Raycast Targets of the Different Legs --> front to back --> first all left legs than all right legs")]
     [SerializeField] private Transform[] animationRaycastOrigins;
-    [Tooltip("Hint Position for Each Leg --> front to back --> first all left legs than all right legs")]
-    [SerializeField] private Transform[] animationHints;
+    public Transform[] AnimationRaycastOrigins { get { return animationRaycastOrigins; } set { animationRaycastOrigins = value; } }
+
+    private Transform[] ikTargets;
+    public Transform[] IkTargets { get { return ikTargets; } set { ikTargets = value; } }
+    private Transform[] animationHints;
+    public Transform[] AnimationHints { get { return animationHints; } set { animationHints = value; } }
+
+    private ELegStages[] alreadyBrokenLegs;
+    private Vector3[] hintLocalStartPosition;
+    public Vector3[] HintLocalStartPosition { get { return hintLocalStartPosition; } set { hintLocalStartPosition = value; } }
+    private Vector3[] originLocalStartPosition;
+    public Vector3[] OriginLocalStartPosition { get { return originLocalStartPosition; } set { originLocalStartPosition = value; } }
 
     //The Current Animation Target Position --> always updated
     private Vector3[] currentAnimationTargetPosition;
     //The Next Animation Target Position --> updated when the leg is supposed to be moved
     private Vector3[] nextAnimationTargetPosition;
+    public Vector3[] NextAnimationTargetPosition { get { return nextAnimationTargetPosition; } set { nextAnimationTargetPosition = value; } }
     //Up Vector to be Set for the Leg IK Target
     private Vector3[] targetUps;
     //Current Range from legs current Position to Calculated Position
@@ -77,8 +97,12 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     //Bool if wich legs are currently moving
     private bool[] moveingLegs;
 
+    public bool[] MoveingLegs { get { return moveingLegs; } set { moveingLegs = value; } }
+
     //Bool if leg is On Move Delay -> Not only one leg can move again and again
     private bool[] isOnMoveDelay;
+
+    public bool[] IsOnMoveDelay { get { return isOnMoveDelay; } set { isOnMoveDelay = value; } }
 
     //Raycast hit for Legs Raycasts
     private RaycastHit hit;
@@ -98,10 +122,16 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     private float curLength;
 
     private Vector3 startLocalPosition;
+    public Vector3 StartLocalPosition { get { return startLocalPosition; } set { startLocalPosition = value; } }
 
     private Quaternion toRot = Quaternion.identity;
     private Quaternion startRot;
     private Quaternion newRot = Quaternion.identity;
+
+    private ELegStages currentLegStage;
+    private LegState[] currentLegState;
+
+    public Dictionary<StateMachineSwitchDelegate, LegState> stateDictionary { get; set; }
 
     [System.Serializable]
     struct AnimParam
@@ -131,31 +161,39 @@ public class ProzeduralAnimationLogic : MonoBehaviour
 
     private void Start()
     {
+        CreateStateDictionary();
+
         startLocalPosition = transform.localPosition;
         startRot = transform.localRotation;
         newRot = startRot;
 
         //Check ik targets and Raycast Origins are the same Length
-        if (ikTargets.Length != animationRaycastOrigins.Length || ikTargets.Length != animationHints.Length)
+        if (legIKSystems.Length != animationRaycastOrigins.Length)
         {
             Debug.LogError("IK Targets Array and Animation Raycast Origins Array isnt the Same Size");
             Debug.Break();
         }
 
         //Initialize Arrays with the correct Length
-        currentAnimationTargetPosition = new Vector3[ikTargets.Length];
-        nextAnimationTargetPosition = new Vector3[ikTargets.Length];
-        hintLocalStartPosition = new Vector3[ikTargets.Length];
-        originLocalStartPosition = new Vector3[ikTargets.Length];
-        brokenLegs = new bool[ikTargets.Length];
-        alreadyBrokenLegs = new bool[ikTargets.Length];
-        targetUps = new Vector3[ikTargets.Length];
-        moveingLegs = new bool[ikTargets.Length];
-        isOnMoveDelay = new bool[ikTargets.Length];
+        currentAnimationTargetPosition = new Vector3[legIKSystems.Length];
+        nextAnimationTargetPosition = new Vector3[legIKSystems.Length];
+        hintLocalStartPosition = new Vector3[legIKSystems.Length];
+        originLocalStartPosition = new Vector3[legIKSystems.Length];
+        legState = new ELegStages[legIKSystems.Length];
+        alreadyBrokenLegs = new ELegStages[legIKSystems.Length];
+        targetUps = new Vector3[legIKSystems.Length];
+        moveingLegs = new bool[legIKSystems.Length];
+        isOnMoveDelay = new bool[legIKSystems.Length];
+        ikTargets = new Transform[legIKSystems.Length];
+        animationHints = new Transform[legIKSystems.Length];
+        currentLegState = new LegState[legIKSystems.Length];
 
         //Set the Initial Leg target Position Data
-        for (int i = 0; i < ikTargets.Length; i++)
+        for (int i = 0; i < legIKSystems.Length; i++)
         {
+            ikTargets[i] = legIKSystems[i].GetTarget();
+            animationHints[i] = legIKSystems[i].GetHint();
+
             nextAnimationTargetPosition[i] = ikTargets[i].position;
             hintLocalStartPosition[i] = animationHints[i].localPosition;
             originLocalStartPosition[i] = animationRaycastOrigins[i].localPosition;
@@ -181,6 +219,30 @@ public class ProzeduralAnimationLogic : MonoBehaviour
 
 
         this.transform.localRotation = Quaternion.Lerp(transform.localRotation, newRot , bodySmoothing * Time.deltaTime);
+    }
+
+    private void CreateStateDictionary()
+    {
+        LegNormalState legNormalState = new LegNormalState(this);
+        LegLimpingState legLimpingState = new LegLimpingState(this);
+
+        stateDictionary = new Dictionary<StateMachineSwitchDelegate, LegState>()
+        {
+            {
+                () => (currentLegStage == ELegStages.LS_Normal),
+                legNormalState
+            },
+            {
+                () => (currentLegStage == ELegStages.LS_Limping),
+                legLimpingState
+            },
+        };
+
+
+        for (int i = 0; i < currentLegState.Length; i++)
+        {
+            currentLegState[i] = legNormalState;
+        }
     }
 
     /// <summary>
@@ -253,7 +315,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
 
     private void SetClosestPoint(RaycastHit _hit, int _idx)
     {
-        if (!additionalLegRangeCheck || (additionalLegRangeCheck && (curLength <= maxLegLength * maxLegRange)))
+        if (!additionalLegRangeCheck || (additionalLegRangeCheck && (curLength <= legIKSystems[_idx].GetMaxRangeOfChain() * legIKSystems[_idx].GetMaxRangeOfChain())))
         {
             closestPoint = _hit.point;
             currentAnimationTargetPosition[_idx] = _hit.point;
@@ -360,8 +422,22 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         isOnMoveDelay[_leg] = true;
         //Set the new Target Position
         SetNewTargetPosition(_leg);
+
+        currentLegStage = legState[_leg];
+
+        foreach (var state in stateDictionary)
+        {
+            if (state.Key())
+            {
+                currentLegState[_leg].ExitLegState(_leg);
+                currentLegState[_leg] = state.Value;
+                currentLegState[_leg].EnterLegState(_leg);
+            }
+        }
+
         //Start the Move Coroutine
-        StartCoroutine(C_MoveLegCoroutine(_leg));
+        StartCoroutine(currentLegState[_leg].C_MoveLegCoroutine(_leg));
+        //StartCoroutine(C_MoveLegCoroutine(_leg));
     }
 
     /// <summary>
@@ -379,7 +455,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         while (passedTime <= legMovementTime)
         {
             //Lerp the Target Position and add the Evaluated Curve to it
-            ikTargets[_leg].position = Vector3.Lerp(ikTargets[_leg].position, nextAnimationTargetPosition[_leg], passedTime / legMovementTime) + legMovementCurve.Evaluate(passedTime / legMovementTime) * (transform.up * (!brokenLegs[_leg] ? 1 : percentOfLegHightMovement));
+            ikTargets[_leg].position = Vector3.Lerp(ikTargets[_leg].position, nextAnimationTargetPosition[_leg], passedTime / legMovementTime) + legMovementCurve.Evaluate(passedTime / legMovementTime) * (transform.up * (legState[_leg] == ELegStages.LS_Normal ? 1 : percentOfLegHightMovement));
 
             //Add deltaTime and Wait for next Frame
             passedTime += Time.deltaTime;
@@ -463,7 +539,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
 
     private void AdjustBrokenLeg(int _leg)
     {
-        if (brokenLegs[_leg])
+        if (legState[_leg] == ELegStages.LS_Limping)
         {
             Plane plane = new Plane(transform.up, transform.position);
 
@@ -474,21 +550,21 @@ public class ProzeduralAnimationLogic : MonoBehaviour
             newRot = transform.localRotation * Quaternion.Inverse(toRot);
 
 
-            if (!alreadyBrokenLegs[_leg])
+            if (alreadyBrokenLegs[_leg] != ELegStages.LS_Limping)
             {
                 animationRaycastOrigins[_leg].localPosition += originLocalBack.normalized * originBackwardsMultiplier;
                 animationHints[_leg].position += ((transform.position) - (animationHints[_leg].position)).normalized * hintBackwardsMultiplier;
-                alreadyBrokenLegs[_leg] = true;
+                alreadyBrokenLegs[_leg] = ELegStages.LS_Limping;
                 startLocalPosition += Vector3.down * downAddPerBrokenLeg;
             }
         }
         else
         {
-            if (alreadyBrokenLegs[_leg])
+            if (alreadyBrokenLegs[_leg] == ELegStages.LS_Limping)
             {
                 animationHints[_leg].localPosition = hintLocalStartPosition[_leg];
                 animationRaycastOrigins[_leg].localPosition = originLocalStartPosition[_leg];
-                alreadyBrokenLegs[_leg] = false;
+                alreadyBrokenLegs[_leg] = ELegStages.LS_Normal;
                 startLocalPosition += Vector3.up * downAddPerBrokenLeg;
             }
         }
@@ -496,7 +572,23 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         
     }
 
-    private AnimationCurve GenerateAnimationCurve(int _frequency, float _amplitude, float _seed, float _randomscale)
+    public void Aj(int _leg)
+    {
+        Plane plane = new Plane(transform.up, transform.position);
+
+        Vector3 pos = plane.ClosestPointOnPlane(ikTargets[_leg].position);
+
+        toRot = Quaternion.FromToRotation((transform.InverseTransformPoint(pos) - transform.localPosition), (transform.InverseTransformPoint((ikTargets[_leg].position + transform.up * hightAddMultiplier)) - transform.localPosition));
+
+        newRot = transform.localRotation * Quaternion.Inverse(toRot);
+    }
+
+    public void ResetRot()
+    {
+        newRot = startRot;
+    }
+
+    private static AnimationCurve GenerateAnimationCurve(int _frequency, float _amplitude, float _seed, float _randomscale)
     {
         AnimationCurve curve = new AnimationCurve();
         curve.preWrapMode = WrapMode.PingPong;
