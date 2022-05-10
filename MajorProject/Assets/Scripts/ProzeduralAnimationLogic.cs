@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ELegStages
+public enum ELegStates
 {
     LS_Normal,
     LS_Limping,
@@ -40,18 +40,16 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
     [SerializeField] private BodyAnimation zAnimation;
 
     [Header("ExtraLegAnimation")]
-    [SerializeField] private ELegStages[] legState;
+    [SerializeField] private bool[] stopLegAnimationFlags;
+    [SerializeField] private ELegStates[] legState;
     [SerializeField] private float bodySmoothing = 8;
     [SerializeField] private float hightAddMultiplier = 0.35f;
     [SerializeField] private float originBackwardsMultiplier = 0.35f;
-    public float OriginBackwardsMultiplier { get { return originBackwardsMultiplier; } }
     [SerializeField] private Vector3 originLocalBack = Vector3.left;
-    public Vector3 OriginLocalBack { get { return originLocalBack; } }
     [SerializeField] private float hintBackwardsMultiplier = 0.35f;
-    public float HintBackwardsMultiplier { get { return hintBackwardsMultiplier; } }
     [SerializeField] private float downAddPerBrokenLeg = 0.1f;
-    public float DownAddPerBrokenLeg { get { return downAddPerBrokenLeg; } }
-    [SerializeField] private float percentOfLegHightMovement = 0.1f;
+    [SerializeField] private float percentOfLegHeightMovement = 0.1f;
+    public float PercentOfLegHeightMovement { get { return percentOfLegHeightMovement; } }
 
 
     [Header("Leg Movement Raycasts")]
@@ -72,14 +70,11 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
     [SerializeField] private IKSystem[] legIKSystems;
     [Tooltip("Animation Raycast Targets of the Different Legs --> front to back --> first all left legs than all right legs")]
     [SerializeField] private Transform[] animationRaycastOrigins;
-    public Transform[] AnimationRaycastOrigins { get { return animationRaycastOrigins; } set { animationRaycastOrigins = value; } }
 
     private Transform[] ikTargets;
     public Transform[] IkTargets { get { return ikTargets; } set { ikTargets = value; } }
     private Transform[] animationHints;
-    public Transform[] AnimationHints { get { return animationHints; } set { animationHints = value; } }
 
-    private ELegStages[] alreadyBrokenLegs;
     private Vector3[] hintLocalStartPosition;
     public Vector3[] HintLocalStartPosition { get { return hintLocalStartPosition; } set { hintLocalStartPosition = value; } }
     private Vector3[] originLocalStartPosition;
@@ -128,7 +123,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
     private Quaternion startRot;
     private Quaternion newRot = Quaternion.identity;
 
-    private ELegStages currentLegStage;
+    private ELegStates currentLegStateEnum;
     private LegState[] currentLegState;
 
     public Dictionary<StateMachineSwitchDelegate, LegState> stateDictionary { get; set; }
@@ -161,8 +156,6 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
 
     private void Start()
     {
-        CreateStateDictionary();
-
         startLocalPosition = transform.localPosition;
         startRot = transform.localRotation;
         newRot = startRot;
@@ -179,14 +172,14 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         nextAnimationTargetPosition = new Vector3[legIKSystems.Length];
         hintLocalStartPosition = new Vector3[legIKSystems.Length];
         originLocalStartPosition = new Vector3[legIKSystems.Length];
-        legState = new ELegStages[legIKSystems.Length];
-        alreadyBrokenLegs = new ELegStages[legIKSystems.Length];
+        legState = new ELegStates[legIKSystems.Length];
         targetUps = new Vector3[legIKSystems.Length];
         moveingLegs = new bool[legIKSystems.Length];
         isOnMoveDelay = new bool[legIKSystems.Length];
         ikTargets = new Transform[legIKSystems.Length];
         animationHints = new Transform[legIKSystems.Length];
         currentLegState = new LegState[legIKSystems.Length];
+        stopLegAnimationFlags = new bool[legIKSystems.Length];
 
         //Set the Initial Leg target Position Data
         for (int i = 0; i < legIKSystems.Length; i++)
@@ -198,6 +191,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
             hintLocalStartPosition[i] = animationHints[i].localPosition;
             originLocalStartPosition[i] = animationRaycastOrigins[i].localPosition;
         }
+
+        CreateStateDictionary();
     }
 
     private void OnValidate()
@@ -229,11 +224,11 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         stateDictionary = new Dictionary<StateMachineSwitchDelegate, LegState>()
         {
             {
-                () => (currentLegStage == ELegStages.LS_Normal),
+                () => (currentLegStateEnum == ELegStates.LS_Normal),
                 legNormalState
             },
             {
-                () => (currentLegStage == ELegStages.LS_Limping),
+                () => (currentLegStateEnum == ELegStates.LS_Limping),
                 legLimpingState
             },
         };
@@ -253,6 +248,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         //Check all Legs
         for (int i = 0; i < animationRaycastOrigins.Length; i++)
         {
+            if (stopLegAnimationFlags[i]) continue;
+
             //Set the delta Degree -> degree per point
             deltaDeg = 360f / legRayNumber;
             //Reset Current Degree
@@ -347,6 +344,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
             //Check if the Current Leg isnt already Moving
             if (!moveingLegs[i])
             {
+                if (stopLegAnimationFlags[i]) continue;
                 //Calculate the Squared Lenght from the Old Animation Target to the current Animation Target
                 ranges = (currentAnimationTargetPosition[i] - nextAnimationTargetPosition[i]).sqrMagnitude;
 
@@ -423,56 +421,20 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         //Set the new Target Position
         SetNewTargetPosition(_leg);
 
-        currentLegStage = legState[_leg];
+        //currentLegStateEnum = legState[_leg];
 
-        foreach (var state in stateDictionary)
-        {
-            if (state.Key())
-            {
-                currentLegState[_leg].ExitLegState(_leg);
-                currentLegState[_leg] = state.Value;
-                currentLegState[_leg].EnterLegState(_leg);
-            }
-        }
+        //foreach (var state in stateDictionary)
+        //{
+        //    if (state.Key())
+        //    {
+        //        currentLegState[_leg].ExitLegState(_leg);
+        //        currentLegState[_leg] = state.Value;
+        //        currentLegState[_leg].EnterLegState(_leg);
+        //    }
+        //}
 
         //Start the Move Coroutine
         StartCoroutine(currentLegState[_leg].C_MoveLegCoroutine(_leg));
-        //StartCoroutine(C_MoveLegCoroutine(_leg));
-    }
-
-    /// <summary>
-    /// Coroutine to Move a given Leg to its new Position
-    /// </summary>
-    /// <param name="_leg"></param>
-    /// <returns></returns>
-    private IEnumerator C_MoveLegCoroutine(int _leg)
-    {
-        float passedTime = 0f;
-        
-        AdjustBrokenLeg(_leg);
-
-        //Move the Leg for the Given Time
-        while (passedTime <= legMovementTime)
-        {
-            //Lerp the Target Position and add the Evaluated Curve to it
-            ikTargets[_leg].position = Vector3.Lerp(ikTargets[_leg].position, nextAnimationTargetPosition[_leg], passedTime / legMovementTime) + legMovementCurve.Evaluate(passedTime / legMovementTime) * (transform.up * (legState[_leg] == ELegStages.LS_Normal ? 1 : percentOfLegHightMovement));
-
-            //Add deltaTime and Wait for next Frame
-            passedTime += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
-
-        //Set Position
-        ikTargets[_leg].position = nextAnimationTargetPosition[_leg];
-
-        //Reset Flag
-        moveingLegs[_leg] = false;
-
-        yield return new WaitForSeconds(legMovementTime / 2);
-
-        isOnMoveDelay[_leg] = false;
-
-        newRot = startRot;
     }
 
     /// <summary>
@@ -537,42 +499,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         transform.localPosition = newLocalPosition + startLocalPosition;
     }
 
-    private void AdjustBrokenLeg(int _leg)
-    {
-        if (legState[_leg] == ELegStages.LS_Limping)
-        {
-            Plane plane = new Plane(transform.up, transform.position);
-
-            Vector3 pos = plane.ClosestPointOnPlane(ikTargets[_leg].position);
-
-            toRot = Quaternion.FromToRotation((transform.InverseTransformPoint(pos) - transform.localPosition), (transform.InverseTransformPoint((ikTargets[_leg].position + transform.up * hightAddMultiplier)) - transform.localPosition));
-
-            newRot = transform.localRotation * Quaternion.Inverse(toRot);
-
-
-            if (alreadyBrokenLegs[_leg] != ELegStages.LS_Limping)
-            {
-                animationRaycastOrigins[_leg].localPosition += originLocalBack.normalized * originBackwardsMultiplier;
-                animationHints[_leg].position += ((transform.position) - (animationHints[_leg].position)).normalized * hintBackwardsMultiplier;
-                alreadyBrokenLegs[_leg] = ELegStages.LS_Limping;
-                startLocalPosition += Vector3.down * downAddPerBrokenLeg;
-            }
-        }
-        else
-        {
-            if (alreadyBrokenLegs[_leg] == ELegStages.LS_Limping)
-            {
-                animationHints[_leg].localPosition = hintLocalStartPosition[_leg];
-                animationRaycastOrigins[_leg].localPosition = originLocalStartPosition[_leg];
-                alreadyBrokenLegs[_leg] = ELegStages.LS_Normal;
-                startLocalPosition += Vector3.up * downAddPerBrokenLeg;
-            }
-        }
-
-        
-    }
-
-    public void Aj(int _leg)
+    public void AdjustBrokenLeg(int _leg)
     {
         Plane plane = new Plane(transform.up, transform.position);
 
@@ -583,9 +510,23 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         newRot = transform.localRotation * Quaternion.Inverse(toRot);
     }
 
-    public void ResetRot()
+    public void ResetBrokenLegRotation()
     {
         newRot = startRot;
+    }
+
+    public void SetLegLimp(int _leg)
+    {
+        animationRaycastOrigins[_leg].localPosition += originLocalBack.normalized * originBackwardsMultiplier;
+        animationHints[_leg].position += ((transform.position) - (animationHints[_leg].position)).normalized * hintBackwardsMultiplier;
+        startLocalPosition += Vector3.down * downAddPerBrokenLeg;
+    }
+
+    public void ResetLegLimp(int _leg)
+    {
+        animationHints[_leg].localPosition = hintLocalStartPosition[_leg];
+        animationRaycastOrigins[_leg].localPosition = originLocalStartPosition[_leg];
+        startLocalPosition += Vector3.up * downAddPerBrokenLeg;
     }
 
     private static AnimationCurve GenerateAnimationCurve(int _frequency, float _amplitude, float _seed, float _randomscale)

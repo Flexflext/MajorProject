@@ -19,12 +19,14 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
 
     private bool DebugUseCameraMovement = true;
 
+    private Vector3 originLocalStartPos;
+
     // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<SpiderBodyRotationController>();
         Cursor.lockState = CursorLockMode.Locked;
-        
+        originLocalStartPos = rayOriginsAndHints.localPosition;
     }
 
     // Update is called once per frame
@@ -47,7 +49,7 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
 
     private void MoveSpider()
     {
-        rayOriginsAndHints.position = Vector3.Lerp(rayOriginsAndHints.position, transform.position + input * predictionMultiplier, predictionSmoothing * Time.deltaTime);
+        rayOriginsAndHints.localPosition = Vector3.Lerp(rayOriginsAndHints.localPosition, originLocalStartPos + new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * predictionMultiplier, predictionSmoothing * Time.deltaTime);
         controller.SetPlayerMovementInput(input * spiderMovementSpeed);
     }
 

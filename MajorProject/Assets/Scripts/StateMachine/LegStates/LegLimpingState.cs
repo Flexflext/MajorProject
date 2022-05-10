@@ -10,15 +10,15 @@ public class LegLimpingState : LegState
 
     public override IEnumerator C_MoveLegCoroutine(int _leg)
     {
-        legController.Aj(_leg);
-
         float passedTime = 0f;
 
+        legController.AdjustBrokenLeg(_leg);
+        
         //Move the Leg for the Given Time
         while (passedTime <= legController.LegMovementTime)
         {
             //Lerp the Target Position and add the Evaluated Curve to it
-            legController.IkTargets[_leg].position = Vector3.Lerp(legController.IkTargets[_leg].position, legController.NextAnimationTargetPosition[_leg], passedTime / legController.LegMovementTime) + legController.LegMovementCurve.Evaluate(passedTime / legController.LegMovementTime) * legController.transform.up;
+            legController.IkTargets[_leg].position = Vector3.Lerp(legController.IkTargets[_leg].position, legController.NextAnimationTargetPosition[_leg], passedTime / legController.LegMovementTime) + legController.LegMovementCurve.Evaluate(passedTime / legController.LegMovementTime) * (legController.transform.up * legController.PercentOfLegHeightMovement);
 
             //Add deltaTime and Wait for next Frame
             passedTime += Time.deltaTime;
@@ -30,25 +30,21 @@ public class LegLimpingState : LegState
 
         //Reset Flag
         legController.MoveingLegs[_leg] = false;
+        legController.ResetBrokenLegRotation();
 
         yield return new WaitForSeconds(legController.LegMovementTime / 2);
 
         legController.IsOnMoveDelay[_leg] = false;
 
-        legController.ResetRot();
     }
 
     public override void EnterLegState(int _leg)
     {
-        legController.AnimationRaycastOrigins[_leg].localPosition += legController.OriginLocalBack.normalized * legController.OriginBackwardsMultiplier;
-        legController.AnimationHints[_leg].position += ((legController.transform.position) - (legController.AnimationHints[_leg].position)).normalized * legController.HintBackwardsMultiplier;
-        legController.StartLocalPosition += Vector3.down * legController.DownAddPerBrokenLeg;
+        legController.SetLegLimp(_leg);
     }
 
     public override void ExitLegState(int _leg)
     {
-        legController.AnimationHints[_leg].localPosition = legController.HintLocalStartPosition[_leg];
-        legController.AnimationRaycastOrigins[_leg].localPosition = legController.OriginLocalStartPosition[_leg];
-        legController.StartLocalPosition += Vector3.up * legController.DownAddPerBrokenLeg;
+        legController.ResetLegLimp(_leg);
     }
 }
