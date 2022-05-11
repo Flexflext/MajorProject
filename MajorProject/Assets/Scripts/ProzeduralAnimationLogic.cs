@@ -421,17 +421,17 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         //Set the new Target Position
         SetNewTargetPosition(_leg);
 
-        //currentLegStateEnum = legState[_leg];
+        currentLegStateEnum = legState[_leg];
 
-        //foreach (var state in stateDictionary)
-        //{
-        //    if (state.Key())
-        //    {
-        //        currentLegState[_leg].ExitLegState(_leg);
-        //        currentLegState[_leg] = state.Value;
-        //        currentLegState[_leg].EnterLegState(_leg);
-        //    }
-        //}
+        foreach (var state in stateDictionary)
+        {
+            if (state.Key())
+            {
+                currentLegState[_leg].ExitLegState(_leg);
+                currentLegState[_leg] = state.Value;
+                currentLegState[_leg].EnterLegState(_leg);
+            }
+        }
 
         //Start the Move Coroutine
         StartCoroutine(currentLegState[_leg].C_MoveLegCoroutine(_leg));
