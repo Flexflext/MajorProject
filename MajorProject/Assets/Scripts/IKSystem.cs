@@ -18,7 +18,9 @@ public class IKSystem : MonoBehaviour
     [Tooltip("The Lenght of the Chain")]
     [Min(1.0f)]
     [SerializeField] private int chainLength = 2;
-
+    private int startChainLenght;
+    public int ChainLenght { get { return chainLength; } set { chainLength = value; } }
+     
     [Tooltip("Target for the Chain to Follow")]
     [SerializeField] private Transform target;
 
@@ -103,6 +105,7 @@ public class IKSystem : MonoBehaviour
 
     private void Awake()
     {
+        startChainLenght = ChainLenght;
         InitializeChain();
     }
 
@@ -124,6 +127,11 @@ public class IKSystem : MonoBehaviour
     public float GetMaxRangeOfChain()
     {
         return completeLenght;
+    }
+
+    public void ResetChainLenght()
+    {
+        chainLength = startChainLenght;
     }
 
     /// <summary>

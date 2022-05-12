@@ -48,8 +48,17 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
     [SerializeField] private Vector3 originLocalBack = Vector3.left;
     [SerializeField] private float hintBackwardsMultiplier = 0.35f;
     [SerializeField] private float downAddPerBrokenLeg = 0.1f;
+    [SerializeField] private float maxDownAddPerBrokenLeg = 0.2f;
+
+    private float currentDownAddPerBrokenLeg = 0;
+    private float CurrentDownAddPerBrokenLeg { get { return currentDownAddPerBrokenLeg; } set { currentDownAddPerBrokenLeg = Mathf.Clamp(value, 0, maxDownAddPerBrokenLeg); } }
+
     [SerializeField] private float percentOfLegHeightMovement = 0.1f;
     public float PercentOfLegHeightMovement { get { return percentOfLegHeightMovement; } }
+
+    [Range(0.001f,1)]
+    [SerializeField] private float brokenLegRangeMultiplier;
+    private float[] currentRangeMultiplier;
 
 
     [Header("Leg Movement Raycasts")]
@@ -180,6 +189,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         animationHints = new Transform[legIKSystems.Length];
         currentLegState = new LegState[legIKSystems.Length];
         stopLegAnimationFlags = new bool[legIKSystems.Length];
+        currentRangeMultiplier = new float[legIKSystems.Length];
 
         //Set the Initial Leg target Position Data
         for (int i = 0; i < legIKSystems.Length; i++)
@@ -190,6 +200,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
             nextAnimationTargetPosition[i] = ikTargets[i].position;
             hintLocalStartPosition[i] = animationHints[i].localPosition;
             originLocalStartPosition[i] = animationRaycastOrigins[i].localPosition;
+
+            currentRangeMultiplier[i] = 1;
         }
 
         CreateStateDictionary();
@@ -220,6 +232,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
     {
         LegNormalState legNormalState = new LegNormalState(this);
         LegLimpingState legLimpingState = new LegLimpingState(this);
+        LegLimpingHalfLegState legLimpngHalfLegState = new LegLimpingHalfLegState(this);
 
         stateDictionary = new Dictionary<StateMachineSwitchDelegate, LegState>()
         {
@@ -230,6 +243,10 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
             {
                 () => (currentLegStateEnum == ELegStates.LS_Limping),
                 legLimpingState
+            },
+            {
+                () => (currentLegStateEnum == ELegStates.LS_LimpingHalfLeg),
+                legLimpngHalfLegState
             },
         };
 
@@ -275,7 +292,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
                 //Set Ray Direction
                 rayDir = (tiltedVector - curPoint).normalized;
 
-                //hit = new RaycastHit();
+                hit = new RaycastHit();
 
                 //Check the íf the Ray hit anything
                 if (Physics.Raycast(animationRaycastOrigins[i].position + curPoint, rayDir, out hit, legRaylength, raycastHitLayers))
@@ -287,20 +304,25 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
                     {
                         //Set ClosestPoint
                         SetClosestPoint(hit, i);
+                        first = false;
                     }
                     //Check if Closer than the Current Closest Point
-                    else if (curLength >= (closestPoint - transform.root.position).sqrMagnitude && useFarthestPoint || (hit.point - transform.root.position).sqrMagnitude <= curLength && !useFarthestPoint)
+                    else if (useFarthestPoint && curLength >= (closestPoint - transform.root.position).sqrMagnitude || !useFarthestPoint && (hit.point - transform.root.position).sqrMagnitude <= curLength)
                     {
-                        if (!additionalLegCollisionCheck || (additionalLegCollisionCheck && Physics.Raycast(transform.root.position, hit.point - transform.root.position, out secondhit, float.MaxValue, raycastHitLayers)))
+                        if (additionalLegCollisionCheck)
                         {
-                            if (additionalLegCollisionCheck && secondhit.point != hit.point)
+                            if (Physics.Raycast(transform.root.position, hit.point - transform.root.position, out secondhit, float.MaxValue, raycastHitLayers))
                             {
-                                continue;
-                            }
-
-                            //Set ClosestPoint
-                            SetClosestPoint(hit, i);
+                                if (Vector3.SqrMagnitude(secondhit.point - hit.point) > 0.1f)
+                                {
+                                    continue;
+                                }
+                            } 
                         }
+
+
+                        //Set ClosestPoint
+                        SetClosestPoint(hit, i);
                     }
                 }
 
@@ -312,12 +334,11 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
 
     private void SetClosestPoint(RaycastHit _hit, int _idx)
     {
-        if (!additionalLegRangeCheck || (additionalLegRangeCheck && (curLength <= legIKSystems[_idx].GetMaxRangeOfChain() * legIKSystems[_idx].GetMaxRangeOfChain())))
+        if (!additionalLegRangeCheck || (additionalLegRangeCheck && ((legIKSystems[_idx].transform.position - _hit.point).sqrMagnitude <= legIKSystems[_idx].GetMaxRangeOfChain() * legIKSystems[_idx].GetMaxRangeOfChain())))
         {
             closestPoint = _hit.point;
             currentAnimationTargetPosition[_idx] = _hit.point;
             targetUps[_idx] = _hit.normal;
-            first = false;
         }
     }
 
@@ -331,7 +352,6 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         if (adjustLastLimbToNormal) ikTargets[_legtomove].up = targetUps[_legtomove];
         //Set the new AnimationTarget Position
         nextAnimationTargetPosition[_legtomove] = currentAnimationTargetPosition[_legtomove];
-
     }
 
     /// <summary>
@@ -357,7 +377,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
                 }
 
                 //Check if the Calculated Range is greater than the maxLegRange
-                if (ranges >= maxLegRange * maxLegRange)
+                if (ranges >= (maxLegRange * maxLegRange) * currentRangeMultiplier[i])
                 {
                     //Check Edge Cases with at Position 0 or half
                     if (i == 0 || i == moveingLegs.Length / 2)
@@ -427,9 +447,12 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         {
             if (state.Key())
             {
-                currentLegState[_leg].ExitLegState(_leg);
-                currentLegState[_leg] = state.Value;
-                currentLegState[_leg].EnterLegState(_leg);
+                if (state.Value != currentLegState[_leg])
+                {
+                    currentLegState[_leg].ExitLegState(_leg);
+                    currentLegState[_leg] = state.Value;
+                    currentLegState[_leg].EnterLegState(_leg);
+                }
             }
         }
 
@@ -496,18 +519,18 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
 
 
 
-        transform.localPosition = newLocalPosition + startLocalPosition;
+        transform.localPosition = newLocalPosition + startLocalPosition + Vector3.down * CurrentDownAddPerBrokenLeg;
     }
 
     public void AdjustBrokenLeg(int _leg)
     {
         Plane plane = new Plane(transform.up, transform.position);
 
-        Vector3 pos = plane.ClosestPointOnPlane(ikTargets[_leg].position);
+        Vector3 pos = plane.ClosestPointOnPlane(animationRaycastOrigins[_leg].position);
 
-        toRot = Quaternion.FromToRotation((transform.InverseTransformPoint(pos) - transform.localPosition), (transform.InverseTransformPoint((ikTargets[_leg].position + transform.up * hightAddMultiplier)) - transform.localPosition));
+        toRot = Quaternion.FromToRotation((transform.InverseTransformPoint((animationRaycastOrigins[_leg].position + transform.up * hightAddMultiplier)) - transform.localPosition), (transform.InverseTransformPoint(pos) - transform.localPosition));
 
-        newRot = transform.localRotation * Quaternion.Inverse(toRot);
+        newRot = startRot * Quaternion.Inverse(toRot);
     }
 
     public void ResetBrokenLegRotation()
@@ -519,14 +542,51 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
     {
         animationRaycastOrigins[_leg].localPosition += originLocalBack.normalized * originBackwardsMultiplier;
         animationHints[_leg].position += ((transform.position) - (animationHints[_leg].position)).normalized * hintBackwardsMultiplier;
-        startLocalPosition += Vector3.down * downAddPerBrokenLeg;
+        CurrentDownAddPerBrokenLeg += downAddPerBrokenLeg;
     }
 
     public void ResetLegLimp(int _leg)
     {
         animationHints[_leg].localPosition = hintLocalStartPosition[_leg];
         animationRaycastOrigins[_leg].localPosition = originLocalStartPosition[_leg];
-        startLocalPosition += Vector3.up * downAddPerBrokenLeg;
+        CurrentDownAddPerBrokenLeg -= downAddPerBrokenLeg;
+    }
+
+    public void SetHalfLeg(int _leg)
+    {
+        int newLenght = legIKSystems[_leg].ChainLenght;
+
+        newLenght = ((newLenght % 2 == 0) ? (newLenght / 2) : (newLenght / 2 + 1));
+
+        legIKSystems[_leg].ChainLenght = newLenght;
+
+        CurrentDownAddPerBrokenLeg += downAddPerBrokenLeg;
+
+
+        Plane plane = new Plane(transform.up, animationRaycastOrigins[_leg].position);
+
+        Vector3 pos = plane.ClosestPointOnPlane(transform.position);
+
+        pos = ((animationRaycastOrigins[_leg].localPosition - animationRaycastOrigins[_leg].InverseTransformPoint(pos)).normalized * 0.2f);
+
+
+        currentRangeMultiplier[_leg] = brokenLegRangeMultiplier;
+        animationRaycastOrigins[_leg].localPosition -= pos;
+    }
+
+    public void ResetHalfLeg(int _leg)
+    {
+        legIKSystems[_leg].ResetChainLenght();
+        CurrentDownAddPerBrokenLeg -= downAddPerBrokenLeg;
+
+        Plane plane = new Plane(transform.up, animationRaycastOrigins[_leg].position);
+
+        Vector3 pos = plane.ClosestPointOnPlane(transform.position);
+
+        pos = ((animationRaycastOrigins[_leg].localPosition - animationRaycastOrigins[_leg].InverseTransformPoint(pos)).normalized * 0.2f);
+
+        currentRangeMultiplier[_leg] = 1;
+        animationRaycastOrigins[_leg].localPosition += pos;
     }
 
     private static AnimationCurve GenerateAnimationCurve(int _frequency, float _amplitude, float _seed, float _randomscale)
@@ -567,7 +627,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
             Gizmos.DrawSphere(animationRaycastOrigins[i].position, 0.1f);
 
             Gizmos.color = Color.black;
-            Gizmos.DrawWireSphere(currentAnimationTargetPosition[i], maxLegRange);
+            Gizmos.DrawWireSphere(currentAnimationTargetPosition[i], maxLegRange * currentRangeMultiplier[i]);
         }
 
         for (int i = 0; i < animationRaycastOrigins.Length; i++)
