@@ -19,7 +19,19 @@ public class IKSystem : MonoBehaviour
     [Min(1.0f)]
     [SerializeField] private int chainLength = 2;
     private int startChainLenght;
-    public int ChainLenght { get { return chainLength; } set { chainLength = value; } }
+    public int ChainLenght 
+    { 
+        get 
+        { 
+            return chainLength;
+        } 
+        set 
+        { 
+            bones[value].localScale = Vector3.zero;
+
+            chainLength = value; 
+        } 
+    }
      
     [Tooltip("Target for the Chain to Follow")]
     [SerializeField] private Transform target;
@@ -43,6 +55,7 @@ public class IKSystem : MonoBehaviour
 
     //All Bones
     private Transform[] bones;
+    private Transform[] startbones;
 
     //Current Calculated Position for the Bone
     private Vector3[] currentPositions;
@@ -107,6 +120,7 @@ public class IKSystem : MonoBehaviour
     {
         startChainLenght = ChainLenght;
         InitializeChain();
+        startbones = bones;
     }
 
     private void LateUpdate()
@@ -131,6 +145,7 @@ public class IKSystem : MonoBehaviour
 
     public void ResetChainLenght()
     {
+        startbones[chainLength].localScale = Vector3.one;
         chainLength = startChainLenght;
     }
 
@@ -205,7 +220,7 @@ public class IKSystem : MonoBehaviour
         //Get the Current Position
         for (int i = 0; i < bones.Length; i++) currentPositions[i] = bones[i].position;
 
-        FabricAlgortihm();
+        FabrikAlgorithm();
 
         if (hint != null) AddHintOffset(ref currentPositions);
 
@@ -258,9 +273,9 @@ public class IKSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// The F.A.B.R.I.K Algorthim (Forward And Backwords Reaching Inverse Kinematics)
+    /// The F.A.B.R.I.K algorithm (Forward And Backwords Reaching Inverse Kinematics)
     /// </summary>
-    private void FabricAlgortihm()
+    private void FabrikAlgorithm()
     {
         //Rotation of the Parent of the Root -> Identity when null
         rootRot = (bones[0].parent != null) ? bones[0].parent.rotation : Quaternion.identity;
