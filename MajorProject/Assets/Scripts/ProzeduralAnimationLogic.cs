@@ -645,7 +645,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
 
         int nextLeg = _leg;
 
-        if (_leg + 1 > legIKSystems.Length || _leg + 1 == legIKSystems.Length / 2)
+        if (_leg + 1 >= legIKSystems.Length || _leg + 1 == legIKSystems.Length / 2)
         {
             //Leg is One of the Edge Cases Left Back or Right Back
             nextLeg--;
