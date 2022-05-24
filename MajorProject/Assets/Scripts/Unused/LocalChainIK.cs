@@ -8,7 +8,6 @@ public class LocalChainIK : MonoBehaviour
     [SerializeField] private bool debugGizmos = true;
     [SerializeField] private float gizmosRadius = 0.1f;
 
-
     [Header("Performance Mode")]
     [Tooltip("Parameter to Activate or Deactivate Performce Mode of the Chain")]
     [SerializeField] private bool performanceMode;
@@ -17,8 +16,22 @@ public class LocalChainIK : MonoBehaviour
 
     [Header("Chain Paramters")]
     [Tooltip("The Lenght of the Chain")]
-    [Min(2.0f)]
+    [Min(1.0f)]
     [SerializeField] private int chainLength = 2;
+    private int startChainLenght;
+    public int ChainLenght
+    {
+        get
+        {
+            return chainLength;
+        }
+        set
+        {
+            bones[value].localScale = Vector3.zero;
+
+            chainLength = value;
+        }
+    }
 
     [Tooltip("Target for the Chain to Follow")]
     [SerializeField] private Transform target;
@@ -42,6 +55,7 @@ public class LocalChainIK : MonoBehaviour
 
     //All Bones
     private Transform[] bones;
+    private Transform[] startbones;
 
     //Current Calculated Position for the Bone
     private Vector3[] currentPositions;
@@ -59,6 +73,8 @@ public class LocalChainIK : MonoBehaviour
 
     #region//--> Rotation <--\\
 
+    //Direction from bone to the Succesor Bone
+    private Vector3[] startdirectionsSucc;
 
     //StartRotation of Each Bone
     private Quaternion[] startRotationBone;
@@ -97,20 +113,40 @@ public class LocalChainIK : MonoBehaviour
 
     #endregion
 
+    public Transform rootRotation;
 
-    private void Start()
+
+    private void Awake()
     {
+        startChainLenght = ChainLenght;
         InitializeChain();
-    }
-
-    private void Update()
-    {
-          
+        startbones = bones;
     }
 
     private void LateUpdate()
     {
         ResolveIK();
+    }
+
+    public Transform GetTarget()
+    {
+        return target;
+    }
+
+    public Transform GetHint()
+    {
+        return hint;
+    }
+
+    public float GetMaxRangeOfChain()
+    {
+        return completeLenght;
+    }
+
+    public void ResetChainLenght()
+    {
+        startbones[chainLength].localScale = Vector3.one;
+        chainLength = startChainLenght;
     }
 
     /// <summary>
@@ -123,26 +159,51 @@ public class LocalChainIK : MonoBehaviour
         currentPositions = new Vector3[chainLength + 1];
         boneLenghts = new float[chainLength];
         completeLenght = 0;
+        startdirectionsSucc = new Vector3[chainLength + 1];
         startRotationBone = new Quaternion[chainLength + 1];
 
         if (target != null) startRotationTarget = Quaternion.identity;
 
         Transform currentBone = transform;
-        for (int i = bones.Length - 1; i >= 0; i--)
+
+        for (int i = 0; i < bones.Length; i++)
         {
             bones[i] = currentBone;
-            startRotationBone[i] = currentBone.rotation;
+            startRotationBone[i] = currentBone.localRotation;
 
             if (i != bones.Length - 1)
             {
-                boneLenghts[i] = (bones[i + 1].position - currentBone.position).magnitude;
-                completeLenght += boneLenghts[i];
+                if (currentBone.childCount > 0)
+                {
+                    currentBone = currentBone.GetChild(0);
+                }
+                else
+                {
+                    Debug.LogError("Longer Chain than Bone Count");
+                    Debug.Break();
+                }
+
             }
 
-            currentBone = currentBone.parent;
         }
 
-        startRotationRoot = (bones[0].parent != null) ? bones[0].parent.rotation : Quaternion.identity;
+        for (int i = bones.Length - 1; i >= 0; i--)
+        {
+            if (i == bones.Length - 1)
+            {
+                //last Bone
+                startdirectionsSucc[i] = (transform.InverseTransformVector(target.position) - transform.InverseTransformVector(bones[i].position));
+            }
+            else
+            {
+                //mid Bone
+                startdirectionsSucc[i] = (transform.InverseTransformVector(bones[i + 1].position) - transform.InverseTransformVector(bones[i].position));
+                boneLenghts[i] = startdirectionsSucc[i].magnitude;
+                completeLenght += boneLenghts[i];
+            }
+        }
+
+        startRotationRoot = (bones[0].parent != null) ? bones[0].parent.localRotation : Quaternion.identity;
     }
 
     /// <summary>
@@ -157,13 +218,13 @@ public class LocalChainIK : MonoBehaviour
 
 
         //Get the Current Position
-        for (int i = 0; i < bones.Length; i++) currentPositions[i] = bones[i].position;
+        for (int i = 0; i < bones.Length; i++) currentPositions[i] = transform.InverseTransformVector(bones[i].position);
 
-        FabricAlgortihm();
+        FabrikAlgorithm();
 
-        if (hint != null) AddHintOffset(ref currentPositions);
+        //if (hint != null) AddHintOffset(ref currentPositions);
 
-        //InitializeChain();
+
 
         //Apply the Current Position and Rotation
         for (int i = 0; i < currentPositions.Length; i++)
@@ -171,20 +232,20 @@ public class LocalChainIK : MonoBehaviour
             if (i == currentPositions.Length - 1)
             {
                 //Multiplies the the target rotation with the Inverse of the startrotation of the target // --> get the Difference of the Rotation to the Start with Multiply of the current and the Original Rotation
-                
-                //bones[i].rotation = Quaternion.FromToRotation(target.position - bones[i].position, target.position - currentPositions[i]) * bones[i].rotation;
+                //bones[i].localRotation = target.rotation * Quaternion.Inverse(startRotationTarget) * startRotationBone[i]; //* Quaternion.Inverse(bones[i].rotation);
+                //bones[i].rotation = Quaternion.FromToRotation(startdirectionsSucc[i], target.position - currentPositions[i]) * startRotationBone[i];
             }
             else
             {
                 //Word Rotation from the Original Direction of the Bone to the Direction to the next Bone + Multiplies with start direction to get the Local Rotation
-                //testingVecs[i] = bones[i + 1].position - bones[i].position;
-                bones[i].rotation = Quaternion.FromToRotation(bones[i + 1].position - bones[i].position, currentPositions[i + 1] - currentPositions[i]) * bones[i].rotation;// * Quaternion.Inverse(bones[i].rotation);
+                bones[i].localRotation = /*startRotationBone[i]*/ Quaternion.FromToRotation((startdirectionsSucc[i]), ((currentPositions[i + 1]) - (currentPositions[i]))); /** transform.localRotation;*/// * Quaternion.Inverse(bones[i].rotation);
             }
 
-
             //Set Transform Position
-            bones[i].position = currentPositions[i];
+            bones[i].position = transform.TransformVector(currentPositions[i]);
         }
+
+
     }
 
     /// <summary>
@@ -212,20 +273,20 @@ public class LocalChainIK : MonoBehaviour
     }
 
     /// <summary>
-    /// The F.A.B.R.I.K Algorthim (Forward And Backwords Reaching Inverse Kinematics)
+    /// The F.A.B.R.I.K algorithm (Forward And Backwords Reaching Inverse Kinematics)
     /// </summary>
-    private void FabricAlgortihm()
+    private void FabrikAlgorithm()
     {
         //Rotation of the Parent of the Root -> Identity when null
-        rootRot = (bones[0].parent != null) ? bones[0].parent.rotation : Quaternion.identity;
+        rootRot = (bones[0].parent != null) ? bones[0].parent.localRotation : Quaternion.identity;
         //Root Rotation Difference between the Root Parent Rotation and the Start Root Rotation
         rootRotDiff = rootRot * Quaternion.Inverse(startRotationRoot);
 
         //IK Calculations
         //Check for Target Outside of Chain Reach
-        if ((target.position - bones[0].position).sqrMagnitude >= completeLenght * completeLenght)
+        if ((transform.InverseTransformVector(target.position) - transform.InverseTransformVector(bones[0].position)).sqrMagnitude >= completeLenght * completeLenght)
         {
-            rootTargetDirection = (target.position - bones[0].position).normalized;
+            rootTargetDirection = (transform.InverseTransformVector(target.position) - currentPositions[0]).normalized;
 
             for (int i = 1; i < currentPositions.Length; i++)
             {
@@ -237,7 +298,7 @@ public class LocalChainIK : MonoBehaviour
             //Snapback to the Previous Position //-> More Dynamic Realistic Movement
             for (int i = 0; i < currentPositions.Length - 1; i++)
             {
-                currentPositions[i + 1] = Vector3.Lerp(currentPositions[i + 1], currentPositions[i] + rootRotDiff * (bones[i + 1].position - bones[i].position), snapbackStrenght);
+                currentPositions[i + 1] = Vector3.Lerp(currentPositions[i + 1], currentPositions[i] + rootRotDiff * startdirectionsSucc[i], snapbackStrenght);
             }
 
             //Check Iterations
@@ -246,16 +307,11 @@ public class LocalChainIK : MonoBehaviour
                 //Backwords
                 for (int i = currentPositions.Length - 1; i > 0; i--)
                 {
-                    if (i == currentPositions.Length - 1)
-                    {
-                        currentPositions[i] = target.position;
-                        
-                    }
+                    if (i == currentPositions.Length - 1) currentPositions[i] = transform.InverseTransformVector(target.position);
                     else
                     {
                         //Set to Positon of the Next Chain Component + the Direction to the old position * the startlenght
                         currentPositions[i] = currentPositions[i + 1] + (currentPositions[i] - currentPositions[i + 1]).normalized * boneLenghts[i];
-                        
                     }
                 }
 
@@ -267,7 +323,7 @@ public class LocalChainIK : MonoBehaviour
                 }
 
                 //Check if in the Margain of Error
-                if ((currentPositions[currentPositions.Length - 1] - target.position).sqrMagnitude <= errorMargain * errorMargain) break;
+                if ((currentPositions[currentPositions.Length - 1] - transform.InverseTransformVector(target.position)).sqrMagnitude <= errorMargain * errorMargain) break;
             }
         }
     }
@@ -277,13 +333,24 @@ public class LocalChainIK : MonoBehaviour
         if (debugGizmos)
         {
             Transform current = this.transform;
+            //for (int i = 0; i < chainLength && current != null && current.parent != null; i++)
+            //{
+            //    float scale = Vector3.Distance(current.position, current.parent.position) * 0.1f;
+            //    Handles.matrix = Matrix4x4.TRS(current.position, Quaternion.FromToRotation(Vector3.up, current.parent.position - current.position), new Vector3(scale, Vector3.Distance(current.parent.position, current.position), scale));
+            //    Handles.color = Color.red;
+            //    Handles.DrawWireCube(Vector3.up * 0.5f, Vector3.one);
+            //    current = current.parent;
+
+
+            //}
+
             for (int i = 0; i < chainLength && current != null && current.parent != null; i++)
             {
-                float scale = Vector3.Distance(current.position, current.parent.position) * 0.1f;
-                Handles.matrix = Matrix4x4.TRS(current.position, Quaternion.FromToRotation(Vector3.up, current.parent.position - current.position), new Vector3(scale, Vector3.Distance(current.parent.position, current.position), scale));
-                Handles.color = Color.blue;
+                float scale = Vector3.Distance(current.position, current.GetChild(0).position) * 0.1f;
+                Handles.matrix = Matrix4x4.TRS(current.position, Quaternion.FromToRotation(Vector3.up, current.GetChild(0).position - current.position), new Vector3(scale, Vector3.Distance(current.GetChild(0).position, current.position), scale));
+                Handles.color = Color.red;
                 Handles.DrawWireCube(Vector3.up * 0.5f, Vector3.one);
-                current = current.parent;
+                current = current.GetChild(0);
             }
 
 
