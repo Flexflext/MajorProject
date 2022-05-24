@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LegBrokenState : LegState
 {
-    public LegBrokenState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset) : base(_controller, _legenterset, _legexitreset)
+    public LegBrokenState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset, ProzeduralAnimationLogic.LegParams[] _legs) : base(_controller, _legenterset, _legexitreset, _legs)
     {
     }
 
@@ -35,16 +35,16 @@ public class LegBrokenState : LegState
         }
 
         //Set Position
-        legController.IkTargets[_leg].position = legController.NextAnimationTargetPosition[_leg];
+        legs[_leg].ikTarget.position = legs[_leg].nextAnimationTargetPosition;
         legController.transform.localPosition = oldPos;
 
         //Reset Flag
-        legController.MoveingLegs[_leg] = false;
+        legs[_leg].moveingLeg = false;
         legController.ResetBrokenLegRotation();
 
         yield return new WaitForSeconds(legController.LegMovementTime / 2);
 
-        legController.IsOnMoveDelay[_leg] = false;
+        legs[_leg].isOnMoveDelay = false;
 
     }
 

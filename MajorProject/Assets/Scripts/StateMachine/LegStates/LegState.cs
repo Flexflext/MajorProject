@@ -12,13 +12,16 @@ public abstract class LegState
 
     protected LegCallback legEnterSet;
     protected LegCallback legExitReset;
+
+    protected ProzeduralAnimationLogic.LegParams[] legs;
     
 
-    public LegState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset)
+    public LegState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset, ProzeduralAnimationLogic.LegParams[] _legs)
     {
         legController = _controller;
         legEnterSet = _legenterset;
         legExitReset = _legexitreset;
+        legs = _legs;
     }
 
     public abstract IEnumerator C_MoveLegCoroutine(int _leg);

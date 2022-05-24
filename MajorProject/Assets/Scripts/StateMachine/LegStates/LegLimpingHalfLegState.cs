@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LegLimpingHalfLegState : LegState
 {
-    public LegLimpingHalfLegState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset) : base(_controller, _legenterset, _legexitreset)
+    public LegLimpingHalfLegState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset, ProzeduralAnimationLogic.LegParams[] _legs) : base(_controller, _legenterset, _legexitreset, _legs)
     {
     }
 
@@ -18,7 +18,7 @@ public class LegLimpingHalfLegState : LegState
         while (passedTime <= legController.LegMovementTime)
         {
             //Lerp the Target Position and add the Evaluated Curve to it
-            legController.IkTargets[_leg].position = Vector3.Lerp(legController.IkTargets[_leg].position, legController.NextAnimationTargetPosition[_leg], passedTime / legController.LegMovementTime) + legController.LegMovementCurve.Evaluate(passedTime / legController.LegMovementTime) * (legController.transform.up * 0.5f);
+            legs[_leg].ikTarget.position = Vector3.Lerp(legs[_leg].ikTarget.position, legs[_leg].nextAnimationTargetPosition, passedTime / legController.LegMovementTime) + legController.LegMovementCurve.Evaluate(passedTime / legController.LegMovementTime) * (legController.transform.up * 0.5f);
 
             //Add deltaTime and Wait for next Frame
             passedTime += Time.deltaTime;
@@ -26,15 +26,16 @@ public class LegLimpingHalfLegState : LegState
         }
 
         //Set Position
-        legController.IkTargets[_leg].position = legController.NextAnimationTargetPosition[_leg];
+        legs[_leg].ikTarget.position = legs[_leg].nextAnimationTargetPosition;
+        legController.ResetBrokenLegRotation();
+
 
         //Reset Flag
-        legController.MoveingLegs[_leg] = false;
-        legController.ResetBrokenLegRotation();
+        legs[_leg].moveingLeg = false;
 
         yield return new WaitForSeconds(legController.LegMovementTime / 2);
 
-        legController.IsOnMoveDelay[_leg] = false;
+        legs[_leg].isOnMoveDelay = false;
 
     }
 

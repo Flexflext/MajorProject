@@ -409,7 +409,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &25767179
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -426,6 +425,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -529,7 +530,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &26044889
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -546,6 +546,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1604,7 +1606,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &112789593
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1621,6 +1622,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1937,7 +1940,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &157699670
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1954,6 +1956,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2311,7 +2315,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &177638199
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2328,6 +2331,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2428,7 +2433,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &181382590
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2445,6 +2449,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2923,7 +2929,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &205730615
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2940,6 +2945,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3599,7 +3606,6 @@ MonoBehaviour:
   maxLegRange: 0.45
   useFarthestPoint: 1
   additionalLegRangeCheck: 1
-  adjustBodyRotation: 0
   adjustLastLimbToNormal: 1
   additionalLegCollisionCheck: 1
   animateBody: 0
@@ -4101,8 +4107,6 @@ MonoBehaviour:
       amplitude: 2.45
       seed: 0.54
       randomScale: 4.74
-  stopLegAnimationFlags: 
-  legState: 
   bodySmoothing: 8
   hightAddMultiplier: -0.25
   originBackwardsMultiplier: 0.2
@@ -4110,7 +4114,6 @@ MonoBehaviour:
   hintBackwardsMultiplier: 1
   downAddPerBrokenLeg: 0.1
   maxDownAddPerBrokenLeg: 0.2
-  brokenLegWhipDownAdd: 0.0025
   percentOfLegHeightMovement: 0.1
   brokenLegRangeMultiplier: 0.5
   legRayNumber: 6
@@ -4120,16 +4123,63 @@ MonoBehaviour:
   raycastHitLayers:
     serializedVersion: 2
     m_Bits: 55
-  legIKSystems:
-  - {fileID: 603732227}
-  - {fileID: 1356241471}
-  - {fileID: 1319516147}
-  - {fileID: 524544752}
-  animationRaycastOrigins:
-  - {fileID: 2005816228}
-  - {fileID: 612106135}
-  - {fileID: 378915061}
-  - {fileID: 813045491}
+  legs:
+  - legIKSystem: {fileID: 603732227}
+    animationRaycastOrigin: {fileID: 2005816228}
+    legState: 0
+    stopLegAnimationFlag: 0
+    currentAnimationTargetPosition: {x: 0, y: 0, z: 0}
+    nextAnimationTargetPosition: {x: 0, y: 0, z: 0}
+    hintLocalStartPosition: {x: 0, y: 0, z: 0}
+    originLocalStartPosition: {x: 0, y: 0, z: 0}
+    targetUp: {x: 0, y: 0, z: 0}
+    moveingLeg: 0
+    isOnMoveDelay: 0
+    ikTarget: {fileID: 0}
+    animationHint: {fileID: 0}
+    currentRangeMultiplier: 0
+  - legIKSystem: {fileID: 1356241471}
+    animationRaycastOrigin: {fileID: 612106135}
+    legState: 0
+    stopLegAnimationFlag: 0
+    currentAnimationTargetPosition: {x: 0, y: 0, z: 0}
+    nextAnimationTargetPosition: {x: 0, y: 0, z: 0}
+    hintLocalStartPosition: {x: 0, y: 0, z: 0}
+    originLocalStartPosition: {x: 0, y: 0, z: 0}
+    targetUp: {x: 0, y: 0, z: 0}
+    moveingLeg: 0
+    isOnMoveDelay: 0
+    ikTarget: {fileID: 0}
+    animationHint: {fileID: 0}
+    currentRangeMultiplier: 0
+  - legIKSystem: {fileID: 1319516147}
+    animationRaycastOrigin: {fileID: 378915061}
+    legState: 0
+    stopLegAnimationFlag: 0
+    currentAnimationTargetPosition: {x: 0, y: 0, z: 0}
+    nextAnimationTargetPosition: {x: 0, y: 0, z: 0}
+    hintLocalStartPosition: {x: 0, y: 0, z: 0}
+    originLocalStartPosition: {x: 0, y: 0, z: 0}
+    targetUp: {x: 0, y: 0, z: 0}
+    moveingLeg: 0
+    isOnMoveDelay: 0
+    ikTarget: {fileID: 0}
+    animationHint: {fileID: 0}
+    currentRangeMultiplier: 0
+  - legIKSystem: {fileID: 524544752}
+    animationRaycastOrigin: {fileID: 813045491}
+    legState: 0
+    stopLegAnimationFlag: 0
+    currentAnimationTargetPosition: {x: 0, y: 0, z: 0}
+    nextAnimationTargetPosition: {x: 0, y: 0, z: 0}
+    hintLocalStartPosition: {x: 0, y: 0, z: 0}
+    originLocalStartPosition: {x: 0, y: 0, z: 0}
+    targetUp: {x: 0, y: 0, z: 0}
+    moveingLeg: 0
+    isOnMoveDelay: 0
+    ikTarget: {fileID: 0}
+    animationHint: {fileID: 0}
+    currentRangeMultiplier: 0
 --- !u!23 &231751572
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4328,7 +4378,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &252009022
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4345,6 +4394,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4826,7 +4877,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &276563197
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4843,6 +4893,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5218,7 +5270,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &322534476
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5235,6 +5286,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6173,7 +6226,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &409326678
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6190,6 +6242,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6284,7 +6338,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &415040195
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6301,6 +6354,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6706,7 +6761,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &432064699
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6723,6 +6777,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6826,7 +6882,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &432467390
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6843,6 +6898,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7531,7 +7588,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &484377611
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -7548,6 +7604,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8228,7 +8286,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &516984841
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -8245,6 +8302,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9335,7 +9394,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &603745017
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -9352,6 +9410,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9638,7 +9698,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &615892084
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -9655,6 +9714,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9758,7 +9819,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &617653761
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -9775,6 +9835,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9869,7 +9931,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &622617254
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -9886,6 +9947,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10185,7 +10248,6 @@ GameObject:
   m_IsActive: 0
 --- !u!73398921 &644225637
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -10202,6 +10264,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11946,7 +12010,6 @@ MonoBehaviour:
   maxLegRange: 2
   useFarthestPoint: 1
   additionalLegRangeCheck: 1
-  adjustBodyRotation: 0
   adjustLastLimbToNormal: 1
   additionalLegCollisionCheck: 1
   animateBody: 0
@@ -12448,8 +12511,6 @@ MonoBehaviour:
       amplitude: 2.45
       seed: 0.54
       randomScale: 4.74
-  stopLegAnimationFlags: 
-  legState: 
   bodySmoothing: 8
   hightAddMultiplier: 0.35
   originBackwardsMultiplier: 0.2
@@ -12457,7 +12518,6 @@ MonoBehaviour:
   hintBackwardsMultiplier: 1
   downAddPerBrokenLeg: 0.1
   maxDownAddPerBrokenLeg: 0.2
-  brokenLegWhipDownAdd: 0.0025
   percentOfLegHeightMovement: 0.1
   brokenLegRangeMultiplier: 0
   legRayNumber: 5
@@ -12467,20 +12527,7 @@ MonoBehaviour:
   raycastHitLayers:
     serializedVersion: 2
     m_Bits: 1
-  legIKSystems:
-  - {fileID: 763124470}
-  - {fileID: 253730342}
-  - {fileID: 1751976028}
-  - {fileID: 630371005}
-  - {fileID: 164777617}
-  - {fileID: 1226913319}
-  animationRaycastOrigins:
-  - {fileID: 1116246807}
-  - {fileID: 730943725}
-  - {fileID: 1514414259}
-  - {fileID: 1947087638}
-  - {fileID: 1904744791}
-  - {fileID: 2038914367}
+  legs: []
 --- !u!23 &770124167
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -13350,7 +13397,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &888321440
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -13367,6 +13413,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -15821,7 +15869,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &1047953439
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -15838,6 +15885,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -15932,7 +15981,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &1050978246
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -15949,6 +15997,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -16052,7 +16102,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &1053407360
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -16069,6 +16118,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -17482,7 +17533,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &1157426823
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -17499,6 +17549,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -17965,7 +18017,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &1193551154
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -17982,6 +18033,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -18642,7 +18695,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &1227123860
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -18659,6 +18711,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -20308,7 +20362,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &1346888371
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -20325,6 +20378,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -20596,7 +20651,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &1367973838
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -20613,6 +20667,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -20693,7 +20749,6 @@ GameObject:
   m_IsActive: 1
 --- !u!73398921 &1378346080
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -20710,6 +20765,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -21173,7 +21230,6 @@ MonoBehaviour:
   maxLegRange: 0.45
   useFarthestPoint: 1
   additionalLegRangeCheck: 1
-  adjustBodyRotation: 0
   adjustLastLimbToNormal: 1
   additionalLegCollisionCheck: 1
   animateBody: 0
@@ -21675,8 +21731,6 @@ MonoBehaviour:
       amplitude: 2.45
       seed: 0.54
       randomScale: 4.74
-  stopLegAnimationFlags: 
-  legState: 
   bodySmoothing: 8
   hightAddMultiplier: -0.25
   originBackwardsMultiplier: 0.2
@@ -21684,7 +21738,6 @@ MonoBehaviour:
   hintBackwardsMultiplier: 1
   downAddPerBrokenLeg: 0.1
   maxDownAddPerBrokenLeg: 0.2
-  brokenLegWhipDownAdd: 0.0025
   percentOfLegHeightMovement: 0.1
   brokenLegRangeMultiplier: 0.5
   legRayNumber: 6
@@ -21694,20 +21747,7 @@ MonoBehaviour:
   raycastHitLayers:
     serializedVersion: 2
     m_Bits: 55
-  legIKSystems:
-  - {fileID: 1290693218}
-  - {fileID: 425382320}
-  - {fileID: 9013352}
-  - {fileID: 1955526958}
-  - {fileID: 1481764538}
-  - {fileID: 29112913}
-  animationRaycastOrigins:
-  - {fileID: 559959344}
-  - {fileID: 1271373158}
-  - {fileID: 1485214317}
-  - {fileID: 2104417345}
-  - {fileID: 162373990}
-  - {fileID: 2018853950}
+  legs: []
 --- !u!1 &1436996418
 GameObject:
   m_ObjectHideFlags: 0
@@ -22119,7 +22159,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &1475319466
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -22136,6 +22175,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -22411,7 +22452,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1503077922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22428,7 +22469,7 @@ MonoBehaviour:
   spiderMovementSpeed: 1.75
   predictionMultiplier: 0.25
   predictionSmoothing: 20
-  rayOriginsAndHints: {fileID: 2103101615}
+  rayOriginsAndHints: {fileID: 1204420777}
 --- !u!114 &1503077923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23631,7 +23672,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &1591036604
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -23648,6 +23688,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -24234,7 +24276,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &1631794759
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -24251,6 +24292,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -24345,7 +24388,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &1638200981
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -24362,6 +24404,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -25685,7 +25729,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &1727516405
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -25702,6 +25745,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -26204,7 +26249,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &1797557230
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -26221,6 +26265,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -26579,7 +26625,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &1810274482
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -26596,6 +26641,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -26932,7 +26979,6 @@ GameObject:
   m_IsActive: 1
 --- !u!73398921 &1843047358
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -26949,6 +26995,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -27465,7 +27513,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &1924375922
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -27482,6 +27529,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -28007,7 +28056,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &1958557221
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -28024,6 +28072,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -28179,7 +28229,6 @@ MonoBehaviour:
   maxLegRange: 0.45
   useFarthestPoint: 1
   additionalLegRangeCheck: 0
-  adjustBodyRotation: 0
   adjustLastLimbToNormal: 0
   additionalLegCollisionCheck: 0
   animateBody: 1
@@ -28258,8 +28307,6 @@ MonoBehaviour:
       amplitude: 0
       seed: 0
       randomScale: 0
-  stopLegAnimationFlags: 
-  legState: 
   bodySmoothing: 8
   hightAddMultiplier: 8
   originBackwardsMultiplier: 0.35
@@ -28267,7 +28314,6 @@ MonoBehaviour:
   hintBackwardsMultiplier: 0.35
   downAddPerBrokenLeg: 0.1
   maxDownAddPerBrokenLeg: 0.2
-  brokenLegWhipDownAdd: 0.0025
   percentOfLegHeightMovement: 0.1
   brokenLegRangeMultiplier: 0
   legRayNumber: 6
@@ -28277,12 +28323,7 @@ MonoBehaviour:
   raycastHitLayers:
     serializedVersion: 2
     m_Bits: 1
-  legIKSystems: []
-  animationRaycastOrigins:
-  - {fileID: 1251545584}
-  - {fileID: 774522813}
-  - {fileID: 1011098415}
-  - {fileID: 1197156505}
+  legs: []
 --- !u!1 &1977894773
 GameObject:
   m_ObjectHideFlags: 0
@@ -28918,7 +28959,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &2008574901
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -28935,6 +28975,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -29268,7 +29310,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &2030075571
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -29285,6 +29326,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -29674,7 +29717,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &2057295579
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -29691,6 +29733,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -29875,7 +29919,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &2074787387
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -29892,6 +29935,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -30391,7 +30436,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &2106863230
 VFXRenderer:
-  serializedVersion: 1
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -30408,6 +30452,8 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -30730,7 +30776,6 @@ MonoBehaviour:
   maxLegRange: 0.45
   useFarthestPoint: 0
   additionalLegRangeCheck: 0
-  adjustBodyRotation: 0
   adjustLastLimbToNormal: 0
   additionalLegCollisionCheck: 0
   animateBody: 1
@@ -30809,8 +30854,6 @@ MonoBehaviour:
       amplitude: 0
       seed: 0
       randomScale: 0
-  stopLegAnimationFlags: 
-  legState: 
   bodySmoothing: 8
   hightAddMultiplier: 8
   originBackwardsMultiplier: 0.35
@@ -30818,7 +30861,6 @@ MonoBehaviour:
   hintBackwardsMultiplier: 0.35
   downAddPerBrokenLeg: 0.1
   maxDownAddPerBrokenLeg: 0.2
-  brokenLegWhipDownAdd: 0.0025
   percentOfLegHeightMovement: 0.1
   brokenLegRangeMultiplier: 0
   legRayNumber: 6
@@ -30828,14 +30870,7 @@ MonoBehaviour:
   raycastHitLayers:
     serializedVersion: 2
     m_Bits: 1
-  legIKSystems: []
-  animationRaycastOrigins:
-  - {fileID: 550652939}
-  - {fileID: 1790706675}
-  - {fileID: 97876223}
-  - {fileID: 1710093847}
-  - {fileID: 1940196844}
-  - {fileID: 987949921}
+  legs: []
 --- !u!23 &2142211538
 MeshRenderer:
   m_ObjectHideFlags: 0
