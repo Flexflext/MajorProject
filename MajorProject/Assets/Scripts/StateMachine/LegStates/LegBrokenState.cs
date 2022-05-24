@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LegBrokenState : LegState
 {
-    public LegBrokenState(ProzeduralAnimationLogic _controller) : base(_controller)
+    public LegBrokenState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset) : base(_controller, _legenterset, _legexitreset)
     {
     }
 
@@ -12,7 +12,7 @@ public class LegBrokenState : LegState
     {
         float passedTime = 0f;
 
-        legController.AdjustBrokenLeg(_leg);
+        legController.AdjustBrokenLegRotation(_leg);
 
         Vector3 oldPos = legController.transform.localPosition;
 
@@ -50,11 +50,17 @@ public class LegBrokenState : LegState
 
     public override void EnterLegState(int _leg)
     {
-        legController.SetBrokenLeg(_leg);
+        if (legEnterSet != null)
+        {
+            legEnterSet.Invoke(_leg);
+        }
     }
 
     public override void ExitLegState(int _leg)
     {
-        legController.ResetBrokenLeg(_leg);
+        if (legExitReset != null)
+        {
+            legExitReset.Invoke(_leg);
+        }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LegNormalState : LegState
 {
-    public LegNormalState(ProzeduralAnimationLogic _controller) : base(_controller)
+    public LegNormalState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset) : base(_controller, _legenterset, _legexitreset)
     {
     }
 
@@ -36,11 +36,17 @@ public class LegNormalState : LegState
 
     public override void EnterLegState(int _leg)
     {
-        
+        if (legEnterSet != null)
+        {
+            legEnterSet.Invoke(_leg);
+        }
     }
 
     public override void ExitLegState(int _leg)
     {
-        
+        if (legExitReset != null)
+        {
+            legExitReset.Invoke(_leg);
+        }
     }
 }

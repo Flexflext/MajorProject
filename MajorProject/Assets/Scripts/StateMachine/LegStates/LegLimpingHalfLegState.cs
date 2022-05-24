@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class LegLimpingHalfLegState : LegState
 {
-    private int previousLegChainLenght = 0;
-
-    public LegLimpingHalfLegState(ProzeduralAnimationLogic _controller) : base(_controller)
+    public LegLimpingHalfLegState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset) : base(_controller, _legenterset, _legexitreset)
     {
     }
 
@@ -14,7 +12,7 @@ public class LegLimpingHalfLegState : LegState
     {
         float passedTime = 0f;
 
-        legController.AdjustBrokenLeg(_leg);
+        legController.AdjustBrokenLegRotation(_leg);
 
         //Move the Leg for the Given Time
         while (passedTime <= legController.LegMovementTime)
@@ -42,15 +40,17 @@ public class LegLimpingHalfLegState : LegState
 
     public override void EnterLegState(int _leg)
     {
-        //legController.SetLegLimp(_leg);
-
-        legController.SetHalfLeg(_leg);
+        if (legEnterSet != null)
+        {
+            legEnterSet.Invoke(_leg);
+        }
     }
 
     public override void ExitLegState(int _leg)
     {
-        //legController.ResetLegLimp(_leg);
-
-        legController.ResetHalfLeg(_leg);
+        if (legExitReset != null)
+        {
+            legExitReset.Invoke(_leg);
+        }
     }
 }

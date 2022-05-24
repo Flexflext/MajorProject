@@ -28,7 +28,6 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
     [Tooltip("Use the Closeset Possible or the Farthest Posssible Position")]
     [SerializeField] private bool useFarthestPoint;
     [SerializeField] private bool additionalLegRangeCheck;
-    [SerializeField] private bool adjustBodyRotation;
     [SerializeField] private bool adjustLastLimbToNormal;
     [SerializeField] private bool additionalLegCollisionCheck;
 
@@ -222,20 +221,24 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
     {
         CalculateTargetPosition();
         CheckRange();
-        if (adjustBodyRotation) AdjustBody();
         AnimateBody();
 
 
         this.transform.localRotation = Quaternion.Lerp(transform.localRotation, newRot, bodySmoothing * Time.deltaTime);
     }
 
+    /// <summary>
+    /// Creates the StateMachine Dictionary for the StateMachine
+    /// </summary>
     private void CreateStateDictionary()
     {
-        LegNormalState legNormalState = new LegNormalState(this);
-        LegLimpingState legLimpingState = new LegLimpingState(this);
-        LegLimpingHalfLegState legLimpngHalfLegState = new LegLimpingHalfLegState(this);
-        LegBrokenState legBrokenState = new LegBrokenState(this);
+        //Create States
+        LegNormalState legNormalState = new LegNormalState(this, null, null);
+        LegLimpingState legLimpingState = new LegLimpingState(this, SetLegLimp, ResetLegLimp);
+        LegLimpingHalfLegState legLimpngHalfLegState = new LegLimpingHalfLegState(this, SetHalfLeg, ResetHalfLeg);
+        LegBrokenState legBrokenState = new LegBrokenState(this, SetBrokenLeg, ResetBrokenLeg);
 
+        //Set States and Change Parameters in the Dictionary
         stateDictionary = new Dictionary<StateMachineSwitchDelegate, LegState>()
         {
             {
@@ -362,6 +365,11 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         }
     }
 
+    /// <summary>
+    /// Set the Closest Point for a Given Leg at the Index | Also Sets the normal and Resets first bool
+    /// </summary>
+    /// <param name="_hit"></param>
+    /// <param name="_idx"></param>
     private void SetClosestPoint(RaycastHit _hit, int _idx)
     {
         closestPoint = _hit.point;
@@ -490,32 +498,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
     }
 
     /// <summary>
-    /// Adjust the Body Rotation amd Position
+    /// Animates the Body Position from the Animation Curves
     /// </summary>
-    private void AdjustBody()
-    {
-        //Calculate the Cross Vector from the Outermost Legs
-        bodyNormal = Vector3.Cross((ikTargets[nextAnimationTargetPosition.Length - 1].position - ikTargets[0].position), (ikTargets[nextAnimationTargetPosition.Length / 2].position - ikTargets[nextAnimationTargetPosition.Length / 2 - 1].position));
-        //Normalize the Vector
-        bodyNormal.Normalize();
-
-
-        //Check that the Calculated Vector is pointing in the same up Direction
-        if (Vector3.Dot(bodyNormal, transform.parent.up) < 0)
-        {
-            bodyNormal *= -1;
-        }
-
-        bodyNormal = Vector3.Lerp(this.transform.up, bodyNormal, 20 * Time.deltaTime);
-
-
-        //Set the Rotation
-        this.transform.rotation = Quaternion.LookRotation(transform.forward, bodyNormal);
-
-        
-
-    }
-
     private void AnimateBody()
     {
         Vector3 add = new Vector3();
@@ -551,7 +535,11 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         transform.localPosition = newLocalPosition + startLocalPosition + Vector3.down * CurrentDownAddPerBrokenLeg;
     }
 
-    public void AdjustBrokenLeg(int _leg)
+    /// <summary>
+    /// Calculates a Rotation wich elevates the Opposite Side of the Leg that should be Limping
+    /// </summary>
+    /// <param name="_leg"></param>
+    public void AdjustBrokenLegRotation(int _leg)
     {
         Plane plane = new Plane(transform.up, transform.position);
 
@@ -562,26 +550,41 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         newRot = startRot * Quaternion.Inverse(toRot);
     }
 
+    /// <summary>
+    /// Resets the Broken Leg Rotation
+    /// </summary>
     public void ResetBrokenLegRotation()
     {
         newRot = startRot;
     }
 
-    public void SetLegLimp(int _leg)
+    /// <summary>
+    /// Set Leg Limp on given Leg Index
+    /// </summary>
+    /// <param name="_leg"></param>
+    private void SetLegLimp(int _leg)
     {
         animationRaycastOrigins[_leg].localPosition += originLocalBack.normalized * originBackwardsMultiplier;
         animationHints[_leg].position += ((transform.position) - (animationHints[_leg].position)).normalized * hintBackwardsMultiplier;
         CurrentDownAddPerBrokenLeg += downAddPerBrokenLeg;
     }
 
-    public void ResetLegLimp(int _leg)
+    /// <summary>
+    /// Reset leg Limp on given Leg Index
+    /// </summary>
+    /// <param name="_leg"></param>
+    private void ResetLegLimp(int _leg)
     {
         animationHints[_leg].localPosition = hintLocalStartPosition[_leg];
         animationRaycastOrigins[_leg].localPosition = originLocalStartPosition[_leg];
         CurrentDownAddPerBrokenLeg -= downAddPerBrokenLeg;
     }
 
-    public void SetHalfLeg(int _leg)
+    /// <summary>
+    /// Set Half Leg Limp on given Leg
+    /// </summary>
+    /// <param name="_leg"></param>
+    private void SetHalfLeg(int _leg)
     {
         int newLenght = legIKSystems[_leg].ChainLenght;
 
@@ -603,7 +606,11 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         animationRaycastOrigins[_leg].localPosition -= pos;
     }
 
-    public void ResetHalfLeg(int _leg)
+    /// <summary>
+    /// Reset Half Leg on Given Leg
+    /// </summary>
+    /// <param name="_leg"></param>
+    private void ResetHalfLeg(int _leg)
     {
         legIKSystems[_leg].ResetChainLenght();
         CurrentDownAddPerBrokenLeg -= downAddPerBrokenLeg;
@@ -618,7 +625,11 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         animationRaycastOrigins[_leg].localPosition += pos;
     }
 
-    public void SetBrokenLeg(int _leg)
+    /// <summary>
+    /// Set Broken Leg on Given Leg
+    /// </summary>
+    /// <param name="_leg"></param>
+    private void SetBrokenLeg(int _leg)
     {
         legIKSystems[_leg].gameObject.SetActive(false);
         legIKSystems[_leg].transform.localScale = Vector3.zero;
@@ -638,7 +649,11 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         animationRaycastOrigins[nextLeg].position += (animationRaycastOrigins[_leg].position - animationRaycastOrigins[nextLeg].position) / 2;
     }
 
-    public void ResetBrokenLeg(int _leg)
+    /// <summary>
+    /// Reset Broken Leg on given Legs
+    /// </summary>
+    /// <param name="_leg"></param>
+    private void ResetBrokenLeg(int _leg)
     {
         legIKSystems[_leg].transform.localScale = Vector3.one;
         legIKSystems[_leg].gameObject.SetActive(true);
@@ -658,6 +673,14 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         animationRaycastOrigins[nextLeg].position -= (animationRaycastOrigins[_leg].position - animationRaycastOrigins[nextLeg].position) / 2;
     }
 
+    /// <summary>
+    /// Generate an Animation Curve with the given Parameters
+    /// </summary>
+    /// <param name="_frequency"></param>
+    /// <param name="_amplitude"></param>
+    /// <param name="_seed"></param>
+    /// <param name="_randomscale"></param>
+    /// <returns></returns>
     private static AnimationCurve GenerateAnimationCurve(int _frequency, float _amplitude, float _seed, float _randomscale)
     {
         AnimationCurve curve = new AnimationCurve();
