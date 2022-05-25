@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public enum ELegStates
 {
@@ -8,6 +10,7 @@ public enum ELegStates
     LS_Limping,
     LS_LimpingHalfLeg,
     LS_Broken,
+    LS_Dead,
 }
 
 public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
@@ -37,6 +40,11 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
     [SerializeField] private BodyAnimation xAnimation;
     [SerializeField] private BodyAnimation yAnimation;
     [SerializeField] private BodyAnimation zAnimation;
+
+
+    [Header("Death Animation")]
+    [SerializeField] private UnityEvent onDeathEvent;
+    [SerializeField] private UnityEvent onDeathResetEvent;
 
     [Header("ExtraLegAnimation")]
     [SerializeField] private float bodySmoothing = 8;
@@ -102,6 +110,10 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
 
     private ELegStates currentLegStateEnum;
 
+    private LegState[] beforeDeathStates;
+
+    private bool isDead;
+
     public Dictionary<StateMachineSwitchDelegate, LegState> stateDictionary { get; set; }
 
     [System.Serializable]
@@ -151,6 +163,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         [HideInInspector] public Transform animationHint;
         [HideInInspector] public float currentRangeMultiplier;
         [HideInInspector] public LegState currentLegState;
+        [HideInInspector] public LegState beforeDeathLegState;
     }
 
     private void Start()
@@ -189,10 +202,27 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
     {
         CalculateTargetPosition();
         CheckRange();
-        AnimateBody();
 
 
-        this.transform.localRotation = Quaternion.Lerp(transform.localRotation, newRot, bodySmoothing * Time.deltaTime);
+        if (!isDead)
+        {
+            AnimateBody();
+            this.transform.localRotation = Quaternion.Lerp(transform.localRotation, newRot, bodySmoothing * Time.deltaTime);
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (!isDead)
+            {
+                SetDeath();
+
+            }
+            else
+            {
+                ResetDeath();
+            }
+        }
     }
 
     /// <summary>
@@ -205,6 +235,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         LegLimpingState legLimpingState = new LegLimpingState(this, SetLegLimp, ResetLegLimp, legs);
         LegLimpingHalfLegState legLimpngHalfLegState = new LegLimpingHalfLegState(this, SetHalfLeg, ResetHalfLeg, legs);
         LegBrokenState legBrokenState = new LegBrokenState(this, SetBrokenLeg, ResetBrokenLeg, legs);
+        LegDeadState legDeadState = new LegDeadState(this, null, ResetBrokenLeg, legs);
 
         //Set States and Change Parameters in the Dictionary
         stateDictionary = new Dictionary<StateMachineSwitchDelegate, LegState>()
@@ -224,6 +255,10 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
             {
                 () => (currentLegStateEnum == ELegStates.LS_Broken),
                 legBrokenState
+            },
+            {
+                () => (currentLegStateEnum == ELegStates.LS_Dead),
+                legDeadState
             },
         };
 
@@ -526,6 +561,26 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         newRot = startRot;
     }
 
+    public void AddDeathEventListener(UnityAction _event)
+    {
+        onDeathEvent.AddListener(_event);
+    }
+
+    public void RemoveDeathEventListener(UnityAction _event)
+    {
+        onDeathEvent.RemoveListener(_event);
+    }
+
+    public void AddDeathResetEventListener(UnityAction _event)
+    {
+        onDeathResetEvent.AddListener(_event);
+    }
+
+    public void RemoveDeathResetEventListener(UnityAction _event)
+    {
+        onDeathResetEvent.RemoveListener(_event);
+    }
+
     /// <summary>
     /// Set Leg Limp on given Leg Index
     /// </summary>
@@ -623,6 +678,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
     /// <param name="_leg"></param>
     private void ResetBrokenLeg(int _leg)
     {
+
+
         legs[_leg].legIKSystem.transform.localScale = Vector3.one;
         legs[_leg].legIKSystem.gameObject.SetActive(true);
 
@@ -639,6 +696,54 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         }
 
         legs[nextLeg].animationRaycastOrigin.position -= (legs[_leg].animationRaycastOrigin.position - legs[nextLeg].animationRaycastOrigin.position) / 2;
+    }
+
+    private void SetDeath()
+    {
+        if (onDeathEvent != null)
+        {
+            onDeathEvent.Invoke();
+        }
+
+
+        isDead = true;
+        Rigidbody rb = gameObject.AddComponent<Rigidbody>();
+
+        for (int i = 0; i < legs.Length; i++)
+        {
+            legs[i].legIKSystem.GiveBodyRigidbody(rb);
+            legs[i].beforeDeathLegState = legs[i].currentLegState;
+
+            legs[i].legState = ELegStates.LS_Dead;
+            currentLegStateEnum = legs[i].legState;
+            foreach (var state in stateDictionary)
+            {
+                if (state.Key())
+                {
+                    legs[i].currentLegState = state.Value;
+                }
+            }
+            legs[i].currentLegState.EnterLegState(i);
+        }
+    }
+
+    private void ResetDeath()
+    {
+        if (onDeathResetEvent != null)
+        {
+            onDeathResetEvent.Invoke();
+        }
+
+        isDead = false;
+        Destroy(gameObject.GetComponent<Rigidbody>());
+
+        for (int i = 0; i < legs.Length; i++)
+        {
+            legs[i].legState = ELegStates.LS_Normal;
+            currentLegStateEnum = legs[i].legState;
+            legs[i].currentLegState.ExitLegState(i);
+            legs[i].currentLegState = legs[i].beforeDeathLegState;
+        }
     }
 
     /// <summary>

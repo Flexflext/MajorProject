@@ -7,6 +7,8 @@ public class IKSystem : MonoBehaviour
 {
     [SerializeField] private bool debugGizmos = true;
     [SerializeField] private float gizmosRadius = 0.1f;
+    [SerializeField] private bool solveIK = true;
+    public bool SolveIK { get { return solveIK; } set {solveIK = value; } }
 
     [Header("Performance Mode")]
     [Tooltip("Parameter to Activate or Deactivate Performce Mode of the Chain")]
@@ -41,7 +43,7 @@ public class IKSystem : MonoBehaviour
 
     [Tooltip("Maximum Iterations of the Inverse Kinematics")]
     [Min(1.0f)]
-    [SerializeField] private int maxIterations = 1;
+    [SerializeField] private int maxIterations = 10;
 
     [Tooltip("Range in wich the Margain of Error from the Result of the Inverse Kinematics is already acceptable")]
     [Min(0.001f)]
@@ -49,7 +51,9 @@ public class IKSystem : MonoBehaviour
 
     [Tooltip("Snapback to the Start Position")]
     [Range(0f, 1f)]
-    [SerializeField] private float snapbackStrenght = 1.0f;
+    [SerializeField] private float snapbackStrenght = 0.0f;
+
+    [SerializeField] private float boxColliderDiamater = 0.1f;
 
     #region//--> Position <--\\
 
@@ -115,6 +119,10 @@ public class IKSystem : MonoBehaviour
 
     public Transform rootRotation;
 
+    private BoxCollider[] boxColliders;
+    private Rigidbody[] rigidbodys;
+    private Rigidbody bodyRigidbody;
+    private CharacterJoint[] characterJoints;
 
     private void Awake()
     {
@@ -125,7 +133,10 @@ public class IKSystem : MonoBehaviour
 
     private void LateUpdate()
     {
-        ResolveIK();
+        if (solveIK)
+        {
+            ResolveIK();
+        }
     }
 
     public Transform GetTarget()
@@ -143,10 +154,75 @@ public class IKSystem : MonoBehaviour
         return completeLenght;
     }
 
+    public void GiveBodyRigidbody(Rigidbody _rb)
+    {
+        bodyRigidbody = _rb;
+    }
+
     public void ResetChainLenght()
     {
         startbones[chainLength].localScale = Vector3.one;
         chainLength = startChainLenght;
+    }
+
+    public void CreateBoxCollidersOnChain()
+    {
+        boxColliders = new BoxCollider[bones.Length];
+ 
+        for (int i = 0; i < boxColliders.Length - 1; i++)
+        {
+            boxColliders[i] = bones[i].gameObject.AddComponent<BoxCollider>();
+            Vector3 dir = bones[i + 1].position - bones[i].position;
+            bones[i].InverseTransformDirection(dir);
+            float mag = dir.magnitude;
+            boxColliders[i].center = (Vector3.forward * (mag / 2));
+            boxColliders[i].size = new Vector3(boxColliderDiamater, boxColliderDiamater, mag);
+        }
+    }
+
+    public void CreateRigidbodysOnChain()
+    {
+        rigidbodys = new Rigidbody[bones.Length];
+        characterJoints = new CharacterJoint[bones.Length];
+
+        for (int i = 0; i < rigidbodys.Length; i++)
+        {
+            rigidbodys[i] = bones[i].gameObject.AddComponent<Rigidbody>();
+        }
+
+
+
+        for (int i = 0; i < characterJoints.Length; i++)
+        {
+            characterJoints[i] = bones[i].gameObject.AddComponent<CharacterJoint>();
+            //characterJoints[i].anchor = bones[i].localPosition;
+
+            if (i == 0)
+            {
+                characterJoints[i].connectedBody = bodyRigidbody;
+            }
+            else
+            {
+                characterJoints[i].connectedBody = rigidbodys[i - 1]; 
+            }
+        }
+    }
+
+    public void ResetRigidbodysOnChain()
+    {
+        for (int i = 0; i < rigidbodys.Length; i++)
+        {
+            Destroy(characterJoints[i]);
+            Destroy(rigidbodys[i]);
+        }
+    }
+
+    public void ResetBoxCollidersOnChain()
+    {
+        for (int i = 0; i < boxColliders.Length; i++)
+        {
+            Destroy(boxColliders[i]);
+        }
     }
 
     /// <summary>
