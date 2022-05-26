@@ -176,7 +176,7 @@ public class IKSystem : MonoBehaviour
             bones[i].InverseTransformDirection(dir);
             float mag = dir.magnitude;
             boxColliders[i].center = (Vector3.forward * (mag / 2));
-            boxColliders[i].size = new Vector3(boxColliderDiamater, boxColliderDiamater, mag);
+            boxColliders[i].size = new Vector3(boxColliderDiamater, boxColliderDiamater, mag * 0.9f);
         }
     }
 
@@ -195,16 +195,40 @@ public class IKSystem : MonoBehaviour
         for (int i = 0; i < characterJoints.Length; i++)
         {
             characterJoints[i] = bones[i].gameObject.AddComponent<CharacterJoint>();
-            //characterJoints[i].anchor = bones[i].localPosition;
+
+            SoftJointLimit limit = new SoftJointLimit();
+
+            limit.limit = 0;
+
+            characterJoints[i].highTwistLimit = limit;
+            characterJoints[i].swing1Limit = limit;
+            characterJoints[i].swing2Limit = limit;
+
+            limit.limit = -0;
+
+            characterJoints[i].lowTwistLimit = limit;
 
             if (i == 0)
             {
+                limit.limit = 10;
+
+                characterJoints[i].highTwistLimit = limit;
+                characterJoints[i].swing1Limit = limit;
+                characterJoints[i].swing2Limit = limit;
+
+                limit.limit = -10;
+
+                characterJoints[i].lowTwistLimit = limit;
+
+
                 characterJoints[i].connectedBody = bodyRigidbody;
             }
             else
             {
-                characterJoints[i].connectedBody = rigidbodys[i - 1]; 
+                characterJoints[i].connectedBody = rigidbodys[i - 1];   
             }
+
+            
         }
     }
 

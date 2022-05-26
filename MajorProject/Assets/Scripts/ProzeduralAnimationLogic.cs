@@ -27,12 +27,14 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
     [Tooltip("Maximum Range of that the leg can be before moveing to new Position")]
     [SerializeField] private float maxLegRange;
 
-    [Header("Additional Leg Position Flags")]
+    [Header("Additional Flags")]
     [Tooltip("Use the Closeset Possible or the Farthest Posssible Position")]
     [SerializeField] private bool useFarthestPoint;
     [SerializeField] private bool additionalLegRangeCheck;
     [SerializeField] private bool adjustLastLimbToNormal;
     [SerializeField] private bool additionalLegCollisionCheck;
+    [SerializeField] private bool alwaysCheckLegState;
+    [SerializeField] private bool alwaysCheckDeathState;
 
 
     [Header("Body Animation")]
@@ -145,6 +147,10 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
     [System.Serializable]
     public struct LegParams
     {
+#if UNITY_EDITOR
+        [HideInInspector] public string name;
+#endif
+
         [Header("Leg Targets and Ray Origins")] //--> First all Left Legs than right Legs
         public IKSystem legIKSystem;
         public Transform animationRaycastOrigin;
@@ -196,6 +202,42 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
             yAnimation.AnimationCurveSettings.positionCurve = GenerateAnimationCurve(yAnimation.AnimationCurveSettings.frequency, yAnimation.AnimationCurveSettings.amplitude, yAnimation.AnimationCurveSettings.seed, yAnimation.AnimationCurveSettings.randomScale);
             zAnimation.AnimationCurveSettings.positionCurve = GenerateAnimationCurve(zAnimation.AnimationCurveSettings.frequency, zAnimation.AnimationCurveSettings.amplitude, zAnimation.AnimationCurveSettings.seed, zAnimation.AnimationCurveSettings.randomScale);
         }
+
+#if UNITY_EDITOR
+        for (int i = 0; i < legs.Length; i++)
+        {
+            if (i < legs.Length / 2)
+            {
+                if (i == 0)
+                {
+                    legs[i].name = "Left Leg Front";
+                }
+                else if (i == legs.Length / 2 - 1)
+                {
+                    legs[i].name = "Left Leg Back";
+                }
+                else
+                {
+                    legs[i].name = "Left Leg Middle" + i;
+                }
+            }
+            else
+            {
+                if (i == legs.Length / 2)
+                {
+                    legs[i].name = "Right Leg Front";
+                }
+                else if (i == legs.Length - 1)
+                {
+                    legs[i].name = "Right Leg Back";
+                }
+                else
+                {
+                    legs[i].name = "Right Leg Middle" + (i - (legs.Length / 2));
+                }
+            }
+        }
+#endif
     }
 
     private void Update()
@@ -222,6 +264,32 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
             {
                 ResetDeath();
             }
+        }
+
+        if (alwaysCheckLegState)
+        {
+            for (int i = 0; i < legs.Length; i++)
+            {
+                currentLegStateEnum = legs[i].legState;
+
+                foreach (var state in stateDictionary)
+                {
+                    if (state.Key())
+                    {
+                        if (state.Value != legs[i].currentLegState)
+                        {
+                            legs[i].currentLegState.ExitLegState(i);
+                            legs[i].currentLegState = state.Value;
+                            legs[i].currentLegState.EnterLegState(i);
+                        }
+                    }
+                }
+            }   
+        }
+
+        if (alwaysCheckDeathState)
+        {
+            CheckDeath();
         }
     }
 
@@ -481,19 +549,27 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         //Set the new Target Position
         SetNewTargetPosition(_leg);
 
-        currentLegStateEnum = legs[_leg].legState;
-
-        foreach (var state in stateDictionary)
+        if (!alwaysCheckLegState)
         {
-            if (state.Key())
+            currentLegStateEnum = legs[_leg].legState;
+
+            foreach (var state in stateDictionary)
             {
-                if (state.Value != legs[_leg].currentLegState)
+                if (state.Key())
                 {
-                    legs[_leg].currentLegState.ExitLegState(_leg);
-                    legs[_leg].currentLegState = state.Value;
-                    legs[_leg].currentLegState.EnterLegState(_leg);
+                    if (state.Value != legs[_leg].currentLegState)
+                    {
+                        legs[_leg].currentLegState.ExitLegState(_leg);
+                        legs[_leg].currentLegState = state.Value;
+                        legs[_leg].currentLegState.EnterLegState(_leg);
+                    }
                 }
             }
+        }
+
+        if (!alwaysCheckDeathState)
+        {
+            CheckDeath();
         }
 
         //Start the Move Coroutine
@@ -696,6 +772,14 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         }
 
         legs[nextLeg].animationRaycastOrigin.position -= (legs[_leg].animationRaycastOrigin.position - legs[nextLeg].animationRaycastOrigin.position) / 2;
+    }
+
+    private void CheckDeath()
+    {
+        if (!isDead)
+        {
+            
+        }
     }
 
     private void SetDeath()
