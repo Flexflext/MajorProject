@@ -17,7 +17,9 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
     private float mouseInput;
     private Vector3 input;
 
-    private bool DebugUseCameraMovement = true;
+    private bool useCameraMovement = true;
+    private bool useMovement = true;
+
 
     private Vector3 originLocalStartPos;
 
@@ -33,22 +35,41 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
     void Update()
     {
         HandlePlayerInput();
-        if (DebugUseCameraMovement) RotateSpider();
+        RotateSpider();
         MoveSpider();
+
 
         if (Input.GetKeyDown(KeyCode.M))
         {
-            DebugUseCameraMovement = !DebugUseCameraMovement;
+            useCameraMovement = !useCameraMovement;
         }
+    }
+
+    public void StopUserInput()
+    {
+        useMovement = false;
+        useCameraMovement = false;
     }
 
     private void RotateSpider()
     {
+        if (!useCameraMovement)
+        {
+            controller.SetPlayerInputRotation(0);
+            return;
+        }
+
         controller.SetPlayerInputRotation(mouseInput * rotationSpeed);
     }
 
     private void MoveSpider()
     {
+        if (!useMovement)
+        {
+            controller.SetPlayerMovementInput(Vector2.zero);
+            return;
+        }
+
         rayOriginsAndHints.localPosition = Vector3.Lerp(rayOriginsAndHints.localPosition, originLocalStartPos + new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * predictionMultiplier, predictionSmoothing * Time.deltaTime);
         controller.SetPlayerMovementInput(input * spiderMovementSpeed);
     }

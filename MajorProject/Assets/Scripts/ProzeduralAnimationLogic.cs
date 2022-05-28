@@ -10,11 +10,13 @@ public enum ELegStates
     LS_Limping,
     LS_LimpingHalfLeg,
     LS_Broken,
-    LS_Dead,
 }
 
 public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
 {
+    public int currentNumberOfNormalLegs = 0;
+    public int currentNumberOfAlmostBrokenLegs = 0;
+
     [SerializeField] private bool showDebugGizmos = true;
 
     [Header("Movement Animation")]
@@ -34,6 +36,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
     [SerializeField] private bool adjustLastLimbToNormal;
     [SerializeField] private bool additionalLegCollisionCheck;
     [SerializeField] private bool alwaysCheckLegState;
+    [SerializeField] private bool checkDeathState;
     [SerializeField] private bool alwaysCheckDeathState;
 
 
@@ -45,6 +48,25 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
 
 
     [Header("Death Animation")]
+    [Range(0f, 1f)]
+    [SerializeField] private float maxPercentOfAlmostBrokenLegs = 0.5f;
+    [SerializeField] private ELegStates almostBrokenLegState = ELegStates.LS_LimpingHalfLeg;
+    [Range(0f, 1f)]
+    [SerializeField] private float minPercentOfNormalLegs = 0.25f;
+    [Space]
+    [SerializeField] private float pauseTillDeath = 0.3f;
+    [SerializeField] private bool deathBodyAnimate = true;
+    [SerializeField] private BodyAnimation deathXAnimation;
+    [SerializeField] private BodyAnimation deathYAnimation;
+    [SerializeField] private BodyAnimation deathZAnimation;
+    [Space]
+    [SerializeField] private float legDeathFoldTime = 1f;
+    [SerializeField] private Vector2 legDeathFoldRndTimeAddMinMax = new Vector2(-0.15f, 0.15f);
+    [Space]
+    [Range(0f, 1f)]
+    [SerializeField] private float legDeathFoldPositionToBodyPercent = 0.5f;
+    [SerializeField] private Vector2 legDeathFoldRndPositionAddMinMax = new Vector2(-0.15f, 0.15f);
+    [Space]
     [SerializeField] private UnityEvent onDeathEvent;
     [SerializeField] private UnityEvent onDeathResetEvent;
 
@@ -56,7 +78,6 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
     [SerializeField] private float hintBackwardsMultiplier = 0.35f;
     [SerializeField] private float downAddPerBrokenLeg = 0.1f;
     [SerializeField] private float maxDownAddPerBrokenLeg = 0.2f;
-    //[SerializeField] private float brokenLegWhipDownAdd = 0.0025f;
 
     private float currentDownAddPerBrokenLeg = 0;
     public float CurrentDownAddPerBrokenLeg { get { return currentDownAddPerBrokenLeg; } set { currentDownAddPerBrokenLeg = Mathf.Clamp(value, 0, maxDownAddPerBrokenLeg); } }
@@ -115,6 +136,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
     private LegState[] beforeDeathStates;
 
     private bool isDead;
+
+    private LegDeadState legDeadState;
 
     public Dictionary<StateMachineSwitchDelegate, LegState> stateDictionary { get; set; }
 
@@ -192,6 +215,20 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         }
 
         CreateStateDictionary();
+
+        if (animateBody)
+        {
+            xAnimation.AnimationCurveSettings.positionCurve = GenerateAnimationCurve(xAnimation.AnimationCurveSettings.frequency, xAnimation.AnimationCurveSettings.amplitude, xAnimation.AnimationCurveSettings.seed, xAnimation.AnimationCurveSettings.randomScale);
+            yAnimation.AnimationCurveSettings.positionCurve = GenerateAnimationCurve(yAnimation.AnimationCurveSettings.frequency, yAnimation.AnimationCurveSettings.amplitude, yAnimation.AnimationCurveSettings.seed, yAnimation.AnimationCurveSettings.randomScale);
+            zAnimation.AnimationCurveSettings.positionCurve = GenerateAnimationCurve(zAnimation.AnimationCurveSettings.frequency, zAnimation.AnimationCurveSettings.amplitude, zAnimation.AnimationCurveSettings.seed, zAnimation.AnimationCurveSettings.randomScale);
+        }
+
+        if (deathBodyAnimate)
+        {
+            deathXAnimation.AnimationCurveSettings.positionCurve = GenerateAnimationCurve(deathXAnimation.AnimationCurveSettings.frequency, deathXAnimation.AnimationCurveSettings.amplitude, deathXAnimation.AnimationCurveSettings.seed, deathXAnimation.AnimationCurveSettings.randomScale);
+            deathYAnimation.AnimationCurveSettings.positionCurve = GenerateAnimationCurve(deathYAnimation.AnimationCurveSettings.frequency, deathYAnimation.AnimationCurveSettings.amplitude, deathYAnimation.AnimationCurveSettings.seed, deathYAnimation.AnimationCurveSettings.randomScale);
+            deathZAnimation.AnimationCurveSettings.positionCurve = GenerateAnimationCurve(deathZAnimation.AnimationCurveSettings.frequency, deathZAnimation.AnimationCurveSettings.amplitude, deathZAnimation.AnimationCurveSettings.seed, deathZAnimation.AnimationCurveSettings.randomScale);
+        }
     }
 
     private void OnValidate()
@@ -201,6 +238,13 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
             xAnimation.AnimationCurveSettings.positionCurve = GenerateAnimationCurve(xAnimation.AnimationCurveSettings.frequency, xAnimation.AnimationCurveSettings.amplitude, xAnimation.AnimationCurveSettings.seed, xAnimation.AnimationCurveSettings.randomScale);
             yAnimation.AnimationCurveSettings.positionCurve = GenerateAnimationCurve(yAnimation.AnimationCurveSettings.frequency, yAnimation.AnimationCurveSettings.amplitude, yAnimation.AnimationCurveSettings.seed, yAnimation.AnimationCurveSettings.randomScale);
             zAnimation.AnimationCurveSettings.positionCurve = GenerateAnimationCurve(zAnimation.AnimationCurveSettings.frequency, zAnimation.AnimationCurveSettings.amplitude, zAnimation.AnimationCurveSettings.seed, zAnimation.AnimationCurveSettings.randomScale);
+        }
+
+        if (deathBodyAnimate)
+        {
+            deathXAnimation.AnimationCurveSettings.positionCurve = GenerateAnimationCurve(deathXAnimation.AnimationCurveSettings.frequency, deathXAnimation.AnimationCurveSettings.amplitude, deathXAnimation.AnimationCurveSettings.seed, deathXAnimation.AnimationCurveSettings.randomScale);
+            deathYAnimation.AnimationCurveSettings.positionCurve = GenerateAnimationCurve(deathYAnimation.AnimationCurveSettings.frequency, deathYAnimation.AnimationCurveSettings.amplitude, deathYAnimation.AnimationCurveSettings.seed, deathYAnimation.AnimationCurveSettings.randomScale);
+            deathZAnimation.AnimationCurveSettings.positionCurve = GenerateAnimationCurve(deathZAnimation.AnimationCurveSettings.frequency, deathZAnimation.AnimationCurveSettings.amplitude, deathZAnimation.AnimationCurveSettings.seed, deathZAnimation.AnimationCurveSettings.randomScale);
         }
 
 #if UNITY_EDITOR
@@ -245,13 +289,11 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         CalculateTargetPosition();
         CheckRange();
 
-
         if (!isDead)
         {
             AnimateBody();
             this.transform.localRotation = Quaternion.Lerp(transform.localRotation, newRot, bodySmoothing * Time.deltaTime);
         }
-
 
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -287,7 +329,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
             }   
         }
 
-        if (alwaysCheckDeathState)
+        if (checkDeathState && alwaysCheckDeathState)
         {
             CheckDeath();
         }
@@ -303,7 +345,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         LegLimpingState legLimpingState = new LegLimpingState(this, SetLegLimp, ResetLegLimp, legs);
         LegLimpingHalfLegState legLimpngHalfLegState = new LegLimpingHalfLegState(this, SetHalfLeg, ResetHalfLeg, legs);
         LegBrokenState legBrokenState = new LegBrokenState(this, SetBrokenLeg, ResetBrokenLeg, legs);
-        LegDeadState legDeadState = new LegDeadState(this, null, ResetBrokenLeg, legs);
+        legDeadState = new LegDeadState(this, null, ResetBrokenLeg, legs, legDeathFoldTime, legDeathFoldRndTimeAddMinMax, legDeathFoldPositionToBodyPercent, legDeathFoldRndPositionAddMinMax);
 
         //Set States and Change Parameters in the Dictionary
         stateDictionary = new Dictionary<StateMachineSwitchDelegate, LegState>()
@@ -323,11 +365,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
             {
                 () => (currentLegStateEnum == ELegStates.LS_Broken),
                 legBrokenState
-            },
-            {
-                () => (currentLegStateEnum == ELegStates.LS_Dead),
-                legDeadState
-            },
+            }
         };
 
 
@@ -567,13 +605,13 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
             }
         }
 
-        if (!alwaysCheckDeathState)
+        //Start the Move Coroutine
+        StartCoroutine(legs[_leg].currentLegState.C_MoveLegCoroutine(_leg));
+
+        if (checkDeathState && !alwaysCheckDeathState)
         {
             CheckDeath();
         }
-
-        //Start the Move Coroutine
-        StartCoroutine(legs[_leg].currentLegState.C_MoveLegCoroutine(_leg));
     }
 
     /// <summary>
@@ -581,27 +619,31 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
     /// </summary>
     private void AnimateBody()
     {
+        if (!animateBody) return;
+
+        Vector3 newLocalPosition = UseAnimationCurves(xAnimation, yAnimation, zAnimation);
+
+        transform.localPosition = newLocalPosition + startLocalPosition + Vector3.down * CurrentDownAddPerBrokenLeg;
+    }
+
+    private Vector3 UseAnimationCurves(BodyAnimation _xanimation, BodyAnimation _yanimation, BodyAnimation _zanimation)
+    {
         Vector3 add = new Vector3();
 
-        if (animateBody)
+        if (_xanimation.AnimationParameter.useAnimation)
         {
-            if (xAnimation.AnimationParameter.useAnimation)
-            {
-                add.x = xAnimation.AnimationCurveSettings.positionCurve.Evaluate(Time.time / xAnimation.AnimationParameter.timeMultiplier) * xAnimation.AnimationParameter.heightMultiplier;
-            }
-
-            if (yAnimation.AnimationParameter.useAnimation)
-            {
-                add.y = yAnimation.AnimationCurveSettings.positionCurve.Evaluate(Time.time / yAnimation.AnimationParameter.timeMultiplier) * yAnimation.AnimationParameter.heightMultiplier;
-            }
-
-            if (zAnimation.AnimationParameter.useAnimation)
-            {
-                add.z = zAnimation.AnimationCurveSettings.positionCurve.Evaluate(Time.time / zAnimation.AnimationParameter.timeMultiplier) * zAnimation.AnimationParameter.heightMultiplier;
-            }
+            add.x = _xanimation.AnimationCurveSettings.positionCurve.Evaluate(Time.time / xAnimation.AnimationParameter.timeMultiplier) * xAnimation.AnimationParameter.heightMultiplier;
         }
 
-        
+        if (_yanimation.AnimationParameter.useAnimation)
+        {
+            add.y = _yanimation.AnimationCurveSettings.positionCurve.Evaluate(Time.time / yAnimation.AnimationParameter.timeMultiplier) * yAnimation.AnimationParameter.heightMultiplier;
+        }
+
+        if (_zanimation.AnimationParameter.useAnimation)
+        {
+            add.z = _zanimation.AnimationCurveSettings.positionCurve.Evaluate(Time.time / zAnimation.AnimationParameter.timeMultiplier) * zAnimation.AnimationParameter.heightMultiplier;
+        }
 
         Vector3 newLocalPosition = Vector3.zero;
 
@@ -611,7 +653,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
 
 
 
-        transform.localPosition = newLocalPosition + startLocalPosition + Vector3.down * CurrentDownAddPerBrokenLeg;
+        return newLocalPosition;
     }
 
     /// <summary>
@@ -774,44 +816,91 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
         legs[nextLeg].animationRaycastOrigin.position -= (legs[_leg].animationRaycastOrigin.position - legs[nextLeg].animationRaycastOrigin.position) / 2;
     }
 
-    private void CheckDeath()
+    public void CheckDeath()
     {
         if (!isDead)
         {
-            
+            float maxNumberOfNormalLegs = legs.Length;
+            currentNumberOfNormalLegs = 0;
+            currentNumberOfAlmostBrokenLegs = 0;
+
+            for (int i = 0; i < legs.Length; i++)
+            {
+                if (legs[i].legState == ELegStates.LS_Normal)
+                {
+                    currentNumberOfNormalLegs++;
+                }
+                else if ((int)legs[i].legState >= (int)almostBrokenLegState)
+                {
+                    currentNumberOfAlmostBrokenLegs++;
+                }
+            }
+
+
+            if (currentNumberOfNormalLegs / maxNumberOfNormalLegs <= minPercentOfNormalLegs)
+            {
+                
+                SetDeath();
+                return;
+            }
+
+            if (currentNumberOfAlmostBrokenLegs / maxNumberOfNormalLegs >= maxPercentOfAlmostBrokenLegs)
+            {
+                SetDeath();
+                return;
+            }
         }
     }
 
-    private void SetDeath()
+    public void SetDeath()
     {
         if (onDeathEvent != null)
         {
             onDeathEvent.Invoke();
         }
-
-
         isDead = true;
+        StartCoroutine(C_WaitToDie());
+    }
+
+    private IEnumerator C_WaitToDie()
+    {
+        float curTime = 0;
+
+        while (curTime <= pauseTillDeath)
+        {
+            //Shake Spider
+            if (deathBodyAnimate)
+            {
+                Vector3 newLocalPosition = UseAnimationCurves(deathXAnimation, deathYAnimation, deathZAnimation);
+                transform.localPosition = newLocalPosition + startLocalPosition;
+            }
+
+
+            curTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();      
+        }    
+
+        
+
         Rigidbody rb = gameObject.AddComponent<Rigidbody>();
+        rb.Sleep();
 
         for (int i = 0; i < legs.Length; i++)
         {
             legs[i].legIKSystem.GiveBodyRigidbody(rb);
             legs[i].beforeDeathLegState = legs[i].currentLegState;
 
-            legs[i].legState = ELegStates.LS_Dead;
             currentLegStateEnum = legs[i].legState;
-            foreach (var state in stateDictionary)
-            {
-                if (state.Key())
-                {
-                    legs[i].currentLegState = state.Value;
-                }
-            }
+            legs[i].currentLegState = legDeadState;
             legs[i].currentLegState.EnterLegState(i);
         }
+
+        yield return new WaitForSeconds(legDeathFoldTime);
+
+        rb.WakeUp();
     }
 
-    private void ResetDeath()
+    public void ResetDeath()
     {
         if (onDeathResetEvent != null)
         {
@@ -828,6 +917,11 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
             legs[i].currentLegState.ExitLegState(i);
             legs[i].currentLegState = legs[i].beforeDeathLegState;
         }
+    }
+
+    public void SetLegState(int _leg, ELegStates _legstate)
+    {
+        legs[_leg].legState = _legstate;
     }
 
     /// <summary>

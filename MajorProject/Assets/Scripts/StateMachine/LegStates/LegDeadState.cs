@@ -5,11 +5,26 @@ using UnityEngine;
 public class LegDeadState : LegState
 {
     private float deathTime = 1f;
-    private Transform[] targetParents;
+    private Vector2 timeRndAdd = Vector2.zero;
+    private float deathPos = 1f;
+    private Vector2 posRndAdd = Vector2.zero;
 
-    public LegDeadState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset, ProzeduralAnimationLogic.LegParams[] _legs) : base(_controller, _legenterset, _legexitreset, _legs)
+
+    private Transform[] targetParents;
+    private Transform[] hintParents;
+    private Vector3[] hintprevPos;
+
+
+    public LegDeadState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset, ProzeduralAnimationLogic.LegParams[] _legs, float _time, Vector2 _timerndadd, float _pos, Vector2 _posrndadd) : base(_controller, _legenterset, _legexitreset, _legs)
     {
         targetParents = new Transform[_legs.Length];
+        hintParents = new Transform[_legs.Length];
+        hintprevPos = new Vector3[_legs.Length];
+
+        deathTime = _time;
+        deathPos = _pos;
+        timeRndAdd = _timerndadd;
+        posRndAdd = _posrndadd;
     }
 
     public override IEnumerator C_MoveLegCoroutine(int _leg)
@@ -20,7 +35,10 @@ public class LegDeadState : LegState
     public override void EnterLegState(int _leg)
     {
         targetParents[_leg] = legs[_leg].ikTarget.parent;
+        hintParents[_leg] = legs[_leg].animationHint.parent;
+        hintprevPos[_leg] = legs[_leg].animationHint.localPosition;
         legs[_leg].ikTarget.parent = legController.transform;
+        legs[_leg].animationHint.parent = legController.transform;
         legController.StartCoroutine(PlayDeathAnimation(_leg));
     }
 
@@ -35,6 +53,8 @@ public class LegDeadState : LegState
         legs[_leg].stopLegAnimationFlag = false;
 
         legs[_leg].ikTarget.parent = targetParents[_leg];
+        legs[_leg].animationHint.parent = hintParents[_leg];
+        legs[_leg].animationHint.localPosition = hintprevPos[_leg];
     }
 
     private IEnumerator PlayDeathAnimation(int _leg)
@@ -45,11 +65,11 @@ public class LegDeadState : LegState
 
         Vector3 dir = legs[_leg].ikTarget.localPosition;
 
-        dir *= 0.35f + Random.Range(-0.15f, 0.15f);
+        dir *= deathPos + Random.Range(posRndAdd.x, posRndAdd.y);
         //dir += legs[_leg].ikTarget.localPosition;
 
         float curTime = 0f;
-        float maxTime = deathTime + Random.Range(0.1f, -0.1f);
+        float maxTime = deathTime + Random.Range(timeRndAdd.x, timeRndAdd.y);
 
         while (curTime < maxTime)
         {
