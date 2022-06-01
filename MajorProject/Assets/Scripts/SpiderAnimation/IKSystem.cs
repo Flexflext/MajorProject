@@ -165,6 +165,11 @@ public class IKSystem : MonoBehaviour
         chainLength = startChainLenght;
     }
 
+    public void SpawnLegAtTransformIndex(GameObject _tospawn, int _chaintransformindex)
+    {
+        Instantiate(_tospawn, bones[_chaintransformindex].position, bones[_chaintransformindex].rotation);
+    }
+
     public void CreateBoxCollidersOnChain()
     {
         boxColliders = new BoxCollider[bones.Length];

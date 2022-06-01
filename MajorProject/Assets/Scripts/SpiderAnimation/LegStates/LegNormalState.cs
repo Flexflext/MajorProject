@@ -31,7 +31,7 @@ public class LegNormalState : LegState
         //Reset Flag
         legs[_leg].moveingLeg = false;
 
-        yield return new WaitForSeconds(legController.LegMovementTime / 2);
+        yield return new WaitForSeconds(legController.LegMovementTime * 0.25f);
 
         legs[_leg].isOnMoveDelay = false;
     }
