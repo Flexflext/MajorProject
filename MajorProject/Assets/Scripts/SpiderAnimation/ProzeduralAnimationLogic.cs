@@ -21,7 +21,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
     [Header("Movement Animation")]
     [Tooltip("Time in wich the Leg Moves from old to new Position")]
     [SerializeField] private float legMovementTime;
-    public float LegMovementTime { get { return legMovementTime; } }
+    public float LegMovementTime { get { return legMovementTime + Random.Range(randomExtraLegMovementTime.x, randomExtraLegMovementTime.y); } }
+    [SerializeField] private Vector2 randomExtraLegMovementTime = Vector2.zero;
     [Tooltip("Curve in wich the leg Moves up")]
     [SerializeField] private AnimationCurve legMovementCurve;
     public AnimationCurve LegMovementCurve { get { return legMovementCurve; } }
@@ -686,60 +687,58 @@ public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
                 //Reset the Target Position
                 legs[i].ikTarget.position = legs[i].nextAnimationTargetPosition;
 
-                if (legs[i].isOnMoveDelay && (preferLongestRangeLeg && preferredLeg != i))
+                if (!legs[i].isOnMoveDelay || (preferLongestRangeLeg && preferredLeg == i))
                 {
-                    continue;
-                }
-
-                //Check if the Calculated Range is greater than the maxLegRange
-                if (ranges >= ((maxLegRange * legs[i].currentRangeMultiplier) * (maxLegRange * legs[i].currentRangeMultiplier)) 
-                    || additionalLegRangeCheck && ((legs[i].legIKSystem.transform.position - legs[i].nextAnimationTargetPosition).sqrMagnitude > (legs[i].legIKSystem.GetMaxRangeOfChain() * legs[i].legIKSystem.GetMaxRangeOfChain())))
-                {
-                    //Check Edge Cases with at Position 0 or half
-                    if (i == 0 || i == legs.Length / 2)
+                    //Check if the Calculated Range is greater than the maxLegRange
+                    if (ranges >= ((maxLegRange * legs[i].currentRangeMultiplier) * (maxLegRange * legs[i].currentRangeMultiplier))
+                        || additionalLegRangeCheck && ((legs[i].legIKSystem.transform.position - legs[i].nextAnimationTargetPosition).sqrMagnitude > (legs[i].legIKSystem.GetMaxRangeOfChain() * legs[i].legIKSystem.GetMaxRangeOfChain())))
                     {
-                        //Check the First Leg (Front Left) (Edge Case)
-                        if (i == 0)
+                        //Check Edge Cases with at Position 0 or half
+                        if (i == 0 || i == legs.Length / 2)
                         {
-                            //Check that the Previous Leg or the Leg on the Other Side is not Moving
-                            if (legs[legs.Length / 2].moveingLeg)
+                            //Check the First Leg (Front Left) (Edge Case)
+                            if (i == 0)
                             {
-                                continue;
+                                //Check that the Previous Leg or the Leg on the Other Side is not Moving
+                                if (legs[legs.Length / 2].moveingLeg)
+                                {
+                                    continue;
+                                }
+                            }
+                            //Check the Leg on the Other Side of the First Leg (Front Right)
+                            else
+                            {
+                                if (legs[0].moveingLeg)
+                                {
+                                    continue;
+                                }
                             }
                         }
-                        //Check the Leg on the Other Side of the First Leg (Front Right)
                         else
                         {
-                            if (legs[0].moveingLeg)
+                            //Check if Left Side Leg or Right Side Leg //-> Left Side
+                            if (i < legs.Length / 2)
                             {
-                                continue;
+                                //Check that the Previous Leg or the Leg on the Other Side is not Moving
+                                if (legs[i - 1].moveingLeg || legs[i + legs.Length / 2 - 1].moveingLeg)
+                                {
+                                    continue;
+                                }
+                            }
+                            else //-> Right Side
+                            {
+                                //Check that the Previous Leg or the Leg on the Other Side is not Moving
+                                if (legs[i - 1].moveingLeg || legs[i - legs.Length / 2].moveingLeg)
+                                {
+                                    continue;
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        //Check if Left Side Leg or Right Side Leg //-> Left Side
-                        if (i < legs.Length / 2)
-                        {
-                            //Check that the Previous Leg or the Leg on the Other Side is not Moving
-                            if (legs[i - 1].moveingLeg || legs[i + legs.Length / 2 - 1].moveingLeg)
-                            {
-                                continue;
-                            }
-                        }
-                        else //-> Right Side
-                        {
-                            //Check that the Previous Leg or the Leg on the Other Side is not Moving
-                            if (legs[i - 1].moveingLeg || legs[i - legs.Length / 2].moveingLeg)
-                            {
-                                continue;
-                            }
-                        }
-                    }
 
 
-                    //Move the Leg at the Index
-                    MoveLeg(i);
+                        //Move the Leg at the Index
+                        MoveLeg(i);
+                    }
                 }
             }
         }

@@ -11,15 +11,16 @@ public class LegBrokenState : LegState
     public override IEnumerator C_MoveLegCoroutine(int _leg)
     {
         float passedTime = 0f;
+        float maxTime = legController.LegMovementTime;
 
         legController.AdjustBrokenLegRotation(_leg);
 
         Vector3 oldPos = legController.transform.localPosition;
 
         //Move the Leg for the Given Time
-        while (passedTime <= legController.LegMovementTime)
+        while (passedTime <= maxTime)
         {
-            if (passedTime <= legController.LegMovementTime / 2)
+            if (passedTime <= maxTime / 2)
             {
                 legController.CurrentDownAddPerBrokenLeg += 0.0025f;
             }
@@ -42,7 +43,7 @@ public class LegBrokenState : LegState
         legs[_leg].moveingLeg = false;
         legController.ResetBrokenLegRotation();
 
-        yield return new WaitForSeconds(legController.LegMovementTime / 2);
+        yield return new WaitForSeconds(maxTime / 2);
 
         legs[_leg].isOnMoveDelay = false;
 
