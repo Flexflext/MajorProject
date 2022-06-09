@@ -6,4 +6,7 @@ public delegate bool StateMachineSwitchDelegate();
 
 public interface IStateMachineController
 {
+    void InitializeStateMachine();
+    void UpdateStateMachine();
+
 }

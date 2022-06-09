@@ -12,7 +12,7 @@ public enum ELegStates
     LS_Broken,
 }
 
-public class ProzeduralAnimationLogic : MonoBehaviour, IStateMachineController
+public class ProzeduralAnimationLogic : MonoBehaviour
 {
     #region Properties
 

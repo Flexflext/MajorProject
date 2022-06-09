@@ -4,11 +4,11 @@ using UnityEngine;
 
 public abstract class StateMachineState
 {
-    protected IStateMachineController controller;
+    protected IStateMachineController stateMachineController;
 
     public StateMachineState(IStateMachineController _controller)
     {
-        controller = _controller;
+        stateMachineController = _controller;
     }
 
     public abstract void EnterState();
