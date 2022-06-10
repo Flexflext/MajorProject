@@ -7,7 +7,11 @@ public class EnemyAttackState : EnemyState
 {
     protected NavMeshAgent agent;
     protected Vector3 hidingPosition;
+
+    protected Vector3 attackPosition;
     bool wasAttacking = false;
+
+    private int attackingIdx = 0;
 
     public EnemyAttackState(IStateMachineController _controller, NavMeshAgent _agent) : base(_controller)
     {
@@ -18,7 +22,7 @@ public class EnemyAttackState : EnemyState
     {
         wasAttacking = false;
         myEnemy.CurrentState = EnemyController.EEnemyStates.ES_Attacking;
-        EnemyManager.Instance.SubscribeToAttacking(myEnemy);
+        attackingIdx = EnemyManager.Instance.SubscribeToAttacking(myEnemy);
         hidingPosition = myEnemy.FindNewHidingPosition();
     }
 
@@ -33,10 +37,13 @@ public class EnemyAttackState : EnemyState
         if (myEnemy.CanAttack)
         {
             if (!wasAttacking)
-	        {
+            {
                 myEnemy.ResetHidingPosition();
                 wasAttacking = true;
-            }   
+            }
+
+            attackPosition = myEnemy.FindAttackPosition(attackingIdx);
+            agent.SetDestination(attackPosition);
 
             //Attack
         }

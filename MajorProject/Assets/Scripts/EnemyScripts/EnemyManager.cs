@@ -14,6 +14,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private int maxNumerOfattackingEnemies = 3;
     [SerializeField] private int currentNumberOfAttackingEnemies = 0;
+    private float currentAngleBetweenAttackingEnemies = 0;
 
     [Header("Boid Settings")]
     [SerializeField] private float boidViewAngle;
@@ -81,7 +82,7 @@ public class EnemyManager : MonoBehaviour
                 continue;
             }
 
-            // Checks that the Enemy is not Agressive
+            // Checks that the Enemy is not agressive
             if (!controller.IsAgressive)
             {
                 // Count Neigbours of the Contoller
@@ -99,7 +100,7 @@ public class EnemyManager : MonoBehaviour
                         // Calculate the direction between the Neighbour and the Enemy
                         Vector3 direction = GetDirectionBetweenPositions(controller.transform.position, neighbour.transform.position);
 
-                        //Check if the neihbour is in Range
+                        //Check if the neighbour is in Range
                         if (direction.sqrMagnitude < boidViewRange * boidViewRange)
                         {
                             // Checkj if the Neigbour is in given view Angle
@@ -117,7 +118,7 @@ public class EnemyManager : MonoBehaviour
 
                 desiredVelocity = Vector3.zero;
 
-                // Calculate desired Velocity with all given Steeringbehavior
+                // Calculate desired Velocity with all given Steeringbehaviors
                 foreach (ASteeringBehavior behavior in behaviors)
                 {
                     desiredVelocity += behavior.CalculateDesiredVelocity(controller, neighbours);
@@ -126,7 +127,7 @@ public class EnemyManager : MonoBehaviour
                 //Check that there are Neigbours
                 if (neighbours.Count != 0)
                 {
-                    // Adds the calculated deired velocity to the agents velocity
+                    // Adds the calculated desired velocity to the agents velocity
                     controller.Agent.velocity += (controller.Agent.velocity + desiredVelocity) * boidSpeed * Time.deltaTime;
                 }
 
@@ -301,6 +302,25 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    public Vector3 GetAttackPosition(float _range, int _idx)
+    {
+        Vector3 origin = Vector3.zero;
+
+        print(_idx);
+        currentAngleBetweenAttackingEnemies = (360f / attackingEnemies.Count) * _idx;
+
+        origin.z = Mathf.Sin(currentAngleBetweenAttackingEnemies * Mathf.Deg2Rad);
+        origin.x = Mathf.Cos(currentAngleBetweenAttackingEnemies * Mathf.Deg2Rad);
+
+        origin.z *= _range;
+        origin.x *= _range;
+
+
+        origin += PlayerPosition;
+
+        return origin;
+    }
+
 
     /// <summary>
     /// Subscribe to the List of Enemys
@@ -328,14 +348,17 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    public void SubscribeToAttacking(EnemyController _controller)
+    public int SubscribeToAttacking(EnemyController _controller)
     {
         // Check if Enemy is already in List
         if (!attackingEnemies.Contains(_controller))
         {
             attackingEnemies.Add(_controller);
             CheckCanCanAttack(_controller);
+            return attackingEnemies.IndexOf(_controller);
         }
+
+        return 0;
     }
 
     /// <summary>

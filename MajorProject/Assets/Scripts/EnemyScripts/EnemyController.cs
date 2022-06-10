@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyController : MonoBehaviour , IStateMachineController
@@ -223,6 +224,22 @@ public class EnemyController : MonoBehaviour , IStateMachineController
         timeReadyAfterAttack = true;
     }
 
+    public Vector3 FindAttackPosition(int _idx)
+    {
+        Vector3 pos = EnemyManager.Instance.GetAttackPosition(attackRange, _idx);
+
+        if (PositionIsOnNavMesh(pos))
+        {
+            if (EnemyManager.Instance.CheckIfPositionCanSeePlayer(pos))
+            {
+                return pos;
+            }
+        }
+
+
+        return transform.position;
+    }
+
     #endregion
 
     #region Private/Protected Methods
@@ -237,7 +254,7 @@ public class EnemyController : MonoBehaviour , IStateMachineController
         NavMeshHit hit;
 
         // Check if hit hit any surface of the NavMesh
-        if (NavMesh.SamplePosition(_position, out hit, 1.0f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(_position, out hit, 3f, NavMesh.AllAreas))
         {
             return true;
         }
