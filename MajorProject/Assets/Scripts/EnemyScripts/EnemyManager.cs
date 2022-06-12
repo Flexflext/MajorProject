@@ -306,7 +306,6 @@ public class EnemyManager : MonoBehaviour
     {
         Vector3 origin = Vector3.zero;
 
-        print(_idx);
         currentAngleBetweenAttackingEnemies = (360f / attackingEnemies.Count) * _idx;
 
         origin.z = Mathf.Sin(currentAngleBetweenAttackingEnemies * Mathf.Deg2Rad);

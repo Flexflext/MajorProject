@@ -482,6 +482,21 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         }
     }
 
+    public LegParams GetFrontRightLeg()
+    {
+        for (int i = legs.Length / 2; i < legs.Length; i++)
+        {
+            if (legs[i].legState < ELegStates.LS_Broken)
+            {
+                legs[i].stopLegAnimationFlag = true;
+                return legs[i];
+            }
+        }
+
+
+        return legs[legs.Length / 2];
+    }
+
     #endregion
 
     #region Private-Methods

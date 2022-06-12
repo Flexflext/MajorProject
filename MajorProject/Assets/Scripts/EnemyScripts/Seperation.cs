@@ -18,7 +18,7 @@ public class Seperation : ASteeringBehavior
         Vector3 total = Vector3.zero;
 
         // Calculate the desired Velo dependent on the Neigbours
-        foreach (var neighbour in _neighbours)
+        foreach (EnemyController neighbour in _neighbours)
         {
             total += (neighbour.transform.position - _controller.transform.position).normalized;
         }

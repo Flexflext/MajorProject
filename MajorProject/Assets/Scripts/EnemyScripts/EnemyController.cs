@@ -37,6 +37,7 @@ public class EnemyController : MonoBehaviour , IStateMachineController
     [SerializeField] protected float agressiveRange;
     [SerializeField] protected float attackRange;
     [SerializeField] protected float attackWaitRange;
+    [SerializeField] protected float moveAwayFromPlayerMultiplier;
 
     [Header("After Attack Properties")]
     [SerializeField] protected Vector2 randomIdleAfterAttackTime;
@@ -238,6 +239,23 @@ public class EnemyController : MonoBehaviour , IStateMachineController
 
 
         return transform.position;
+    }
+
+    public void StayAwayFromPlayer()
+    {
+        Vector3 direction = transform.position - EnemyManager.Instance.PlayerPosition;
+
+        if ((direction).sqrMagnitude < attackRange * attackRange)
+        {
+            myAgent.velocity += direction * moveAwayFromPlayerMultiplier * Time.deltaTime;
+        }
+    }
+
+    public Quaternion GetLookToPlayerRotation()
+    {
+        Vector3 playerPosOnMyYPlane = new Vector3(EnemyManager.Instance.PlayerPosition.x, transform.position.y, EnemyManager.Instance.PlayerPosition.z);
+
+        return Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(playerPosOnMyYPlane - transform.position), 20 * Time.deltaTime); ;
     }
 
     #endregion

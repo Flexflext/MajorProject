@@ -36,6 +36,7 @@ public class EnemyAttackState : EnemyState
     {
         if (myEnemy.CanAttack)
         {
+            //Attack
             if (!wasAttacking)
             {
                 myEnemy.ResetHidingPosition();
@@ -44,18 +45,19 @@ public class EnemyAttackState : EnemyState
 
             attackPosition = myEnemy.FindAttackPosition(attackingIdx);
             agent.SetDestination(attackPosition);
-
-            //Attack
+            myEnemy.transform.rotation = myEnemy.GetLookToPlayerRotation();
         }
         else
         {
             if (EnemyManager.Instance.CheckIfPositionCanSeePlayer(hidingPosition))
             {
-                hidingPosition = myEnemy.FindNewHidingPosition();
+                hidingPosition = myEnemy.FindNewHidingPosition() * Time.deltaTime;
             }
 
             //Find Cover
             agent.SetDestination(hidingPosition);
         }
+
+        myEnemy.StayAwayFromPlayer();
     }
 }
