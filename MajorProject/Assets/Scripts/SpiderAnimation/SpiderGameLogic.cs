@@ -35,22 +35,37 @@ public class SpiderGameLogic : MonoBehaviour
     {
         if (_dooropener != null)
         {
-            ProzeduralAnimationLogic.LegParams leg = animationLogic.GetFrontRightLeg();
-            leg.stopLegAnimationFlag = true;
+            int leg = animationLogic.GetFrontRightLeg();
+            animationLogic.StartStoplegAnimation(leg, true);
 
-
+            Vector3 newPos = Vector3.zero;
+            Vector3 originalPos = animationLogic.GetLegTargetPosition(leg);
             float curtime = 0;
 
             while (curtime < timeTillOpenDoor)
             {
-                //leg.ikTarget.position = Vector3.Lerp(leg.ikTarget.position, _dooropener.transform.position, curtime / timeTillOpenDoor);
-                Debug.Log("HUHU");
+                newPos = Vector3.Lerp(originalPos, _dooropener.transform.position, curtime / timeTillOpenDoor);
+
+                animationLogic.SetLegTargetPosition(newPos, leg);
 
                 curtime += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
 
+            curtime = 0;
             _dooropener.OpenDoor();
+
+            while (curtime < timeTillOpenDoor)
+            {
+                newPos = Vector3.Lerp(_dooropener.transform.position, originalPos, curtime / timeTillOpenDoor);
+
+                animationLogic.SetLegTargetPosition(newPos, leg);
+
+                curtime += Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            }
+
+            animationLogic.StartStoplegAnimation(leg, false);
         }
 
         

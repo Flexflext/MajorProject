@@ -482,20 +482,34 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         }
     }
 
-    public LegParams GetFrontRightLeg()
+    public int GetFrontRightLeg()
     {
         for (int i = legs.Length / 2; i < legs.Length; i++)
         {
             if (legs[i].legState < ELegStates.LS_Broken)
             {
-                legs[i].stopLegAnimationFlag = true;
-                return legs[i];
+                return i;
             }
         }
 
-
-        return legs[legs.Length / 2];
+        return legs.Length / 2;
     }
+
+    public void SetLegTargetPosition(Vector3 _pos, int _idx)
+    {
+        legs[_idx].ikTarget.position = _pos;
+    }
+
+    public void StartStoplegAnimation(int _idx, bool _onoff)
+    {
+        legs[_idx].stopLegAnimationFlag = _onoff;
+    }
+
+    public Vector3 GetLegTargetPosition(int _idx)
+    {
+        return legs[_idx].ikTarget.position;
+    }
+
 
     #endregion
 
