@@ -35,7 +35,7 @@ public class SpiderGameLogic : MonoBehaviour
     {
         if (_dooropener != null)
         {
-            int leg = animationLogic.GetFrontRightLeg();
+            int leg = animationLogic.GetFrontLeg();
             animationLogic.StartStoplegAnimation(leg, true);
 
             Vector3 newPos = Vector3.zero;

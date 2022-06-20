@@ -478,17 +478,25 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     {
         if (legs[_leg].legState != ELegStates.LS_Broken)
         {
+            CheckAndSetLegState(_leg);
+
             legs[_leg].legState ++;
         }
     }
 
-    public int GetFrontRightLeg()
+    public int GetFrontLeg()
     {
+
         for (int i = legs.Length / 2; i < legs.Length; i++)
         {
             if (legs[i].legState < ELegStates.LS_Broken)
             {
                 return i;
+            }
+
+            if (legs[i - legs.Length / 2].legState < ELegStates.LS_Broken)
+            {
+                return i - legs.Length / 2;
             }
         }
 

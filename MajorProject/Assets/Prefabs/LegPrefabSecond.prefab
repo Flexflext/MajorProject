@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 51970635473248909}
   - component: {fileID: 51970635473248911}
   - component: {fileID: 51970635473248908}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Joint 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 51970635569912902}
   - component: {fileID: 51970635569912900}
   - component: {fileID: 51970635569912903}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 51970636352397588}
   - component: {fileID: 51970636352397802}
   - component: {fileID: 51970636352397589}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 51970636639577304}
   - component: {fileID: 51970636639577310}
   - component: {fileID: 51970636639577305}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -364,7 +364,7 @@ GameObject:
   - component: {fileID: 51970636808744672}
   - component: {fileID: 51970636808744675}
   - component: {fileID: 51970636808744674}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: LegPrefabSecond
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -428,7 +428,7 @@ GameObject:
   - component: {fileID: 51970637327964568}
   - component: {fileID: 51970637327964574}
   - component: {fileID: 51970637327964569}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3833531310712206321}
   - component: {fileID: 3833531310712206326}
   - component: {fileID: 3833531310712206327}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: LegPrefabFirst
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 3833531310777547538}
   - component: {fileID: 3833531310777547536}
   - component: {fileID: 3833531310777547537}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3833531310977426066}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Joint 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 3833531311672386325}
   - component: {fileID: 3833531311672386347}
   - component: {fileID: 3833531311672386324}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 3833531312229953786}
   - component: {fileID: 3833531312229953784}
   - component: {fileID: 3833531312229953785}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
