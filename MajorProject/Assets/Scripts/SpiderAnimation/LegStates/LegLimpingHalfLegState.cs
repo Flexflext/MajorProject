@@ -10,14 +10,15 @@ public class LegLimpingHalfLegState : LegState
 
     public override IEnumerator C_MoveLegCoroutine(int _leg)
     {
-        float passedTime = 0f;
         float maxTime = legController.LegMovementTime;
+        float passedTime = 0f;
 
         legController.AdjustBrokenLegRotation(_leg);
 
         //Move the Leg for the Given Time
         while (passedTime <= maxTime)
         {
+
             //Lerp the Target Position and add the Evaluated Curve to it
             legs[_leg].ikTarget.position = Vector3.Lerp(legs[_leg].ikTarget.position, legs[_leg].nextAnimationTargetPosition, passedTime / maxTime) + legController.LegMovementCurve.Evaluate(passedTime / maxTime) * (legController.transform.up * 0.5f);
 

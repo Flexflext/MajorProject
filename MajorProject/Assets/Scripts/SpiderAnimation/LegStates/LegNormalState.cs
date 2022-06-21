@@ -10,12 +10,23 @@ public class LegNormalState : LegState
 
     public override IEnumerator C_MoveLegCoroutine(int _leg)
     {
+        float passedExtraAnimTime = 0f;
         float passedTime = 0f;
         float maxTime = legController.LegMovementTime;
+        legController.SetLegCanMoveOppesite(_leg, false);
 
         //Move the Leg for the Given Time
         while (passedTime <= maxTime)
         {
+            if ((passedExtraAnimTime > (maxTime * 0.5f)) && !legs[_leg].canUseOppesiteLegs)
+            {
+                legController.SetLegCanMoveOppesite(_leg, true);
+            }
+            else
+            {
+                passedExtraAnimTime += Time.deltaTime;
+            }
+
             //Lerp the Target Position and add the Evaluated Curve to it
             legs[_leg].ikTarget.position = Vector3.Lerp(legs[_leg].ikTarget.position, legs[_leg].nextAnimationTargetPosition, passedTime / maxTime) + legController.LegMovementCurve.Evaluate(passedTime / maxTime) * legController.transform.up;
 

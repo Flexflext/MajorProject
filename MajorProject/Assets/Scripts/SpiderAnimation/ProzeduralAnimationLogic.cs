@@ -176,7 +176,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     }
 
     [System.Serializable]
-    public struct LegParams
+    public class LegParams
     {
 #if UNITY_EDITOR
         [HideInInspector] public string name;
@@ -208,6 +208,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         [HideInInspector] public float rangeLegToCalcPos;
         [HideInInspector] public LegState currentLegState;
         [HideInInspector] public LegState beforeDeathLegState;
+        /*[HideInInspector] */public bool canUseOppesiteLegs;
     }
 
     #endregion
@@ -518,6 +519,10 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         return legs[_idx].ikTarget.position;
     }
 
+    public void SetLegCanMoveOppesite(int _leg, bool _toset)
+    {
+        legs[_leg].canUseOppesiteLegs = _toset;
+    }
 
     #endregion
 
@@ -757,7 +762,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                             if (i < legs.Length / 2)
                             {
                                 //Check that the Previous Leg or the Leg on the Other Side is not Moving
-                                if (legs[i - 1].moveingLeg || legs[i + legs.Length / 2 - 1].moveingLeg)
+                                if ((legs[i - 1].moveingLeg || legs[i + legs.Length / 2 - 1].moveingLeg))
                                 {
                                     continue;
                                 }
@@ -765,13 +770,44 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                             else //-> Right Side
                             {
                                 //Check that the Previous Leg or the Leg on the Other Side is not Moving
-                                if (legs[i - 1].moveingLeg || legs[i - legs.Length / 2].moveingLeg)
+                                if ((legs[i - 1].moveingLeg || legs[i - legs.Length / 2].moveingLeg))
                                 {
                                     continue;
                                 }
                             }
                         }
 
+                        if (legs.Length == 4)
+                        {
+                            if (i == 0)
+                            {
+                                if (!legs[legs.Length - 1].canUseOppesiteLegs)
+                                {
+                                    continue;
+                                }
+                            }
+                            else if (i == 1)
+                            {
+                                if (!legs[legs.Length / 2].canUseOppesiteLegs)
+                                {
+                                    continue;
+                                }
+                            }
+                            else if (i == 2)
+                            {
+                                if (!legs[legs.Length / 2 - 1].canUseOppesiteLegs)
+                                {
+                                    continue;
+                                }
+                            }
+                            else if (i == 3)
+                            {
+                                if (!legs[0].canUseOppesiteLegs)
+                                {
+                                    continue;
+                                }
+                            }
+                        }
 
                         //Move the Leg at the Index
                         MoveLeg(i);
@@ -1061,6 +1097,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
             legs[i].nextAnimationTargetPosition = legs[i].ikTarget.position;
             legs[i].hintLocalStartPosition = legs[i].animationHint.localPosition;
             legs[i].originLocalStartPosition = legs[i].animationRaycastOrigin.localPosition;
+            legs[i].canUseOppesiteLegs = true;
 
             legs[i].currentRangeMultiplier = 1;
         }
