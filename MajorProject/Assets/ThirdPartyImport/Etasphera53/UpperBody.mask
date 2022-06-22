@@ -1,0 +1,287 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UpperBody
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Character1_Reference
+    m_Weight: 0
+  - m_Path: Character1_Reference/Character1_HipsTranslation
+    m_Weight: 0
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips
+    m_Weight: 0
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_LeftUpLeg
+    m_Weight: 0
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_LeftUpLeg/Character1_LeftLeg
+    m_Weight: 0
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_LeftUpLeg/Character1_LeftLeg/Character1_LeftFoot
+    m_Weight: 0
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_LeftUpLeg/Character1_LeftLeg/Character1_LeftFoot/Character1_LeftToeBase
+    m_Weight: 0
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_RightUpLeg
+    m_Weight: 0
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_RightUpLeg/Character1_RightLeg
+    m_Weight: 0
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_RightUpLeg/Character1_RightLeg/Character1_RightFoot
+    m_Weight: 0
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_RightUpLeg/Character1_RightLeg/Character1_RightFoot/Character1_RightToeBase
+    m_Weight: 0
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandIndex1
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandIndex1/Character1_LeftHandIndex2
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandIndex1/Character1_LeftHandIndex2/Character1_LeftHandIndex3
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandIndex1/Character1_LeftHandIndex2/Character1_LeftHandIndex3/Character1_LeftHandIndex4
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandMiddle1
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandMiddle1/Character1_LeftHandMiddle2
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandMiddle1/Character1_LeftHandMiddle2/Character1_LeftHandMiddle3
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandMiddle1/Character1_LeftHandMiddle2/Character1_LeftHandMiddle3/Character1_LeftHandMiddle4
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandPinky1
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandPinky1/Character1_LeftHandPinky2
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandPinky1/Character1_LeftHandPinky2/Character1_LeftHandPinky3
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandPinky1/Character1_LeftHandPinky2/Character1_LeftHandPinky3/Character1_LeftHandPinky4
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandRing1
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandRing1/Character1_LeftHandRing2
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandRing1/Character1_LeftHandRing2/Character1_LeftHandRing3
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandRing1/Character1_LeftHandRing2/Character1_LeftHandRing3/Character1_LeftHandRing4
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandThumb1
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandThumb1/Character1_LeftHandThumb2
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandThumb1/Character1_LeftHandThumb2/Character1_LeftHandThumb3
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand/Character1_LeftHandThumb1/Character1_LeftHandThumb2/Character1_LeftHandThumb3/Character1_LeftHandThumb4
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_Neck
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_Neck/Character1_Head
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandIndex1
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandIndex1/Character1_RightHandIndex2
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandIndex1/Character1_RightHandIndex2/Character1_RightHandIndex3
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandIndex1/Character1_RightHandIndex2/Character1_RightHandIndex3/Character1_RightHandIndex4
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandMiddle1
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandMiddle1/Character1_RightHandMiddle2
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandMiddle1/Character1_RightHandMiddle2/Character1_RightHandMiddle3
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandMiddle1/Character1_RightHandMiddle2/Character1_RightHandMiddle3/Character1_RightHandMiddle4
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandPinky1
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandPinky1/Character1_RightHandPinky2
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandPinky1/Character1_RightHandPinky2/Character1_RightHandPinky3
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandPinky1/Character1_RightHandPinky2/Character1_RightHandPinky3/Character1_RightHandPinky4
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandRing1
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandRing1/Character1_RightHandRing2
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandRing1/Character1_RightHandRing2/Character1_RightHandRing3
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandRing1/Character1_RightHandRing2/Character1_RightHandRing3/Character1_RightHandRing4
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandThumb1
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandThumb1/Character1_RightHandThumb2
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandThumb1/Character1_RightHandThumb2/Character1_RightHandThumb3
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Spine2/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand/Character1_RightHandThumb1/Character1_RightHandThumb2/Character1_RightHandThumb3/Character1_RightHandThumb4
+    m_Weight: 1
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Weapon1
+    m_Weight: 0
+  - m_Path: Character1_Reference/Character1_HipsTranslation/Weapon1/Weapon2
+    m_Weight: 0
+  - m_Path: group1
+    m_Weight: 1
+  - m_Path: group1/Arm
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_hand_l
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_hand_r
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_index_01_l
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_index_01_r
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_index_02_l
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_index_02_r
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_index_03_l
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_index_03_r
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_lowerarm_l
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_lowerarm_r
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_middle_01_l
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_middle_01_r
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_middle_02_l
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_middle_02_r
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_middle_03_l
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_middle_03_r
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_pinky_01_l
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_pinky_01_r
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_pinky_02_l
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_pinky_02_r
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_pinky_03_l
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_pinky_03_r
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_ring_01_l
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_ring_01_r
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_ring_02_l
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_ring_02_r
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_ring_03_l
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_ring_03_r
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_thumb_01_l
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_thumb_01_r
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_thumb_02_l
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_thumb_02_r
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_thumb_03_l
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_thumb_03_r
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_upperarm_l
+    m_Weight: 0
+  - m_Path: group1/Arm/Arm_upperarm_r
+    m_Weight: 0
+  - m_Path: group1/Armor
+    m_Weight: 0
+  - m_Path: group1/Armor/Armor_calf_elb_l
+    m_Weight: 0
+  - m_Path: group1/Armor/Armor_calf_elb_r
+    m_Weight: 0
+  - m_Path: group1/Armor/Armor_calf_l
+    m_Weight: 0
+  - m_Path: group1/Armor/Armor_calf_r
+    m_Weight: 0
+  - m_Path: group1/Armor/Armor_hips
+    m_Weight: 0
+  - m_Path: group1/Armor/Armor_lowerarm_elb_l
+    m_Weight: 0
+  - m_Path: group1/Armor/Armor_lowerarm_elb_r
+    m_Weight: 0
+  - m_Path: group1/Armor/Armor_thigh_l
+    m_Weight: 0
+  - m_Path: group1/Armor/Armor_thigh_r
+    m_Weight: 0
+  - m_Path: group1/Armor/Armor_top_l
+    m_Weight: 0
+  - m_Path: group1/Armor/Armor_top_r
+    m_Weight: 0
+  - m_Path: group1/Armor/Armor_upperarm_l
+    m_Weight: 0
+  - m_Path: group1/Armor/Armor_upperarm_r
+    m_Weight: 0
+  - m_Path: group1/Body
+    m_Weight: 0
+  - m_Path: group1/Body/Body_cyl_l_1
+    m_Weight: 0
+  - m_Path: group1/Body/Body_cyl_l_2
+    m_Weight: 0
+  - m_Path: group1/Body/Body_cyl_l_3
+    m_Weight: 0
+  - m_Path: group1/Body/Body_cyl_r_1
+    m_Weight: 0
+  - m_Path: group1/Body/Body_cyl_r_2
+    m_Weight: 0
+  - m_Path: group1/Body/Body_cyl_r_3
+    m_Weight: 0
+  - m_Path: group1/Body/Body_hips
+    m_Weight: 0
+  - m_Path: group1/Body/Body_spine1
+    m_Weight: 0
+  - m_Path: group1/Body/Body_spine2
+    m_Weight: 0
+  - m_Path: group1/Gun
+    m_Weight: 0
+  - m_Path: group1/Head
+    m_Weight: 0
+  - m_Path: group1/Leg
+    m_Weight: 0
+  - m_Path: group1/Leg/Leg_calf_l
+    m_Weight: 0
+  - m_Path: group1/Leg/Leg_calf_r
+    m_Weight: 0
+  - m_Path: group1/Leg/Leg_foot_l
+    m_Weight: 0
+  - m_Path: group1/Leg/Leg_foot_r
+    m_Weight: 0
+  - m_Path: group1/Leg/Leg_thigh_l
+    m_Weight: 0
+  - m_Path: group1/Leg/Leg_thigh_r
+    m_Weight: 0

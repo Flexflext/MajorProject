@@ -43,9 +43,16 @@ public class EnemyAttackState : EnemyState
                 wasAttacking = true;
             }
 
+            myEnemy.Shoot();
             attackPosition = myEnemy.FindAttackPosition(attackingIdx);
             agent.SetDestination(attackPosition);
-            myEnemy.transform.rotation = myEnemy.GetLookToPlayerRotation();
+
+            if (Vector3.Dot(myEnemy.transform.forward, EnemyManager.Instance.PlayerPosition - myEnemy.transform.position) < 0)
+            {
+                myEnemy.transform.rotation = myEnemy.GetLookToPlayerRotation();
+            }
+
+
         }
         else
         {

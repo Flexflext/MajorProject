@@ -38,6 +38,10 @@ public class EnemyController : MonoBehaviour , IStateMachineController
     [SerializeField] protected float attackRange;
     [SerializeField] protected float attackWaitRange;
     [SerializeField] protected float moveAwayFromPlayerMultiplier;
+    [SerializeField] protected GameObject bulletPrefab;
+    [SerializeField] protected Transform barrel;
+    [SerializeField] protected float bulletSpeed;
+    [SerializeField] protected float bulletUpMultiplier;
 
     [Header("After Attack Properties")]
     [SerializeField] protected Vector2 randomIdleAfterAttackTime;
@@ -55,6 +59,7 @@ public class EnemyController : MonoBehaviour , IStateMachineController
     protected bool nextIdleState;
 
     protected AttackWaitingPosition currentWaitingPosition;
+    protected Animator enemyAnimator;
 
     protected EnemyState currentEnemyState;
     protected Dictionary<EnemyState, Dictionary<StateMachineSwitchDelegate, EnemyState>> stateDictionary;
@@ -67,11 +72,13 @@ public class EnemyController : MonoBehaviour , IStateMachineController
     {
         EnemyManager.Instance.EnemySubscribe(this);
         myAgent = GetComponent<NavMeshAgent>();
+        enemyAnimator = GetComponentInChildren<Animator>();
         InitializeStateMachine();
     }
 
     private void Update()
     {
+        SetAnimationVelo();
         isAgressive = CheckIfEnemyIsAgressive();
         UpdateStateMachine();
     }
@@ -258,6 +265,15 @@ public class EnemyController : MonoBehaviour , IStateMachineController
         return Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(playerPosOnMyYPlane - transform.position), 20 * Time.deltaTime); ;
     }
 
+    public void Shoot()
+    {
+        Vector3 velo = ((EnemyManager.Instance.PlayerPosition - barrel.transform.position).normalized + barrel.up * bulletUpMultiplier) * bulletSpeed;
+
+        Rigidbody bulletRB = Instantiate(bulletPrefab, barrel.position, Quaternion.identity).GetComponent<Rigidbody>();
+
+        bulletRB.AddForce(velo, ForceMode.Impulse);
+    }
+
     #endregion
 
     #region Private/Protected Methods
@@ -310,6 +326,14 @@ public class EnemyController : MonoBehaviour , IStateMachineController
         }
 
         return false;
+    }
+
+    protected void SetAnimationVelo()
+    {
+        Vector2 velo = ExtraMath.GetAnimatorVeloFromAgent(new Vector2(transform.right.x, transform.right.z), new Vector2(myAgent.velocity.x, myAgent.velocity.z));
+
+        enemyAnimator.SetFloat("XVelo", velo.x);
+        enemyAnimator.SetFloat("YVelo", velo.y);
     }
 
     #endregion
