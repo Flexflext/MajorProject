@@ -6,11 +6,14 @@ using Cinemachine;
 public class PlayerCameraController : MonoBehaviour
 {
     [SerializeField] private float camSensitivity = 100.0f;
+    [SerializeField] private float swaySpeed = 20;
 
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCam;
     [SerializeField] private Transform camPosition;
+    [SerializeField] private Transform weaponSwayTransdorm;
     private CinemachineBrain cinemachineBrain;
     private Camera mainCam;
+    private HeadBob motionBob;
 
     private Vector2 mouseInput;
 
@@ -18,11 +21,17 @@ public class PlayerCameraController : MonoBehaviour
     {
         mainCam = Camera.main;
         cinemachineBrain = mainCam.GetComponent<CinemachineBrain>();
+        motionBob = GetComponent<HeadBob>();
     }
 
     private void Update()
     {
         RotateCamera();
+    }
+
+    private void LateUpdate()
+    {
+        weaponSwayTransdorm.rotation = Quaternion.Lerp(weaponSwayTransdorm.rotation, Quaternion.Euler(mouseInput.y, mouseInput.x, 0), swaySpeed * Time.deltaTime);
     }
 
     private void RotateCamera()
@@ -32,15 +41,15 @@ public class PlayerCameraController : MonoBehaviour
         mouseInput.x += Input.GetAxis("Mouse X") * camSensitivity * Time.deltaTime;
         mouseInput.y -= Input.GetAxis("Mouse Y") * camSensitivity * Time.deltaTime;
 
-        mouseInput.y = Mathf.Clamp(90, -90, mouseInput.y);
+        mouseInput.y = Mathf.Clamp(mouseInput.y, -85, 85);
 
-        mainCam.transform.localRotation = Quaternion.Euler(mouseInput.y, 0, 0);
+        camPosition.localEulerAngles = new Vector3(mouseInput.y,0,0);
         transform.localRotation = Quaternion.Euler(0, mouseInput.x, 0);
     }
 
-    public void HeadBobbing(Vector3 _inputdir, float _intensity)
+    public void HeadBobbing(float _intensity)
     {
-        //transform.localPosition += in
+        motionBob.SetPlayerSpeed(_intensity);
     }
 
     /// <summary>

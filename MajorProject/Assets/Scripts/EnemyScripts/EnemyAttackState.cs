@@ -13,6 +13,9 @@ public class EnemyAttackState : EnemyState
 
     private int attackingIdx = 0;
 
+    private float timeTillNextAttack = 1f;
+    private float curTimeTillNextAttack;
+
     public EnemyAttackState(IStateMachineController _controller, NavMeshAgent _agent) : base(_controller)
     {
         agent = _agent;
@@ -24,12 +27,14 @@ public class EnemyAttackState : EnemyState
         myEnemy.CurrentState = EnemyController.EEnemyStates.ES_Attacking;
         attackingIdx = EnemyManager.Instance.SubscribeToAttacking(myEnemy);
         hidingPosition = myEnemy.FindNewHidingPosition();
+        myEnemy.SetAttackAnimations(0);
     }
 
     public override void ExitState()
     {
         myEnemy.ResetHidingPosition();
         EnemyManager.Instance.UnSubscribeToAttacking(myEnemy);
+        myEnemy.SetAttackAnimations(0);
     }
 
     public override void UpdateState()
@@ -40,31 +45,40 @@ public class EnemyAttackState : EnemyState
             if (!wasAttacking)
             {
                 myEnemy.ResetHidingPosition();
+                myEnemy.SetAttackAnimations(1);
                 wasAttacking = true;
             }
 
-            myEnemy.Shoot();
-            attackPosition = myEnemy.FindAttackPosition(attackingIdx);
-            agent.SetDestination(attackPosition);
-
-            if (Vector3.Dot(myEnemy.transform.forward, EnemyManager.Instance.PlayerPosition - myEnemy.transform.position) < 0)
+            if (curTimeTillNextAttack <= 0)
             {
-                myEnemy.transform.rotation = myEnemy.GetLookToPlayerRotation();
+                myEnemy.Shoot();
+                curTimeTillNextAttack = timeTillNextAttack;
+            }
+            else
+            {
+                curTimeTillNextAttack -= Time.deltaTime;
             }
 
+            
+            attackPosition = myEnemy.FindAttackPosition(attackingIdx);
+            agent.SetDestination(attackPosition);
+            myEnemy.transform.rotation = myEnemy.GetLookToPlayerRotation();
 
+            myEnemy.StayAwayFromPlayer(1);
         }
         else
         {
             if (EnemyManager.Instance.CheckIfPositionCanSeePlayer(hidingPosition))
             {
-                hidingPosition = myEnemy.FindNewHidingPosition() * Time.deltaTime;
+                hidingPosition = myEnemy.FindNewHidingPosition(); //* Time.deltaTime;
+                myEnemy.ResetHidingPosition();
             }
 
             //Find Cover
             agent.SetDestination(hidingPosition);
+            myEnemy.StayAwayFromPlayer(0.5f);
         }
 
-        myEnemy.StayAwayFromPlayer();
+        
     }
 }

@@ -5,44 +5,106 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float playerSpeed;
+    [SerializeField] private float maxSpeed;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private float jumpCoyoteTimer;
+    [SerializeField] private float deceleration = 3f;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float groundCheckOffset = 1f;
+    private float curJumpCoyoteTimer;
 
     private bool isControllingPlayer = true;
     private Vector3 input;
     private Rigidbody rb;
+    private PlayerCameraController playerCameraController;
+    private float currentSpeed;
+
+    private bool isGrounded = true;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        playerCameraController = GetComponent<PlayerCameraController>();
+        rb.maxDepenetrationVelocity = maxSpeed;
     }
 
     private void Update()
     {
         if (!isControllingPlayer) return;
 
-        GetPlayerInput();
-    }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Jump();
+        }
 
-    private void FixedUpdate()
-    {
-        if (!isControllingPlayer) return;
+        GroundCheck();
+        GetPlayerInput();
+
+        if (isGrounded)
+        {
+            playerCameraController.HeadBobbing(currentSpeed);
+        }
+        else
+        {
+            playerCameraController.HeadBobbing(0);
+        }
 
         MovePlayer();
     }
 
     private void GetPlayerInput()
     {
+
         input = Vector3.zero;
 
-        input += transform.right * Input.GetAxisRaw("Horizontal");
-        input += transform.forward * Input.GetAxisRaw("Vertical");
+        input += transform.right * Input.GetAxis("Horizontal");
+        input += transform.forward * Input.GetAxis("Vertical");
 
         input.Normalize();
 
-        input *= (playerSpeed) * Time.deltaTime;
+        input *= (playerSpeed);
     }
 
     private void MovePlayer()
     {
-        rb.MovePosition(transform.position + input);
+        if (curJumpCoyoteTimer <= 0 && !isGrounded)
+        {
+            return;
+        }
+        else if (!isGrounded)
+        {
+            curJumpCoyoteTimer -= Time.deltaTime;
+        }
+
+
+        rb.velocity += input * Time.deltaTime;
+
+        //if (!isGrounded) return;
+        currentSpeed = rb.velocity.magnitude;
+
+        if (currentSpeed > maxSpeed)
+        {
+            rb.velocity -= (1/ currentSpeed * rb.velocity) * Time.deltaTime * deceleration;
+        }
+    }
+
+    private void Jump()
+    {
+        if (!isGrounded) return;
+
+        isGrounded = false;
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+
+        curJumpCoyoteTimer = jumpCoyoteTimer;
+    }
+
+    private void GroundCheck()
+    {
+        isGrounded = Physics.CheckSphere(transform.position - Vector3.down * groundCheckOffset, 0.2f, groundLayer);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(transform.position - Vector3.down * groundCheckOffset, 0.2f);
     }
 }

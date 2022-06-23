@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(NavMeshAgent))]
@@ -42,6 +43,7 @@ public class EnemyController : MonoBehaviour , IStateMachineController
     [SerializeField] protected Transform barrel;
     [SerializeField] protected float bulletSpeed;
     [SerializeField] protected float bulletUpMultiplier;
+    [SerializeField] protected float playerDeltaDistranceToAttackPos;
 
     [Header("After Attack Properties")]
     [SerializeField] protected Vector2 randomIdleAfterAttackTime;
@@ -60,6 +62,7 @@ public class EnemyController : MonoBehaviour , IStateMachineController
 
     protected AttackWaitingPosition currentWaitingPosition;
     protected Animator enemyAnimator;
+    protected Rig rig;
 
     protected EnemyState currentEnemyState;
     protected Dictionary<EnemyState, Dictionary<StateMachineSwitchDelegate, EnemyState>> stateDictionary;
@@ -73,6 +76,7 @@ public class EnemyController : MonoBehaviour , IStateMachineController
         EnemyManager.Instance.EnemySubscribe(this);
         myAgent = GetComponent<NavMeshAgent>();
         enemyAnimator = GetComponentInChildren<Animator>();
+        rig = GetComponentInChildren<Rig>();
         InitializeStateMachine();
     }
 
@@ -84,7 +88,7 @@ public class EnemyController : MonoBehaviour , IStateMachineController
     }
 
     private void OnDestroy()
-    {
+    { 
         EnemyManager.Instance.EnemyUnSubscribe(this);
     }
 
@@ -199,7 +203,7 @@ public class EnemyController : MonoBehaviour , IStateMachineController
 
     public Vector3 FindNewHidingPosition()
     {
-        ResetHidingPosition();
+        //ResetHidingPosition();
 
         Vector3 pos = EnemyManager.Instance.FindAttackWaitingPosition(attackWaitRange, transform.position, out currentWaitingPosition);
 
@@ -236,23 +240,25 @@ public class EnemyController : MonoBehaviour , IStateMachineController
     {
         Vector3 pos = EnemyManager.Instance.GetAttackPosition(attackRange, _idx);
 
-        if (PositionIsOnNavMesh(pos))
+        if ((pos - transform.position).sqrMagnitude >= playerDeltaDistranceToAttackPos)
         {
-            if (EnemyManager.Instance.CheckIfPositionCanSeePlayer(pos))
+            if (PositionIsOnNavMesh(pos))
             {
-                return pos;
+                if (EnemyManager.Instance.CheckIfPositionCanSeePlayer(pos))
+                {
+                    return pos;
+                }
             }
         }
-
 
         return transform.position;
     }
 
-    public void StayAwayFromPlayer()
+    public void StayAwayFromPlayer(float _multiplier)
     {
         Vector3 direction = transform.position - EnemyManager.Instance.PlayerPosition;
 
-        if ((direction).sqrMagnitude < attackRange * attackRange)
+        if ((direction).sqrMagnitude < (attackRange * attackRange) * _multiplier)
         {
             myAgent.velocity += direction * moveAwayFromPlayerMultiplier * Time.deltaTime;
         }
@@ -273,6 +279,12 @@ public class EnemyController : MonoBehaviour , IStateMachineController
 
         bulletRB.AddForce(velo, ForceMode.Impulse);
     }
+
+    public void SetAttackAnimations(int _setto)
+    {
+        enemyAnimator.SetLayerWeight(1, _setto);
+        rig.weight = _setto;
+    } 
 
     #endregion
 
