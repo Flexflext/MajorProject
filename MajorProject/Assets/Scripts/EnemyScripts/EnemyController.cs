@@ -64,6 +64,9 @@ public class EnemyController : MonoBehaviour , IStateMachineController
     protected Animator enemyAnimator;
     protected Rig rig;
 
+    protected bool isDead;
+    protected EnemyHealth enemyHealth;
+
     protected EnemyState currentEnemyState;
     protected Dictionary<EnemyState, Dictionary<StateMachineSwitchDelegate, EnemyState>> stateDictionary;
 
@@ -75,6 +78,8 @@ public class EnemyController : MonoBehaviour , IStateMachineController
     {
         EnemyManager.Instance.EnemySubscribe(this);
         myAgent = GetComponent<NavMeshAgent>();
+        enemyHealth = GetComponent<EnemyHealth>();
+        enemyHealth.SubToOnDeath(OnDeath);
         enemyAnimator = GetComponentInChildren<Animator>();
         rig = GetComponentInChildren<Rig>();
         InitializeStateMachine();
@@ -88,7 +93,8 @@ public class EnemyController : MonoBehaviour , IStateMachineController
     }
 
     private void OnDestroy()
-    { 
+    {
+        enemyHealth.UnsubToOnDeath(OnDeath);
         EnemyManager.Instance.EnemyUnSubscribe(this);
     }
 
@@ -102,6 +108,7 @@ public class EnemyController : MonoBehaviour , IStateMachineController
         EnemyWalkingState walkState = new EnemyWalkingState(this, myAgent);
         EnemyAttackState attackState = new EnemyAttackState(this, myAgent);
         EnemyAfterAttackState afterAttackState = new EnemyAfterAttackState(this, myAgent);
+        EnemyDeathState deathState = new EnemyDeathState(this);
 
         stateDictionary = new Dictionary<EnemyState, Dictionary<StateMachineSwitchDelegate, EnemyState>>
         {
@@ -109,6 +116,7 @@ public class EnemyController : MonoBehaviour , IStateMachineController
                 idleState,
                 new Dictionary<StateMachineSwitchDelegate, EnemyState>
                 {
+                    {() => isDead, deathState },
                     {() => isAgressive, attackState },
                     {() => !nextIdleState, walkState },
                 }
@@ -117,6 +125,7 @@ public class EnemyController : MonoBehaviour , IStateMachineController
                 walkState,
                 new Dictionary<StateMachineSwitchDelegate, EnemyState>
                 {
+                    {() => isDead, deathState },
                     {() => isAgressive, attackState },
                     {() => nextIdleState, idleState },
                 }
@@ -125,6 +134,7 @@ public class EnemyController : MonoBehaviour , IStateMachineController
                 attackState,
                 new Dictionary<StateMachineSwitchDelegate, EnemyState>
                 {
+                    {() => isDead, deathState },
                     {() => !isAgressive, afterAttackState },
                 }
             },
@@ -132,8 +142,15 @@ public class EnemyController : MonoBehaviour , IStateMachineController
                 afterAttackState,
                 new Dictionary<StateMachineSwitchDelegate, EnemyState>
                 {
+                    {() => isDead, deathState },
                     {() => isAgressive, attackState },
                     {() => timeReadyAfterAttack, idleState },
+                }
+            },
+            {
+                deathState,
+                new Dictionary<StateMachineSwitchDelegate, EnemyState>
+                {
                 }
             },
         };
@@ -286,6 +303,11 @@ public class EnemyController : MonoBehaviour , IStateMachineController
         rig.weight = _setto;
     } 
 
+    public void Die()
+    {
+        Destroy(this.gameObject);
+    }
+
     #endregion
 
     #region Private/Protected Methods
@@ -346,6 +368,13 @@ public class EnemyController : MonoBehaviour , IStateMachineController
 
         enemyAnimator.SetFloat("XVelo", velo.x);
         enemyAnimator.SetFloat("YVelo", velo.y);
+    }
+
+    protected void OnDeath()
+    {
+        //Disable Colliders
+        isDead = true;
+        enemyAnimator.SetTrigger("isDead");
     }
 
     #endregion

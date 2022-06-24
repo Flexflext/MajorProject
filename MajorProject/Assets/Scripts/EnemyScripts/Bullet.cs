@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private LayerMask hitLayer;
     [SerializeField] private float dmg;
 
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == hitLayer.value)
-        {
+        IDamageable damageObj = collision.collider.GetComponent<IDamageable>();
 
+        if (damageObj != null)
+        {
+            damageObj.TakeDamage(dmg);
+        }
+        else
+        {
+            damageObj = collision.collider.GetComponentInParent<IDamageable>();
+
+            if (damageObj != null)
+            {
+                damageObj.TakeDamage(dmg);
+            }
         }
         
 

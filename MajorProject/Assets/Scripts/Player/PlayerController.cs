@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float deceleration = 3f;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckOffset = 1f;
+    [SerializeField] private float shootForce = 20f;
+    [SerializeField] private Transform shootTransform;
+    [SerializeField] private GameObject bulletPrefab;
     private float curJumpCoyoteTimer;
 
     private bool isControllingPlayer = true;
@@ -18,11 +21,16 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private PlayerCameraController playerCameraController;
     private float currentSpeed;
+    private float shootdelay = 0.6f;
+    private float curshootdelay = 0;
 
     private bool isGrounded = true;
 
+    private Animator weaponAnimator;
+
     private void Awake()
     {
+        weaponAnimator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         playerCameraController = GetComponent<PlayerCameraController>();
         rb.maxDepenetrationVelocity = maxSpeed;
@@ -36,6 +44,20 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
         }
+
+        if (curshootdelay <= 0)
+	    {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                Shoot();
+            }
+        }
+        else
+        {
+            curshootdelay -= Time.deltaTime;
+        }
+
+        
 
         GroundCheck();
         GetPlayerInput();
@@ -54,7 +76,6 @@ public class PlayerController : MonoBehaviour
 
     private void GetPlayerInput()
     {
-
         input = Vector3.zero;
 
         input += transform.right * Input.GetAxis("Horizontal");
@@ -101,6 +122,17 @@ public class PlayerController : MonoBehaviour
     private void GroundCheck()
     {
         isGrounded = Physics.CheckSphere(transform.position - Vector3.down * groundCheckOffset, 0.2f, groundLayer);
+    }
+
+    private void Shoot()
+    {
+        weaponAnimator.SetTrigger("Shoot");
+        playerCameraController.ShootShake();
+        playerCameraController.AddRecoil(0, -2.5f);
+        curshootdelay = shootdelay;
+        Rigidbody bullet = Instantiate(bulletPrefab, shootTransform.position, Quaternion.identity).GetComponent<Rigidbody>();
+
+        bullet.AddForce(shootTransform.forward * shootForce, ForceMode.Impulse);
     }
 
     private void OnDrawGizmos()

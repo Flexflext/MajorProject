@@ -8,6 +8,12 @@ public class HeadBob : MonoBehaviour
     [SerializeField] private float frequency = 10.0f;
     [SerializeField] private float focusDistance = 15.0f;
 
+    [Space]
+    [SerializeField] private float shakeamplitude = 0.015f;
+    [SerializeField] private float shakefrequency = 10.0f;
+    [SerializeField] private float shaketime = 15.0f;
+    private float curtime;
+
     [SerializeField] private Transform camHolder;
     [SerializeField] private Transform cam;
 
@@ -16,6 +22,7 @@ public class HeadBob : MonoBehaviour
 
     private void Awake()
     {
+        
         startPos = cam.transform.localPosition;
     }
 
@@ -25,6 +32,11 @@ public class HeadBob : MonoBehaviour
         ResetCamPosition();
         cam.LookAt(FocusTarget());
 
+        if (curtime > 0)
+        {
+            ShakeScreen();
+            curtime -= Time.deltaTime;
+        }
     }
 
     private void CheckMotion()
@@ -65,5 +77,19 @@ public class HeadBob : MonoBehaviour
     public void SetPlayerSpeed(float _speed)
     {
         playerSpeed = _speed;
+    }
+
+    public void SetScreenShake()
+    {
+        curtime = shaketime;
+    }
+    private void ShakeScreen()
+    {
+        Vector3 pos = Vector3.zero;
+
+        pos.y += Mathf.Sin(Time.time * shakefrequency) * shakeamplitude;
+        pos.x += Mathf.Cos(Time.time * shakefrequency) * shakeamplitude;
+
+        PlayMotion(pos);
     }
 } 

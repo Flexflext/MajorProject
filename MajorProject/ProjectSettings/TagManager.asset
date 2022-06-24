@@ -14,8 +14,8 @@ TagManager:
   - Spider
   - Enemy
   - DoorReciever
-  - 
-  - 
+  - Bullet
+  - DeadBody
   - 
   - 
   - 

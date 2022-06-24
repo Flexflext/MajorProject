@@ -10,7 +10,7 @@ public class PlayerCameraController : MonoBehaviour
 
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCam;
     [SerializeField] private Transform camPosition;
-    [SerializeField] private Transform weaponSwayTransdorm;
+    [SerializeField] private Transform weaponSwayTransform;
     private CinemachineBrain cinemachineBrain;
     private Camera mainCam;
     private HeadBob motionBob;
@@ -22,6 +22,9 @@ public class PlayerCameraController : MonoBehaviour
         mainCam = Camera.main;
         cinemachineBrain = mainCam.GetComponent<CinemachineBrain>();
         motionBob = GetComponent<HeadBob>();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void Update()
@@ -31,7 +34,7 @@ public class PlayerCameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        weaponSwayTransdorm.rotation = Quaternion.Lerp(weaponSwayTransdorm.rotation, Quaternion.Euler(mouseInput.y, mouseInput.x, 0), swaySpeed * Time.deltaTime);
+        weaponSwayTransform.rotation = Quaternion.Lerp(weaponSwayTransform.rotation, Quaternion.Euler(mouseInput.y, mouseInput.x, 0), swaySpeed * Time.deltaTime);
     }
 
     private void RotateCamera()
@@ -43,13 +46,19 @@ public class PlayerCameraController : MonoBehaviour
 
         mouseInput.y = Mathf.Clamp(mouseInput.y, -85, 85);
 
-        camPosition.localEulerAngles = new Vector3(mouseInput.y,0,0);
+        camPosition.localEulerAngles = new Vector3(mouseInput.y, 0, 0);
         transform.localRotation = Quaternion.Euler(0, mouseInput.x, 0);
     }
+        
 
     public void HeadBobbing(float _intensity)
     {
         motionBob.SetPlayerSpeed(_intensity);
+    }
+
+    public void ShootShake()
+    {
+        motionBob.SetScreenShake();
     }
 
     /// <summary>
