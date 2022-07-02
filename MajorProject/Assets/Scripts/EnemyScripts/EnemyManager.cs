@@ -9,6 +9,7 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] private Transform playerTransform;
     public Vector3 PlayerPosition => playerTransform.position;
+    public Transform Player => playerTransform;
 
     [SerializeField] private float enemyPlayerRange = 75f;
     [SerializeField] private LayerMask enemyLayer;
@@ -206,7 +207,7 @@ public class EnemyManager : MonoBehaviour
         // Raycast from pos to Enemy
         if (Physics.Raycast(_pos, GetDirectionBetweenPositions(_pos, PlayerPosition), out RaycastHit hit, float.MaxValue))
         {
-            if (hit.collider.gameObject.layer == 6)
+            if (hit.collider.gameObject.layer == 3)
             {
                 canSeeEnemy = true;
             }

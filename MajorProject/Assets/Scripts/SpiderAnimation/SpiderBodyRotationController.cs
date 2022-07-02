@@ -51,8 +51,13 @@ public class SpiderBodyRotationController : MonoBehaviour
     [Tooltip("Lerp Smoothing of the Position")]
     [SerializeField] private float positionSmoothing = 20;
 
+    [Header("Coyote Timer")]
     [SerializeField] private bool useCoyoteTimer = true;
     [SerializeField] private float rotationCoyoteTimer = 0.01f;
+
+    [Header("Hit Recoil")]
+    [SerializeField] private float hitRecoil = 0.5f;
+
     private float currotationCoyoteTimer = 0.01f;
 
     private Vector3 rotatedForward;
@@ -104,7 +109,6 @@ public class SpiderBodyRotationController : MonoBehaviour
 
     private void Update()
     {
-
         //Check Coyote Timer Time
         if (useCoyoteTimer)
         {
@@ -183,6 +187,17 @@ public class SpiderBodyRotationController : MonoBehaviour
         currentMovementInput = _moveinput;
     }
 
+    public void AddRecoilMovement(Vector3 _pos)
+    {
+        Vector3 dir = new Plane(transform.up, transform.position).ClosestPointOnPlane(_pos);
+
+        dir = transform.position - dir;
+
+        dir.Normalize();
+
+        transform.position += dir.normalized * hitRecoil;
+    }
+
     /// <summary>
     /// Rotates the Whole Spider so that the Calculates up Vector is the CUrrent Transform Up Vector
     /// </summary>
@@ -214,6 +229,8 @@ public class SpiderBodyRotationController : MonoBehaviour
 
         //Calculate a new Position with a given Distance from the Average Position
         transform.position = Vector3.Lerp(transform.position, _averagepos + averagePositionToPositionDirection * bodyDistanceToGround * bodyDistanceToGround, positionSmoothing * Time.deltaTime);
+
+
 
         transform.position += currentMovementInput * Time.deltaTime;
     }

@@ -39,6 +39,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     [SerializeField] private bool checkDeathState;
     [SerializeField] private bool alwaysCheckDeathState;
     [SerializeField] private bool preferLongestRangeLeg;
+    [SerializeField] private bool slideLeg;
 
 
     [Header("Body Animation")]
@@ -79,6 +80,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     [SerializeField] private float hintBackwardsMultiplier = 0.35f;
     [SerializeField] private float downAddPerBrokenLeg = 0.1f;
     [SerializeField] private float maxDownAddPerBrokenLeg = 0.2f;
+    [SerializeField] private float legSlideRange = 1.2f;
 
     private float currentDownAddPerBrokenLeg = 0;
     public float CurrentDownAddPerBrokenLeg { get { return currentDownAddPerBrokenLeg; } set { currentDownAddPerBrokenLeg = Mathf.Clamp(value, 0, maxDownAddPerBrokenLeg); } }
@@ -139,6 +141,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     private bool isDead;
 
     private LegDeadState legDeadState;
+
+    private Vector3 tosetto;
 
     private int currentNumberOfNormalLegs = 0;
     private int currentNumberOfAlmostBrokenLegs = 0;
@@ -208,7 +212,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         [HideInInspector] public float rangeLegToCalcPos;
         [HideInInspector] public LegState currentLegState;
         [HideInInspector] public LegState beforeDeathLegState;
-        /*[HideInInspector] */public bool canUseOppesiteLegs;
+        [HideInInspector] public bool canUseOppesiteLegs;
     }
 
     #endregion
@@ -443,6 +447,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour
 
     public void SetDeath()
     {
+        if (isDead) return;
+
         if (onDeathEvent != null)
         {
             onDeathEvent.Invoke();
@@ -726,14 +732,15 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                 //Calculate the Squared Lenght from the Old Animation Target to the current Animation Target
                 ranges = (legs[i].currentAnimationTargetPosition - legs[i].nextAnimationTargetPosition).sqrMagnitude;
 
-                //Reset the Target Position
+                tosetto = legs[i].ikTarget.position;
                 legs[i].ikTarget.position = legs[i].nextAnimationTargetPosition;
 
                 if (!legs[i].isOnMoveDelay || (preferLongestRangeLeg && preferredLeg == i))
                 {
+                    float maxRange = ((maxLegRange * legs[i].currentRangeMultiplier) * (maxLegRange * legs[i].currentRangeMultiplier));
+
                     //Check if the Calculated Range is greater than the maxLegRange
-                    if (ranges >= ((maxLegRange * legs[i].currentRangeMultiplier) * (maxLegRange * legs[i].currentRangeMultiplier))
-                        || additionalLegRangeCheck && ((legs[i].legIKSystem.transform.position - legs[i].nextAnimationTargetPosition).sqrMagnitude > (legs[i].legIKSystem.GetMaxRangeOfChain() * legs[i].legIKSystem.GetMaxRangeOfChain())))
+                    if (ranges >= maxRange || additionalLegRangeCheck && ((legs[i].legIKSystem.transform.position - legs[i].nextAnimationTargetPosition).sqrMagnitude > (legs[i].legIKSystem.GetMaxRangeOfChain() * legs[i].legIKSystem.GetMaxRangeOfChain())))
                     {
                         //Check Edge Cases with at Position 0 or half
                         if (i == 0 || i == legs.Length / 2)
@@ -744,6 +751,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                                 //Check that the Previous Leg or the Leg on the Other Side is not Moving
                                 if (legs[legs.Length / 2].moveingLeg)
                                 {
+                                    CheckSlideLeg(ranges, maxRange, i);
+
                                     continue;
                                 }
                             }
@@ -752,6 +761,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                             {
                                 if (legs[0].moveingLeg)
                                 {
+                                    CheckSlideLeg(ranges, maxRange, i);
                                     continue;
                                 }
                             }
@@ -764,6 +774,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                                 //Check that the Previous Leg or the Leg on the Other Side is not Moving
                                 if ((legs[i - 1].moveingLeg || legs[i + legs.Length / 2 - 1].moveingLeg))
                                 {
+                                    CheckSlideLeg(ranges, maxRange, i);
                                     continue;
                                 }
                             }
@@ -772,6 +783,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                                 //Check that the Previous Leg or the Leg on the Other Side is not Moving
                                 if ((legs[i - 1].moveingLeg || legs[i - legs.Length / 2].moveingLeg))
                                 {
+                                    CheckSlideLeg(ranges, maxRange, i);
                                     continue;
                                 }
                             }
@@ -815,6 +827,19 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void CheckSlideLeg(float _range, float _maxrange, int _leg)
+    {
+        if (!slideLeg) return; 
+        if (_range <= ((maxLegRange * legSlideRange) * (maxLegRange * legSlideRange))) return;
+
+
+        legs[_leg].ikTarget.position = tosetto;
+        legs[_leg].nextAnimationTargetPosition = tosetto;
+
+
+        //MoveLeg(_leg);
     }
 
     /// <summary>

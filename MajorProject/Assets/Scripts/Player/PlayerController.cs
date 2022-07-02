@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
         playerCameraController.ShootShake();
         playerCameraController.AddRecoil(0, -2.5f);
         curshootdelay = shootdelay;
-        Rigidbody bullet = Instantiate(bulletPrefab, shootTransform.position, Quaternion.identity).GetComponent<Rigidbody>();
+        Rigidbody bullet = Instantiate(bulletPrefab, shootTransform.position, Quaternion.LookRotation(shootTransform.forward)).GetComponent<Rigidbody>();
 
         bullet.AddForce(shootTransform.forward * shootForce, ForceMode.Impulse);
     }

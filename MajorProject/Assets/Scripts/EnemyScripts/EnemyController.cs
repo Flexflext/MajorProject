@@ -83,6 +83,16 @@ public class EnemyController : MonoBehaviour , IStateMachineController
         enemyAnimator = GetComponentInChildren<Animator>();
         rig = GetComponentInChildren<Rig>();
         InitializeStateMachine();
+
+        MultiAimConstraint[] aim = GetComponentsInChildren<MultiAimConstraint>();
+        RigBuilder builder = GetComponentInChildren<RigBuilder>();
+
+        for (int i = 0; i < aim.Length; i++)
+        {
+            aim[i].data.sourceObjects = new WeightedTransformArray { new WeightedTransform(EnemyManager.Instance.Player, 1) };
+        }
+
+        builder.Build();
     }
 
     private void Update()
