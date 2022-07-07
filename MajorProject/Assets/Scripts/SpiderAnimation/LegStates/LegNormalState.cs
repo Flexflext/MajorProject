@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LegNormalState : LegState
 {
-    public LegNormalState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset, ProzeduralAnimationLogic.LegParams[] _legs) : base(_controller, _legenterset, _legexitreset, _legs)
+    public LegNormalState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset, ProzeduralAnimationLogic.LegParams[] _legs, UnityEvent<int, ELegStates> _onenter, UnityEvent<int> _onmove) : base(_controller, _legenterset, _legexitreset, _legs, _onenter, _onmove)
     {
     }
 
@@ -21,11 +22,16 @@ public class LegNormalState : LegState
             if ((passedExtraAnimTime > (maxTime * 0.5f)) && !legs[_leg].canUseOppesiteLegs)
             {
                 legController.SetLegCanMoveOppesite(_leg, true);
+                if (onMove != null)
+                {
+                    onMove.Invoke(_leg);
+                }
             }
             else
             {
                 passedExtraAnimTime += Time.deltaTime;
             }
+
 
             //Lerp the Target Position and add the Evaluated Curve to it
             legs[_leg].ikTarget.position = Vector3.Lerp(legs[_leg].ikTarget.position, legs[_leg].nextAnimationTargetPosition, passedTime / maxTime) + legController.LegMovementCurve.Evaluate(passedTime / maxTime) * legController.transform.up;
@@ -52,6 +58,11 @@ public class LegNormalState : LegState
         if (legEnterSet != null)
         {
             legEnterSet.Invoke(_leg);
+        }
+
+        if (onEnter != null)
+        {
+            onEnter.Invoke(_leg, ELegStates.LS_Normal);
         }
     }
 

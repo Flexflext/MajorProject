@@ -21,10 +21,15 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         curHealth = _newhealth;
 
-        if (curHealth <= 0)
+        if (curHealth > maxHealth) curHealth = maxHealth;
+        if (curHealth > maxHealth) curHealth = maxHealth;
+        if (curHealth <= 0) 
         {
+            curHealth = 0;
             OnDeath();
         }
+
+        HUD.Instance.SetPlayerHealth(curHealth / maxHealth);
     }
 
     private void OnDeath()

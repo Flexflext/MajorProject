@@ -54,7 +54,7 @@ public class EnemyController : MonoBehaviour , IStateMachineController
     public bool CanAttack { get { return canAttack; } set { canAttack = value; } }
 
     protected bool isAgressive;
-    public bool IsAgressive { get { return isAgressive; } }
+    public bool IsAgressive { get { return isAgressive; } set { isAgressive = value; } }
 
     protected NavMeshAgent myAgent;
     public NavMeshAgent Agent { get { return myAgent; } }
@@ -383,8 +383,15 @@ public class EnemyController : MonoBehaviour , IStateMachineController
     protected void OnDeath()
     {
         //Disable Colliders
-        isDead = true;
-        enemyAnimator.SetTrigger("isDead");
+        if (!isDead)
+        {
+            isDead = true;
+            myAgent.isStopped = true;
+            enemyAnimator.SetTrigger("isDead");
+            HUD.Instance.KillObjAnim();
+        }
+
+        
     }
 
     #endregion

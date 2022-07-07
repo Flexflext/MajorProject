@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LegBrokenState : LegState
 {
-    public LegBrokenState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset, ProzeduralAnimationLogic.LegParams[] _legs) : base(_controller, _legenterset, _legexitreset, _legs)
+    public LegBrokenState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset, ProzeduralAnimationLogic.LegParams[] _legs, UnityEvent<int, ELegStates> _onenter, UnityEvent<int> _onmove) : base(_controller, _legenterset, _legexitreset, _legs, _onenter, _onmove)
     {
     }
 
@@ -14,6 +15,11 @@ public class LegBrokenState : LegState
         float maxTime = legController.LegMovementTime;
 
         legController.AdjustBrokenLegRotation(_leg);
+
+        if (onMove != null)
+        {
+            onMove.Invoke(_leg);
+        }
 
         Vector3 oldPos = legController.transform.localPosition;
 
@@ -54,6 +60,11 @@ public class LegBrokenState : LegState
         if (legEnterSet != null)
         {
             legEnterSet.Invoke(_leg);
+        }
+
+        if (onEnter != null)
+        {
+            onEnter.Invoke(_leg, ELegStates.LS_Broken);
         }
     }
 

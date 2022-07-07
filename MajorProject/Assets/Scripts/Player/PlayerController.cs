@@ -11,9 +11,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float deceleration = 3f;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckOffset = 1f;
-    [SerializeField] private float shootForce = 20f;
+    [SerializeField] private float dmg = 5f;
+    [SerializeField] private LayerMask hittableLayers;
     [SerializeField] private Transform shootTransform;
-    [SerializeField] private GameObject bulletPrefab;
     private float curJumpCoyoteTimer;
 
     private bool isControllingPlayer = true;
@@ -34,6 +34,11 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerCameraController = GetComponent<PlayerCameraController>();
         rb.maxDepenetrationVelocity = maxSpeed;
+    }
+
+    private void Start()
+    {
+        LevelManager.Instance.PlayerSubscribe(this);
     }
 
     private void Update()
@@ -78,8 +83,13 @@ public class PlayerController : MonoBehaviour
     {
         input = Vector3.zero;
 
-        input += transform.right * Input.GetAxis("Horizontal");
-        input += transform.forward * Input.GetAxis("Vertical");
+        input += transform.right * Input.GetAxisRaw("Horizontal");
+        input += transform.forward * Input.GetAxisRaw("Vertical");
+
+        if (input == Vector3.zero && isGrounded)
+        {
+            rb.velocity -= (rb.velocity) * Time.deltaTime * deceleration;
+        }
 
         input.Normalize();
 
@@ -97,6 +107,8 @@ public class PlayerController : MonoBehaviour
             curJumpCoyoteTimer -= Time.deltaTime;
         }
 
+
+        
 
         rb.velocity += input * Time.deltaTime;
 
@@ -130,9 +142,33 @@ public class PlayerController : MonoBehaviour
         playerCameraController.ShootShake();
         playerCameraController.AddRecoil(0, -2.5f);
         curshootdelay = shootdelay;
-        Rigidbody bullet = Instantiate(bulletPrefab, shootTransform.position, Quaternion.LookRotation(shootTransform.forward)).GetComponent<Rigidbody>();
 
-        bullet.AddForce(shootTransform.forward * shootForce, ForceMode.Impulse);
+        if (Physics.Raycast(shootTransform.position, shootTransform.forward, out RaycastHit hit, float.MaxValue, hittableLayers))
+        {
+            IDamageable damageObj = hit.collider.GetComponent<IDamageable>();
+
+            if (damageObj == null)
+            {
+                damageObj = hit.collider.GetComponentInParent<IDamageable>();
+            }
+
+            if (damageObj != null)
+            {
+                damageObj.TakeDamage(dmg, transform.forward);
+
+                HUD.Instance.HitObjAnim();
+            }
+        }
+    }
+
+    public Transform GetCamParent()
+    {
+        return playerCameraController.GetCamPosition();
+    }
+
+    public void SetPlayerControlling(bool _tosetto)
+    {
+        isControllingPlayer = _tosetto;
     }
 
     private void OnDrawGizmos()

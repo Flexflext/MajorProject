@@ -68,9 +68,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     [Range(0f, 1f)]
     [SerializeField] private float legDeathFoldPositionToBodyPercent = 0.5f;
     [SerializeField] private Vector2 legDeathFoldRndPositionAddMinMax = new Vector2(-0.15f, 0.15f);
-    [Space]
-    [SerializeField] private UnityEvent onDeathEvent;
-    [SerializeField] private UnityEvent onDeathResetEvent;
+
 
     [Header("ExtraLegAnimation")]
     [SerializeField] private float bodySmoothing = 8;
@@ -108,6 +106,13 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     [Header("Leg Targets and Ray Origins")] //--> First all Left Legs than right Legs
     [Tooltip("IK Systems of the Different Legs --> front to back --> first all left legs than all right legs")]
     [SerializeField] private LegParams[] legs;
+
+    [Header("Events")]
+    [SerializeField] private UnityEvent onDeathEvent;
+    [SerializeField] private UnityEvent onDeathResetEvent;
+    [SerializeField] private UnityEvent<int, ELegStates> onLegStateChanged;
+    [SerializeField] private UnityEvent<int> onLegMoved;
+
 
     private float ranges;
 
@@ -389,6 +394,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         newRot = startRot;
     }
 
+    #region Event-Subscibing
+
     public void AddDeathEventListener(UnityAction _event)
     {
         onDeathEvent.AddListener(_event);
@@ -408,6 +415,28 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     {
         onDeathResetEvent.RemoveListener(_event);
     }
+
+    public void AddLegStateChangeEventListener(UnityAction<int, ELegStates> _event)
+    {
+        onLegStateChanged.AddListener(_event);
+    }
+
+    public void RemoveLegStateChangeEventListener(UnityAction<int, ELegStates> _event)
+    {
+        onLegStateChanged.RemoveListener(_event);
+    }
+
+    public void AddLegMoveEventListener(UnityAction<int> _event)
+    {
+        onLegMoved.AddListener(_event);
+    }
+
+    public void RemoveLegMoveEventListener(UnityAction<int> _event)
+    {
+        onLegMoved.RemoveListener(_event);
+    }
+
+    #endregion
 
     public void CheckDeath()
     {
@@ -459,11 +488,6 @@ public class ProzeduralAnimationLogic : MonoBehaviour
 
     public void ResetDeath()
     {
-        if (onDeathResetEvent != null)
-        {
-            onDeathResetEvent.Invoke();
-        }
-
         isDead = false;
         Destroy(gameObject.GetComponent<Rigidbody>());
 
@@ -473,6 +497,16 @@ public class ProzeduralAnimationLogic : MonoBehaviour
             currentLegStateEnum = legs[i].legState;
             legs[i].currentLegState.ExitLegState(i);
             legs[i].currentLegState = legs[i].beforeDeathLegState;
+
+            if (onLegStateChanged != null)
+            {
+                onLegStateChanged.Invoke(i, legs[i].legState);
+            }
+        }
+
+        if (onDeathResetEvent != null)
+        {
+            onDeathResetEvent.Invoke();
         }
     }
 
@@ -485,7 +519,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     {
         if (legs[_leg].legState != ELegStates.LS_Broken)
         {
-            CheckAndSetLegState(_leg);
+            for (int i = 0; i < legs.Length; i++) CheckAndSetLegState(i);
 
             legs[_leg].legState ++;
         }
@@ -540,11 +574,11 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     private void CreateStateDictionary()
     {
         //Create States
-        LegNormalState legNormalState = new LegNormalState(this, null, null, legs);
-        LegLimpingState legLimpingState = new LegLimpingState(this, SetLegLimp, ResetLegLimp, legs);
-        LegLimpingHalfLegState legLimpngHalfLegState = new LegLimpingHalfLegState(this, SetHalfLeg, ResetHalfLeg, legs);
-        LegBrokenState legBrokenState = new LegBrokenState(this, SetBrokenLeg, ResetBrokenLeg, legs);
-        legDeadState = new LegDeadState(this, null, ResetBrokenLeg, legs, legDeathFoldTime, legDeathFoldRndTimeAddMinMax, legDeathFoldPositionToBodyPercent, legDeathFoldRndPositionAddMinMax);
+        LegNormalState legNormalState = new LegNormalState(this, null, null, legs, onLegStateChanged, onLegMoved);
+        LegLimpingState legLimpingState = new LegLimpingState(this, SetLegLimp, ResetLegLimp, legs, onLegStateChanged, onLegMoved);
+        LegLimpingHalfLegState legLimpngHalfLegState = new LegLimpingHalfLegState(this, SetHalfLeg, ResetHalfLeg, legs, onLegStateChanged, onLegMoved);
+        LegBrokenState legBrokenState = new LegBrokenState(this, SetBrokenLeg, ResetBrokenLeg, legs, onLegStateChanged, onLegMoved);
+        legDeadState = new LegDeadState(this, null, ResetBrokenLeg, legs, legDeathFoldTime, legDeathFoldRndTimeAddMinMax, legDeathFoldPositionToBodyPercent, legDeathFoldRndPositionAddMinMax, onLegStateChanged, onLegMoved);
 
         //Set States and Change Parameters in the Dictionary
         stateDictionary = new Dictionary<StateMachineSwitchDelegate, LegState>()
@@ -873,11 +907,15 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     /// </summary>
     private void AnimateBody()
     {
-        if (!animateBody) return;
+        Vector3 newLocalPosition = Vector3.zero;
 
-        Vector3 newLocalPosition = UseAnimationCurves(xAnimation, yAnimation, zAnimation);
+        if (!animateBody)
+        {
+            newLocalPosition = UseAnimationCurves(xAnimation, yAnimation, zAnimation);
+        }
 
         transform.localPosition = newLocalPosition + startLocalPosition + Vector3.down * CurrentDownAddPerBrokenLeg;
+
     }
 
     /// <summary>

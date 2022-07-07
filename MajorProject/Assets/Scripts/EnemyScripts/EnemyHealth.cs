@@ -11,16 +11,19 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     private System.Action onDeath;
 
     private NavMeshAgent agent;
+    private EnemyController controller;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        controller = GetComponent<EnemyController>();
         ChangeHealth(maxHealth);
     }
 
     public void TakeDamage(float _damage, Vector3 _knockback)
     {
         ChangeHealth(curHealth - _damage);
+        controller.IsAgressive = true;
         StartCoroutine(C_AddKnockback(_knockback * 5));  
     }
 

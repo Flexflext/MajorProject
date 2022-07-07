@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LegLimpingState : LegState
 {
     
 
-    public LegLimpingState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset, ProzeduralAnimationLogic.LegParams[] _legs) : base(_controller, _legenterset, _legexitreset, _legs)
+    public LegLimpingState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset, ProzeduralAnimationLogic.LegParams[] _legs, UnityEvent<int, ELegStates> _onenter, UnityEvent<int> _onmove) : base(_controller, _legenterset, _legexitreset, _legs, _onenter, _onmove)
     {
     }
 
@@ -16,7 +17,12 @@ public class LegLimpingState : LegState
         float maxTime = legController.LegMovementTime;
 
         legController.AdjustBrokenLegRotation(_leg);
-        
+
+        if (onMove != null)
+        {
+            onMove.Invoke(_leg);
+        }
+
         //Move the Leg for the Given Time
         while (passedTime <= maxTime)
         {
@@ -46,6 +52,11 @@ public class LegLimpingState : LegState
         if (legEnterSet != null)
         {
             legEnterSet.Invoke(_leg);
+        }
+
+        if (onEnter != null)
+        {
+            onEnter.Invoke(_leg, ELegStates.LS_Limping);
         }
     }
 

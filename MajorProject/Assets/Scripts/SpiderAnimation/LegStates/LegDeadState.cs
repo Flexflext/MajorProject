@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LegDeadState : LegState
 {
@@ -15,7 +16,7 @@ public class LegDeadState : LegState
     private Vector3[] hintprevPos;
 
 
-    public LegDeadState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset, ProzeduralAnimationLogic.LegParams[] _legs, float _time, Vector2 _timerndadd, float _pos, Vector2 _posrndadd) : base(_controller, _legenterset, _legexitreset, _legs)
+    public LegDeadState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset, ProzeduralAnimationLogic.LegParams[] _legs, float _time, Vector2 _timerndadd, float _pos, Vector2 _posrndadd, UnityEvent<int, ELegStates> _onenter, UnityEvent<int> _onmove) : base(_controller, _legenterset, _legexitreset, _legs, _onenter, _onmove)
     {
         targetParents = new Transform[_legs.Length];
         hintParents = new Transform[_legs.Length];
@@ -40,6 +41,11 @@ public class LegDeadState : LegState
         legs[_leg].ikTarget.parent = legController.transform;
         legs[_leg].animationHint.parent = legController.transform;
         legController.StartCoroutine(PlayDeathAnimation(_leg));
+
+        if (onEnter != null)
+        {
+            onEnter.Invoke(_leg, ELegStates.LS_Broken);
+        }
     }
 
     public override void ExitLegState(int _leg) 

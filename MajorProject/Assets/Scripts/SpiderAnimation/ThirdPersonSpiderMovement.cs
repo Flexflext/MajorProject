@@ -51,6 +51,12 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
         useCameraMovement = false;
     }
 
+    public void StartUserInput()
+    {
+        useMovement = true;
+        useCameraMovement = true;
+    }
+
     private void RotateSpider()
     {
         if (!useCameraMovement)

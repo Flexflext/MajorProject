@@ -71,4 +71,9 @@ public class PlayerCameraController : MonoBehaviour
         mouseInput.x -= _xrecoil;
         mouseInput.y += _yrecoil;
     }
+
+    public Transform GetCamPosition()
+    {
+        return camPosition;
+    }
 }
