@@ -38,8 +38,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     [SerializeField] private bool alwaysCheckLegState;
     [SerializeField] private bool checkDeathState;
     [SerializeField] private bool alwaysCheckDeathState;
-    [SerializeField] private bool preferLongestRangeLeg;
-    [SerializeField] private bool slideLeg;
+    [SerializeField] private bool preventLegOverreach;
 
 
     [Header("Body Animation")]
@@ -737,26 +736,6 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     /// </summary>
     private void CheckRange()
     {
-        int preferredLeg = 0;
-        
-
-        if (preferLongestRangeLeg)
-        {
-            float longRange = 0;
-
-            for (int i = 0; i < legs.Length; i++)
-            {
-                legs[i].rangeLegToCalcPos = (legs[i].currentAnimationTargetPosition - legs[i].nextAnimationTargetPosition).sqrMagnitude;
-
-                if (longRange < legs[i].rangeLegToCalcPos)
-                {
-                    longRange = legs[i].rangeLegToCalcPos;
-                    preferredLeg = i;
-                }
-            }
-        }
-
-
         for (int i = 0; i < legs.Length; i++)
         {
             //Check if the Current Leg isnt already Moving
@@ -769,7 +748,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                 tosetto = legs[i].ikTarget.position;
                 legs[i].ikTarget.position = legs[i].nextAnimationTargetPosition;
 
-                if (!legs[i].isOnMoveDelay || (preferLongestRangeLeg && preferredLeg == i))
+                if (!legs[i].isOnMoveDelay)
                 {
                     float maxRange = ((maxLegRange * legs[i].currentRangeMultiplier) * (maxLegRange * legs[i].currentRangeMultiplier));
 
@@ -865,15 +844,11 @@ public class ProzeduralAnimationLogic : MonoBehaviour
 
     private void CheckSlideLeg(float _range, float _maxrange, int _leg)
     {
-        if (!slideLeg) return; 
+        if (!preventLegOverreach) return;
+
         if (_range <= ((maxLegRange * legSlideRange) * (maxLegRange * legSlideRange))) return;
 
-
-        legs[_leg].ikTarget.position = tosetto;
-        legs[_leg].nextAnimationTargetPosition = tosetto;
-
-
-        //MoveLeg(_leg);
+        MoveLeg(_leg);
     }
 
     /// <summary>

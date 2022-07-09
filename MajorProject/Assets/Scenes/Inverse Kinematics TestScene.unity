@@ -708,7 +708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90abf128bf46ea049b5366c36d21663e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controllPlayer: 1
+  controllPlayer: 0
   minRangeToPlayer: 5
   playerLayer:
     serializedVersion: 2
@@ -9521,8 +9521,7 @@ MonoBehaviour:
   alwaysCheckLegState: 0
   checkDeathState: 0
   alwaysCheckDeathState: 0
-  preferLongestRangeLeg: 0
-  slideLeg: 0
+  preventLegOverreach: 0
   animateBody: 0
   xAnimation:
     AnimationParameter:
@@ -11505,7 +11504,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2345448966534801858, guid: 916921c869e5c4f4a8987a9a5fa3895d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 34
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2345448966534801858, guid: 916921c869e5c4f4a8987a9a5fa3895d, type: 3}
       propertyPath: m_SizeDelta.y
@@ -12291,7 +12290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2345448966534801858, guid: 916921c869e5c4f4a8987a9a5fa3895d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 34
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2345448966534801858, guid: 916921c869e5c4f4a8987a9a5fa3895d, type: 3}
       propertyPath: m_SizeDelta.y
@@ -14492,7 +14491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2345448966534801858, guid: 916921c869e5c4f4a8987a9a5fa3895d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 34
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2345448966534801858, guid: 916921c869e5c4f4a8987a9a5fa3895d, type: 3}
       propertyPath: m_SizeDelta.y
@@ -14673,7 +14672,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1099619923
 Transform:
   m_ObjectHideFlags: 0
@@ -18301,8 +18300,7 @@ MonoBehaviour:
   alwaysCheckLegState: 0
   checkDeathState: 0
   alwaysCheckDeathState: 0
-  preferLongestRangeLeg: 0
-  slideLeg: 0
+  preventLegOverreach: 0
   animateBody: 0
   xAnimation:
     AnimationParameter:
@@ -23232,7 +23230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2345448966534801858, guid: 916921c869e5c4f4a8987a9a5fa3895d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 34
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2345448966534801858, guid: 916921c869e5c4f4a8987a9a5fa3895d, type: 3}
       propertyPath: m_SizeDelta.y
@@ -25368,8 +25366,7 @@ MonoBehaviour:
   alwaysCheckLegState: 0
   checkDeathState: 0
   alwaysCheckDeathState: 0
-  preferLongestRangeLeg: 0
-  slideLeg: 0
+  preventLegOverreach: 0
   animateBody: 1
   xAnimation:
     AnimationParameter:
@@ -25571,8 +25568,8 @@ GameObject:
   - component: {fileID: 1995166891}
   - component: {fileID: 1995166894}
   - component: {fileID: 1995166893}
-  - component: {fileID: 1995166892}
   - component: {fileID: 1995166895}
+  - component: {fileID: 1995166892}
   m_Layer: 8
   m_Name: DoorReciever
   m_TagString: Untagged
@@ -25594,8 +25591,8 @@ Transform:
   m_Father: {fileID: 753015254}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1995166892
-BoxCollider:
+--- !u!135 &1995166892
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -25605,8 +25602,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.5000001
+  m_Center: {x: -0.0000038146973, y: 0, z: 0}
 --- !u!23 &1995166893
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -27901,7 +27898,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2345448966534801858, guid: 916921c869e5c4f4a8987a9a5fa3895d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 34
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2345448966534801858, guid: 916921c869e5c4f4a8987a9a5fa3895d, type: 3}
       propertyPath: m_SizeDelta.y
@@ -28068,81 +28065,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 410272853, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: m_Speed
-      value: 0.75
+    - target: {fileID: 410272852, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: range
+      value: 4.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1134289123, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: deltapositionChange
+    - target: {fileID: 410272852, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: rayLayerMask.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 3355469689747317548, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: slideLeg
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementTime
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: preferLongestRangeLeg
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: onDeathEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: onLegStateChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: onDeathEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: onDeathEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 1062701910}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: onDeathEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: onLegStateChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: onDeathEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: onLegStateChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1062701915}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: onLegStateChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: onLegStateChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetSpiderLegStatus
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: onDeathEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: ThirdPersonSpiderMovement, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: onLegStateChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: HUD, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: onDeathEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: onLegStateChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+    - target: {fileID: 3355469690534166810, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3355469690992127889, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: m_RootOrder
@@ -28150,7 +28091,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3355469690992127889, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.13
+      value: 45.58
       objectReference: {fileID: 0}
     - target: {fileID: 3355469690992127889, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -28158,7 +28099,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3355469690992127889, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -33.63
+      value: -31.01
       objectReference: {fileID: 0}
     - target: {fileID: 3355469690992127889, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -28192,9 +28133,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpiderTestRobot4Legs
       objectReference: {fileID: 0}
-    - target: {fileID: 3355469690992127895, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: predictionMultiplier
-      value: 0.5
+    - target: {fileID: 3355469691164412188, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}

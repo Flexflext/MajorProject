@@ -41,10 +41,8 @@ public class BodyMovementAnimation : MonoBehaviour
         transform.localEulerAngles = localVelo;
 
         newPos = GetAnimatedPosition(Time.deltaTime, target.position, null);
-        if ((newPos - transform.position).sqrMagnitude > deltapositionChange * deltapositionChange)
-        {
-            transform.position = newPos;
-        }
+        transform.position = newPos;
+        transform.localPosition = new Vector3(transform.localPosition.x, 0, transform.localPosition.z);
 
     }
 

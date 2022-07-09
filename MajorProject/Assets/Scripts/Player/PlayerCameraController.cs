@@ -14,7 +14,7 @@ public class PlayerCameraController : MonoBehaviour
     private CinemachineBrain cinemachineBrain;
     private Camera mainCam;
     private HeadBob motionBob;
-
+    private bool playerIsControlling;
     private Vector2 mouseInput;
 
     private void Start()
@@ -29,11 +29,13 @@ public class PlayerCameraController : MonoBehaviour
 
     private void Update()
     {
+        if (!playerIsControlling) return;
         RotateCamera();
     }
 
     private void LateUpdate()
     {
+        if (!playerIsControlling) return;
         weaponSwayTransform.rotation = Quaternion.Lerp(weaponSwayTransform.rotation, Quaternion.Euler(mouseInput.y, mouseInput.x, 0), swaySpeed * Time.deltaTime);
     }
 
@@ -53,11 +55,13 @@ public class PlayerCameraController : MonoBehaviour
 
     public void HeadBobbing(float _intensity)
     {
+        if (!playerIsControlling) return;
         motionBob.SetPlayerSpeed(_intensity);
     }
 
     public void ShootShake()
     {
+        if (!playerIsControlling) return;
         motionBob.SetScreenShake();
     }
 
@@ -68,6 +72,7 @@ public class PlayerCameraController : MonoBehaviour
     /// <param name="_yrecoil"></param>
     public void AddRecoil(float _xrecoil, float _yrecoil)
     {
+        if (!playerIsControlling) return;
         mouseInput.x -= _xrecoil;
         mouseInput.y += _yrecoil;
     }
@@ -75,5 +80,10 @@ public class PlayerCameraController : MonoBehaviour
     public Transform GetCamPosition()
     {
         return camPosition;
+    }
+
+    public void SetPlayerControll(bool _tosetto)
+    {
+        playerIsControlling = _tosetto;
     }
 }

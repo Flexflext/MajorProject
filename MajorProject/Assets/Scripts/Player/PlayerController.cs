@@ -169,6 +169,7 @@ public class PlayerController : MonoBehaviour
     public void SetPlayerControlling(bool _tosetto)
     {
         isControllingPlayer = _tosetto;
+        playerCameraController.SetPlayerControll(_tosetto);
     }
 
     private void OnDrawGizmos()

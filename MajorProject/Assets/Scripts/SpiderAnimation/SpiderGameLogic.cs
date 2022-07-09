@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SpiderGameLogic : MonoBehaviour
 {
-    [SerializeField] private int doorOpenerLayer = 8;
     [SerializeField] private float timeTillOpenDoor = 1f;
     [SerializeField] private float range = 1f;
     [SerializeField] private KeyCode doorOpenerKey = KeyCode.Mouse0;
@@ -24,7 +23,7 @@ public class SpiderGameLogic : MonoBehaviour
     {
         if (Input.GetKeyDown(doorOpenerKey))
         {
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range, rayLayerMask))
+            if (Physics.Raycast(Camera.main.transform.position, transform.forward, out hit, range, rayLayerMask))
             {
                 StartCoroutine(C_OpenDoor(hit.collider.GetComponent<DoorOpener>()));
             }
@@ -33,6 +32,7 @@ public class SpiderGameLogic : MonoBehaviour
 
     private IEnumerator C_OpenDoor(DoorOpener _dooropener)
     {
+            Debug.Log("HUHU");
         if (_dooropener != null)
         {
             int leg = animationLogic.GetFrontLeg();
