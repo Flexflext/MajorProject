@@ -11,7 +11,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float minRangeToPlayer = 3.0f;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private Camera cam;
-
+    [SerializeField] private Menu pauseMenu;
+    [SerializeField] private float deathTimer = 3.0f;
+     
     private PlayerController player;
     private SpiderController spider;
     private CinemachineBrain cineBrain;
@@ -19,6 +21,9 @@ public class LevelManager : MonoBehaviour
     private bool canchange;
 
     private Vector3 dir;
+
+    private bool paused;
+    private bool isdead;
 
     private void Awake()
     {
@@ -34,11 +39,15 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        pauseMenu.OpenMainMenu(false);
+        Cursor.lockState = CursorLockMode.Locked;
         cineBrain = cam.GetComponent<CinemachineBrain>();
     }
 
     private void Update()
     {
+        if (isdead) return;
+
         if (!setfirstContollingPlayer)
         {
             setfirstContollingPlayer = true;
@@ -58,6 +67,11 @@ public class LevelManager : MonoBehaviour
             {
                 ChangeInControllCharacter();
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePauseMenu();
         }
 
         canchange = CheckIfCanSwitchToPLayer();
@@ -112,6 +126,56 @@ public class LevelManager : MonoBehaviour
         else return false;
     }
 
+    private void TogglePauseMenu()
+    {
+
+        if (paused)
+        {
+            paused = false;
+            pauseMenu.OpenMainMenu(false);
+            Time.timeScale = 1;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            paused = true;
+            pauseMenu.OpenMainMenu(true);
+            Time.timeScale = 0;
+            
+        }
+        
+    }
+
+    public void SetDeath()
+    {
+        isdead = true;
+        StartCoroutine(C_DeathTimer());
+    }
+
+    private IEnumerator C_DeathTimer()
+    {
+        yield return new WaitForSeconds(deathTimer);
+
+        float curTime = 1;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        pauseMenu.OpenDeathScreen();
+
+        while (curTime > 0)
+	    {
+            if (curTime <= 0)
+            {
+                curTime = 0;
+            }
+
+            Time.timeScale = curTime;
+            yield return null;
+	        curTime -= Time.deltaTime;
+	    }   
+    }
+
     public void PlayerSubscribe(PlayerController _player)
     {
         player = _player;
@@ -120,5 +184,12 @@ public class LevelManager : MonoBehaviour
     public void SpiderSubscribe(SpiderController _spider)
     {
         spider = _spider;
+    }
+
+    private void OnDestroy()
+    {
+        Time.timeScale = 1;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }

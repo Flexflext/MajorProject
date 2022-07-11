@@ -85,5 +85,6 @@ public class PlayerCameraController : MonoBehaviour
     public void SetPlayerControll(bool _tosetto)
     {
         playerIsControlling = _tosetto;
+        motionBob.SetPlayerControll(_tosetto);
     }
 }

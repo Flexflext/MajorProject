@@ -169,6 +169,7 @@ public class PlayerController : MonoBehaviour
     public void SetPlayerControlling(bool _tosetto)
     {
         isControllingPlayer = _tosetto;
+        rb.velocity = Vector3.zero;
         playerCameraController.SetPlayerControll(_tosetto);
     }
 

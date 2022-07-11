@@ -6,8 +6,6 @@ public class BodyMovementAnimation : MonoBehaviour
 {
     [SerializeField] private Transform target;
     [SerializeField] private float rotationMultiplier;
-    [SerializeField] private float deltapositionChange;
-    [SerializeField] private float yrotationMultiplier = 0.05f;
 
     [SerializeField] private float frequency; // Speed the System will Respond to a Change
     [SerializeField] private float damping;
@@ -64,11 +62,15 @@ public class BodyMovementAnimation : MonoBehaviour
         if (_inputvelocity == null) // Estimate the Input Velocity -> Averrage Velo since previous Sample
         {
             _inputvelocity = ((_inputtargetposition - previousTargetPosition) / _deltatime).normalized;
+
             previousTargetPosition = _inputtargetposition;
         }
 
         float k2_stable = Mathf.Max(k2, _deltatime * _deltatime / 2 + _deltatime * k1 / 2, _deltatime * k1);
         currentPosition = currentPosition + _deltatime * velocity; // Update Current Position with velocity mult by timestep
+
+
+        
 
         velocity = velocity + _deltatime * (_inputtargetposition + k3 * (Vector3)_inputvelocity - currentPosition - k1 * velocity) / k2_stable; // Velocity  =  velocity + accelearation
         return currentPosition;

@@ -20,6 +20,8 @@ public class HeadBob : MonoBehaviour
     [SerializeField] private float playerSpeed;
     private Vector3 startPos;
 
+    private bool playerIsControlling;
+
     private void Awake()
     {
         
@@ -28,6 +30,8 @@ public class HeadBob : MonoBehaviour
 
     private void Update()
     {
+        if (!playerIsControlling) return;
+
         CheckMotion();
         ResetCamPosition();
         cam.LookAt(FocusTarget());
@@ -91,5 +95,10 @@ public class HeadBob : MonoBehaviour
         pos.x += Mathf.Cos(Time.time * shakefrequency) * shakeamplitude;
 
         PlayMotion(pos);
+    }
+
+    public void SetPlayerControll(bool _controll)
+    {
+        playerIsControlling = _controll;
     }
 } 

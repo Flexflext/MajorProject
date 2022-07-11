@@ -33,7 +33,10 @@ public class SpiderController : MonoBehaviour
     {
         if (!isGettingControlled)
         {
-            spiderAgent.SetDestination(EnemyManager.Instance.PlayerPosition);
+            if (spiderAgent.isOnNavMesh)
+            {
+                 spiderAgent.SetDestination(EnemyManager.Instance.PlayerPosition);
+	        }
         }
     }
 
@@ -58,8 +61,8 @@ public class SpiderController : MonoBehaviour
         controller.SetPlayerMovementInput(Vector2.zero);
 
         isGettingControlled = false;
-        spiderAgent.isStopped = false;
         spiderAgent.enabled = true;
+        spiderAgent.isStopped = false;
 
         movement.enabled = false;
         gameLogic.enabled = false;

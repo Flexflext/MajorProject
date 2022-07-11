@@ -27,7 +27,6 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
     void Start()
     {
         controller = GetComponent<SpiderBodyRotationController>();
-        Cursor.lockState = CursorLockMode.Locked;
         originLocalStartPos = rayOriginsAndHints.localPosition;
     }
 
@@ -90,5 +89,10 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
         mouseInput = Input.GetAxis("Mouse X");
 
         input.Normalize();
+    }
+
+    private void OnDisable()
+    {
+        rayOriginsAndHints.localPosition = originLocalStartPos;
     }
 }
