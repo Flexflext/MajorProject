@@ -481,6 +481,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         {
             onDeathEvent.Invoke();
         }
+
+        MoveAllLegs();
         isDead = true;
         StartCoroutine(C_WaitToDie());
     }
@@ -519,6 +521,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         if (legs[_leg].legState != ELegStates.LS_Broken)
         {
             for (int i = 0; i < legs.Length; i++) CheckAndSetLegState(i);
+            MoveAllLegs();
 
             legs[_leg].legState ++;
         }
@@ -764,9 +767,10 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                                 //Check that the Previous Leg or the Leg on the Other Side is not Moving
                                 if (legs[legs.Length / 2].moveingLeg)
                                 {
-                                    CheckSlideLeg(ranges, maxRange, i);
-
-                                    continue;
+                                    if (!CheckSlideLeg(ranges, maxRange, i))
+                                    {
+                                        continue;
+                                    }              
                                 }
                             }
                             //Check the Leg on the Other Side of the First Leg (Front Right)
@@ -774,8 +778,10 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                             {
                                 if (legs[0].moveingLeg)
                                 {
-                                    CheckSlideLeg(ranges, maxRange, i);
-                                    continue;
+                                    if (!CheckSlideLeg(ranges, maxRange, i))
+                                    {
+                                        continue;
+                                    }
                                 }
                             }
                         }
@@ -787,8 +793,10 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                                 //Check that the Previous Leg or the Leg on the Other Side is not Moving
                                 if ((legs[i - 1].moveingLeg || legs[i + legs.Length / 2 - 1].moveingLeg))
                                 {
-                                    CheckSlideLeg(ranges, maxRange, i);
-                                    continue;
+                                    if (!CheckSlideLeg(ranges, maxRange, i))
+                                    {
+                                        continue;
+                                    }
                                 }
                             }
                             else //-> Right Side
@@ -796,8 +804,10 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                                 //Check that the Previous Leg or the Leg on the Other Side is not Moving
                                 if ((legs[i - 1].moveingLeg || legs[i - legs.Length / 2].moveingLeg))
                                 {
-                                    CheckSlideLeg(ranges, maxRange, i);
-                                    continue;
+                                    if (!CheckSlideLeg(ranges, maxRange, i))
+                                    {
+                                        continue;
+                                    }
                                 }
                             }
                         }
@@ -842,13 +852,13 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         }
     }
 
-    private void CheckSlideLeg(float _range, float _maxrange, int _leg)
+    private bool CheckSlideLeg(float _range, float _maxrange, int _leg)
     {
-        if (!preventLegOverreach) return;
+        if (!preventLegOverreach) return false;
 
-        if (_range <= ((maxLegRange * legSlideRange) * (maxLegRange * legSlideRange))) return;
+        if (_range <= ((maxLegRange * legSlideRange) * (maxLegRange * legSlideRange))) return false;
 
-        MoveLeg(_leg);
+        return true;
     }
 
     /// <summary>
@@ -1170,6 +1180,14 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         }
 
         return curve;
+    }
+
+    private void MoveAllLegs()
+    {
+        for (int i = 0; i < legs.Length; i++)
+        {
+            MoveLeg(i);
+        }
     }
 
 #endregion

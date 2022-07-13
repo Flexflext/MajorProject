@@ -52,19 +52,20 @@ public class SpiderController : MonoBehaviour
         spiderAgent.isStopped = true;
         spiderAgent.enabled = false;
 
-        movement.enabled = true;
+        movement.SetPlayerStartControll();
         gameLogic.enabled = true;
     }
 
     public void GiveUpControll()
     {
         controller.SetPlayerMovementInput(Vector2.zero);
+        movement.SetPlayerStopControll();
+        //movement.enabled = false;
 
         isGettingControlled = false;
         spiderAgent.enabled = true;
         spiderAgent.isStopped = false;
 
-        movement.enabled = false;
         gameLogic.enabled = false;
     }
 

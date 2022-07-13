@@ -24256,6 +24256,10 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 963194227}
+    - target: {fileID: 2819617430841908647, guid: 6ab239482a0fe294c930d8d2eb3387ff, type: 3}
+      propertyPath: controllPlayer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2819617430841908648, guid: 6ab239482a0fe294c930d8d2eb3387ff, type: 3}
       propertyPath: m_RootOrder
       value: 20

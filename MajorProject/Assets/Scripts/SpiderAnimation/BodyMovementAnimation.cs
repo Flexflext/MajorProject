@@ -34,6 +34,8 @@ public class BodyMovementAnimation : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale < 1) return;
+
         localVelo = transform.InverseTransformDirection(velocity);
         localVelo.Set(localVelo.z * rotationMultiplier, 0, -localVelo.x * rotationMultiplier);
         transform.localEulerAngles = localVelo;

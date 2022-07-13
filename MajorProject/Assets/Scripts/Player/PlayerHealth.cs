@@ -7,7 +7,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     [SerializeField] private float maxHealth;
     private float curHealth;
 
-    private void Awake()
+    private void Start()
     {
         ChangeHealth(maxHealth);
     }

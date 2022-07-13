@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(SpiderBodyRotationController))]
 public class ThirdPersonSpiderMovement : MonoBehaviour
@@ -12,6 +13,9 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
     [SerializeField] private float predictionSmoothing = 20;
     [SerializeField] private Transform rayOriginsAndHints;
 
+
+    private NavMeshAgent agent;
+
     private SpiderBodyRotationController controller;
 
     private float mouseInput;
@@ -20,12 +24,15 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
     private bool useCameraMovement = true;
     private bool useMovement = true;
 
+    private bool iscontrolled;
+
 
     private Vector3 originLocalStartPos;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        agent= GetComponent<NavMeshAgent>();
         controller = GetComponent<SpiderBodyRotationController>();
         originLocalStartPos = rayOriginsAndHints.localPosition;
     }
@@ -33,6 +40,16 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!iscontrolled)
+        {
+            Vector3 dir = transform.InverseTransformDirection(agent.velocity);
+            dir.Normalize();
+
+            rayOriginsAndHints.localPosition = Vector3.Lerp(rayOriginsAndHints.localPosition, originLocalStartPos + new Vector3(dir.x, 0, dir.z) * predictionMultiplier, predictionSmoothing * Time.deltaTime);
+
+            return;
+        }
+
         HandlePlayerInput();
         RotateSpider();
         MoveSpider();
@@ -48,6 +65,18 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
     {
         useMovement = false;
         useCameraMovement = false;
+    }
+
+    public void SetPlayerStopControll()
+    {
+        //rayOriginsAndHints.localPosition = new Vector3(0, 0, 0.5f) + originLocalStartPos;
+        iscontrolled = false;
+    }
+
+    public void SetPlayerStartControll()
+    {
+        //rayOriginsAndHints.localPosition = originLocalStartPos + new Vector3(0, 0, 0.5f);
+        iscontrolled = true;
     }
 
     public void StartUserInput()
