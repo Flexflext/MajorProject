@@ -384,7 +384,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -5492
     y: -2377
-    width: 7505
+    width: 5094
     height: 2866
 --- !u!114 &114350483966674976
 MonoBehaviour:
@@ -1270,7 +1270,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661615113}
       inputSlot: {fileID: 8926484042661616442}
-    position: {x: -1110, y: -1101}
+    position: {x: -1051, y: -1110}
     expandedSlots: []
     expanded: 0
 --- !u!114 &8926484042661615113
@@ -15503,7 +15503,7 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: -981, y: -1320}
+  m_UIPosition: {x: -822, y: -1326}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
@@ -16473,7 +16473,7 @@ MonoBehaviour:
   - {fileID: 8926484042661616547}
   m_ExposedName: NoisePower 1
   m_Exposed: 1
-  m_Order: 15
+  m_Order: 16
   m_Category: 
   m_Min:
     m_Type:
@@ -16545,7 +16545,7 @@ MonoBehaviour:
   - {fileID: 8926484042661616549}
   m_ExposedName: NoiseFequency 1
   m_Exposed: 1
-  m_Order: 15
+  m_Order: 17
   m_Category: 
   m_Min:
     m_Type:
@@ -16617,7 +16617,7 @@ MonoBehaviour:
   - {fileID: 8926484042661616551}
   m_ExposedName: Roughness
   m_Exposed: 1
-  m_Order: 15
+  m_Order: 18
   m_Category: 
   m_Min:
     m_Type:

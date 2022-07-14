@@ -768,7 +768,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                                 if (legs[legs.Length / 2].moveingLeg)
                                 {
                                     if (!CheckSlideLeg(ranges, maxRange, i))
-                                    {
+                                    {          
                                         continue;
                                     }              
                                 }
@@ -894,7 +894,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     {
         Vector3 newLocalPosition = Vector3.zero;
 
-        if (!animateBody)
+        if (animateBody)
         {
             newLocalPosition = UseAnimationCurves(xAnimation, yAnimation, zAnimation);
         }

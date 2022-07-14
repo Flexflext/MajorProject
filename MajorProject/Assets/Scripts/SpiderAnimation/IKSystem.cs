@@ -190,14 +190,14 @@ public class IKSystem : MonoBehaviour
         rigidbodys = new Rigidbody[bones.Length];
         characterJoints = new CharacterJoint[bones.Length];
 
-        for (int i = 0; i < rigidbodys.Length; i++)
+        for (int i = 0; i < rigidbodys.Length - 1; i++)
         {
             rigidbodys[i] = bones[i].gameObject.AddComponent<Rigidbody>();
         }
 
 
 
-        for (int i = 0; i < characterJoints.Length; i++)
+        for (int i = 0; i < characterJoints.Length - 1; i++)
         {
             characterJoints[i] = bones[i].gameObject.AddComponent<CharacterJoint>();
 

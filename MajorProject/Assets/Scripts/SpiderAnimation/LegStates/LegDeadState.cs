@@ -51,7 +51,7 @@ public class LegDeadState : LegState
     public override void ExitLegState(int _leg) 
     {
         legs[_leg].legIKSystem.SolveIK = true;
-        legs[_leg].legIKSystem.ResetBoxCollidersOnChain();
+        //legs[_leg].legIKSystem.ResetBoxCollidersOnChain();
         legs[_leg].legIKSystem.ResetRigidbodysOnChain();
 
         legs[_leg].moveingLeg = false;
@@ -65,7 +65,7 @@ public class LegDeadState : LegState
 
     private IEnumerator PlayDeathAnimation(int _leg)
     {
-        legs[_leg].legIKSystem.CreateBoxCollidersOnChain();
+        //legs[_leg].legIKSystem.CreateBoxCollidersOnChain();
         
         legs[_leg].stopLegAnimationFlag = true;
 
