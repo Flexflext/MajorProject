@@ -193,30 +193,35 @@ public class EnemyController : MonoBehaviour , IStateMachineController
     {
         RaycastHit hit = new RaycastHit();
 
-        Vector3 origin = new Vector3();
+        Vector3 origin = Vector3.zero;
+        Vector3 dir = Vector3.zero;
         
         float range = Random.Range(randomWalkRange.x, randomWalkRange.y);
-        float degree = Random.Range(0.0f, 360.0f);
 
-        origin.z = Mathf.Sin(degree * Mathf.Deg2Rad);
-        origin.x = Mathf.Cos(degree * Mathf.Deg2Rad);
+        dir += transform.forward * Random.Range( -1.0f, 1.0f);
+        dir += transform.right * Random.Range(-1.0f, 1.0f);
 
-        origin = origin * range;
-        origin += transform.position + (Vector3.up * walkPositionYCheckOffset);
 
-        if (Physics.Raycast(origin, Vector3.down, out hit, float.MaxValue, walkableLayer))
-        {
-            if (PositionIsOnNavMesh(hit.point))
+        origin = transform.position + (dir * range);
+        Debug.DrawRay(transform.position, dir * range, Color.red, 2);
+
+
+        //origin += transform.position + (Vector3.up * walkPositionYCheckOffset);
+
+        //if (Physics.Raycast(origin, Vector3.down, out hit, float.MaxValue, walkableLayer))
+        //{
+        if (PositionIsOnNavMesh(origin))
             {
-                return hit.point;
+                return origin;
             }
             else
             {
+                Debug.Log("HUHU");
+                Debug.DrawRay(origin, Vector3.down, Color.blue, 2);
+                Instantiate(bulletPrefab, origin, Quaternion.identity);
                 return transform.position;
             }        
-        }
-
-        return transform.position;
+        //}
     }
 
     public void ResetHidingPosition()

@@ -24,7 +24,7 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
     private bool useCameraMovement = true;
     private bool useMovement = true;
 
-    private bool iscontrolled;
+    private bool iscontrolled = true;
 
 
     private Vector3 originLocalStartPos;

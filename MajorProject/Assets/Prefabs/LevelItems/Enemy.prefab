@@ -525,13 +525,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  randomWalkRange: {x: 5, y: 10}
+  randomWalkRange: {x: 10, y: 15}
   walkPositionYCheckOffset: 3
   walkableLayer:
     serializedVersion: 2
     m_Bits: 1
-  randomIdleTime: {x: 2, y: 5}
-  agressiveRange: 10
+  randomIdleTime: {x: 1, y: 2}
+  agressiveRange: 15
   attackRange: 10
   attackWaitRange: 20
   moveAwayFromPlayerMultiplier: 0.2
@@ -540,7 +540,7 @@ MonoBehaviour:
   bulletSpeed: 20
   bulletUpMultiplier: 0.2
   playerDeltaDistranceToAttackPos: 2
-  randomIdleAfterAttackTime: {x: 3, y: 5}
+  randomIdleAfterAttackTime: {x: 1, y: 3}
   timeReadyAfterAttack: 0
 --- !u!195 &3298308840265250059
 NavMeshAgent:
@@ -576,7 +576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6fa07e0563144044bc5d0ecd35532cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 20
 --- !u!1 &3298308840516885733
 GameObject:
   m_ObjectHideFlags: 0

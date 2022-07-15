@@ -867,6 +867,8 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     /// <param name="_leg"></param>
     private void MoveLeg(int _leg)
     {
+        if (legs[_leg].moveingLeg) return;
+
         //Set Flag
         legs[_leg].moveingLeg = true;
         legs[_leg].isOnMoveDelay = true;

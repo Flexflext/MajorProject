@@ -2577,7 +2577,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebugGizmos: 1
-  legMovementTime: 0.25
+  legMovementTime: 0.225
   randomExtraLegMovementTime: {x: -0.05, y: 0.05}
   legMovementCurve:
     serializedVersion: 2
@@ -2630,7 +2630,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  maxLegRange: 0.45
+  maxLegRange: 0.4
   useFarthestPoint: 1
   additionalLegRangeCheck: 1
   adjustLastLimbToNormal: 1
@@ -7726,10 +7726,10 @@ MonoBehaviour:
   hightAddMultiplier: -0.25
   originBackwardsMultiplier: 0.2
   originLocalBack: {x: -1, y: 0, z: 0}
-  hintBackwardsMultiplier: 1
+  hintBackwardsMultiplier: 1.4
   downAddPerBrokenLeg: 0.1
   maxDownAddPerBrokenLeg: 0.2
-  legSlideRange: 2.6
+  legSlideRange: 2.2
   percentOfLegHeightMovement: 0.1
   brokenLegRangeMultiplier: 0.5
   legRayNumber: 6

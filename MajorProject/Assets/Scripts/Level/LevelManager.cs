@@ -142,7 +142,8 @@ public class LevelManager : MonoBehaviour
             paused = true;
             pauseMenu.OpenMainMenu(true);
             Time.timeScale = 0;
-            
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         
     }
