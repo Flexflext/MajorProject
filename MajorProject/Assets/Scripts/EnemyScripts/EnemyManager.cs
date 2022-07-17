@@ -279,28 +279,27 @@ public class EnemyManager : MonoBehaviour
 
     private void CheckCanCanAttack(EnemyController _controller)
     {
-        if (currentNumberOfAttackingEnemies < maxNumerOfattackingEnemies)
-        {
-            _controller.CanAttack = true;
-            currentNumberOfAttackingEnemies++;
-        }
+        _controller.CanAttack = true;
+        currentNumberOfAttackingEnemies++;
     }
 
     private void CheckIfOthersCanAttack(EnemyController _controller)
     {
-        _controller.CanAttack = false;
         currentNumberOfAttackingEnemies--;
+        
 
         if (currentNumberOfAttackingEnemies < maxNumerOfattackingEnemies)
         {
             for (int i = 0; i < attackingEnemies.Count; i++)
             {
-                if (!_controller.CanAttack)
-                {
-                    CheckCanCanAttack(_controller);
+                if (attackingEnemies[i].CanAttack == false)
+                {  
+                    CheckCanCanAttack(attackingEnemies[i]);
+                    break;
                 }
             }
         }
+        _controller.CanAttack = false;
     }
 
     public Vector3 GetAttackPosition(float _range, int _idx)
@@ -345,6 +344,7 @@ public class EnemyManager : MonoBehaviour
         if (enemyControllers.Contains(_controller))
         {
             enemyControllers.Remove(_controller);
+            UnSubscribeToAttacking(_controller);
         }
     }
 
@@ -354,7 +354,10 @@ public class EnemyManager : MonoBehaviour
         if (!attackingEnemies.Contains(_controller))
         {
             attackingEnemies.Add(_controller);
-            CheckCanCanAttack(_controller);
+            if (currentNumberOfAttackingEnemies < maxNumerOfattackingEnemies)
+            {
+                CheckCanCanAttack(_controller);
+            }
             return attackingEnemies.IndexOf(_controller);
         }
 
@@ -370,6 +373,7 @@ public class EnemyManager : MonoBehaviour
         // Check if Enemy is already in List
         if (attackingEnemies.Contains(_controller))
         {
+            
             attackingEnemies.Remove(_controller);
             CheckIfOthersCanAttack(_controller);
         }

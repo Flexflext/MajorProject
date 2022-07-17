@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
 
         if (currentSpeed > maxSpeed)
         {
-            rb.velocity -= (1/ currentSpeed * rb.velocity) * Time.deltaTime * deceleration;
+            rb.velocity -= (rb.velocity) * Time.deltaTime * deceleration;
         }
     }
 
@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
         playerCameraController.AddRecoil(0, -2.5f);
         curshootdelay = shootdelay;
 
-        if (Physics.Raycast(shootTransform.position, shootTransform.forward, out RaycastHit hit, float.MaxValue, hittableLayers))
+        if (Physics.SphereCast(shootTransform.position,0.2f, shootTransform.forward, out RaycastHit hit, float.MaxValue, hittableLayers))
         {
             IDamageable damageObj = hit.collider.GetComponent<IDamageable>();
 

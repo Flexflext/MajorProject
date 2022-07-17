@@ -530,8 +530,8 @@ MonoBehaviour:
   walkableLayer:
     serializedVersion: 2
     m_Bits: 1
-  randomIdleTime: {x: 1, y: 2}
-  agressiveRange: 15
+  randomIdleTime: {x: 2, y: 4}
+  agressiveRange: 25
   attackRange: 10
   attackWaitRange: 20
   moveAwayFromPlayerMultiplier: 0.2

@@ -30,6 +30,8 @@ public class Door : MonoBehaviour
 
         while (curTime < timeTillOpenDoor)
         {
+            Debug.Log("WTF");
+
             leftDoor.localPosition = Vector3.Lerp(startPosLeft, localEndPosLeft, curTime / timeTillOpenDoor);
 
             rightDoor.localPosition = Vector3.Lerp(startPosRight, localEndPosRight, curTime / timeTillOpenDoor);

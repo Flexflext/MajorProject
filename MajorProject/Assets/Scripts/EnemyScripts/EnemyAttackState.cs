@@ -27,7 +27,7 @@ public class EnemyAttackState : EnemyState
         myEnemy.CurrentState = EnemyController.EEnemyStates.ES_Attacking;
         attackingIdx = EnemyManager.Instance.SubscribeToAttacking(myEnemy);
         hidingPosition = myEnemy.FindNewHidingPosition();
-        myEnemy.SetAttackAnimations(0);
+        myEnemy.SetAttackAnimations(1);
     }
 
     public override void ExitState()
@@ -62,7 +62,7 @@ public class EnemyAttackState : EnemyState
             
             attackPosition = myEnemy.FindAttackPosition(attackingIdx);
             agent.SetDestination(attackPosition);
-            myEnemy.transform.rotation = myEnemy.GetLookToPlayerRotation();
+            
 
             myEnemy.StayAwayFromPlayer(1);
         }
@@ -79,6 +79,8 @@ public class EnemyAttackState : EnemyState
             myEnemy.StayAwayFromPlayer(0.5f);
         }
 
-        
+        myEnemy.transform.rotation = myEnemy.GetLookToPlayerRotation();
+
+
     }
 }
