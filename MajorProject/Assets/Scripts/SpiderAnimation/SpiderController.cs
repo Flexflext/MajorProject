@@ -49,8 +49,12 @@ public class SpiderController : MonoBehaviour
     public void SetControll()
     {
         isGettingControlled = true;
-        spiderAgent.isStopped = true;
-        spiderAgent.enabled = false;
+        if (spiderAgent.enabled)
+        {
+            spiderAgent.isStopped = true;
+            spiderAgent.enabled = false;
+        }
+        
 
         movement.SetPlayerStartControll();
         gameLogic.enabled = true;
@@ -62,9 +66,14 @@ public class SpiderController : MonoBehaviour
         movement.SetPlayerStopControll();
         //movement.enabled = false;
 
+        if (!spiderAgent.enabled)
+        {
+            spiderAgent.enabled = true;
+            spiderAgent.isStopped = false;
+        }
+
+        
         isGettingControlled = false;
-        spiderAgent.enabled = true;
-        spiderAgent.isStopped = false;
 
         gameLogic.enabled = false;
     }

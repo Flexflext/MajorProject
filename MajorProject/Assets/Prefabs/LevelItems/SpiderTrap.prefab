@@ -139,7 +139,7 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 0.1
+      - m_Value: 0.05
         m_Name: Size
         m_Overridden: 1
       - m_Value: 1
@@ -167,25 +167,25 @@ VisualEffect:
       m_Array: []
     m_Vector3f:
       m_Array:
-      - m_Value: {x: 78.9, y: 7.000001, z: 5.7499995}
+      - m_Value: {x: 37.29, y: 1.98, z: -37.44}
         m_Name: Pos1
         m_Overridden: 1
-      - m_Value: {x: 78.9, y: 7.000001, z: 5.7499995}
+      - m_Value: {x: 37.29, y: 1.98, z: -37.44}
         m_Name: Pos2
         m_Overridden: 1
-      - m_Value: {x: 78.9, y: 7.000001, z: 3.7499995}
+      - m_Value: {x: 37.29, y: -0.01999998, z: -37.44}
         m_Name: Pos3
         m_Overridden: 1
-      - m_Value: {x: 78.9, y: 7.000001, z: 3.7499995}
+      - m_Value: {x: 37.29, y: -0.01999998, z: -37.44}
         m_Name: Pos4
         m_Overridden: 1
       - m_Value: {x: 0, y: 1.365016, z: 0}
         m_Name: StartCone_center
         m_Overridden: 1
-      - m_Value: {x: 90, y: 0, z: 0}
+      - m_Value: {x: -0, y: 0, z: 0}
         m_Name: StartDirectionTransform_angles
         m_Overridden: 1
-      - m_Value: {x: 78.9, y: 7.000001, z: 5.7499995}
+      - m_Value: {x: 37.29, y: 1.98, z: -37.44}
         m_Name: StartDirectionTransform_position
         m_Overridden: 1
       - m_Value: {x: 1, y: 1, z: 1}

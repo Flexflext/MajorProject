@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6104225720084450826}
   - component: {fileID: 6104225720085417162}
   - component: {fileID: 6104225720083256488}
+  - component: {fileID: 3287862450579362199}
   m_Layer: 0
   m_Name: Pillar_Big_01
   m_TagString: Untagged
@@ -97,3 +98,16 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 0dfed32bbccaa4c98863bd836e71b737, type: 3}
+--- !u!65 &3287862450579362199
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6104225720083157514}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5000002, y: 2.4565566, z: 1.0457764}
+  m_Center: {x: -0.00000023841858, y: 1.2282792, z: -2.6641254}
