@@ -983,7 +983,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
 
         Vector3 pos = plane.ClosestPointOnPlane(transform.position);
 
-        pos = ((legs[_leg].animationRaycastOrigin.localPosition - legs[_leg].animationRaycastOrigin.InverseTransformPoint(pos)).normalized * 0.2f);
+        pos = ((legs[_leg].animationRaycastOrigin.localPosition - legs[_leg].animationRaycastOrigin.InverseTransformPoint(pos)).normalized * 0.1f);
 
 
         legs[_leg].currentRangeMultiplier = brokenLegRangeMultiplier;
