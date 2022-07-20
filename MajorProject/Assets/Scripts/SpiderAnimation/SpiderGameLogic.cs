@@ -8,6 +8,8 @@ public class SpiderGameLogic : MonoBehaviour
     [SerializeField] private float range = 1f;
     [SerializeField] private KeyCode doorOpenerKey = KeyCode.Mouse0;
     [SerializeField] private LayerMask rayLayerMask;
+    [SerializeField] private GameObject dmgVFX;
+    [SerializeField] private float dmgVFXTime;
 
     private RaycastHit hit;
 
@@ -16,6 +18,7 @@ public class SpiderGameLogic : MonoBehaviour
     private void Start()
     {
         animationLogic = GetComponentInChildren<ProzeduralAnimationLogic>();
+        animationLogic.AddLegTakeDmgEventListener(OnSpiderTakeDmg);
     }
 
     // Update is called once per frame
@@ -68,7 +71,20 @@ public class SpiderGameLogic : MonoBehaviour
 
             animationLogic.StartStoplegAnimation(leg, false);
         }
-
         
+    }
+
+    private void OnSpiderTakeDmg(int _leg)
+    {
+        StartCoroutine(C_TurnOnOffVFX());
+    }
+
+    private IEnumerator C_TurnOnOffVFX()
+    {
+        dmgVFX.SetActive(true);
+
+        yield return new WaitForSeconds(dmgVFXTime);
+
+        dmgVFX.SetActive(false);
     }
 }

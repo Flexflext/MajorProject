@@ -111,6 +111,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     [SerializeField] private UnityEvent onDeathResetEvent;
     [SerializeField] private UnityEvent<int, ELegStates> onLegStateChanged;
     [SerializeField] private UnityEvent<int> onLegMoved;
+    [SerializeField] private UnityEvent<int> onLegTakeDamage;
 
 
     private float ranges;
@@ -435,6 +436,16 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         onLegMoved.RemoveListener(_event);
     }
 
+    public void AddLegTakeDmgEventListener(UnityAction<int> _event)
+    {
+        onLegTakeDamage.AddListener(_event);
+    }
+
+    public void RemoveLegTakeDmgEventListener(UnityAction<int> _event)
+    {
+        onLegTakeDamage.RemoveListener(_event);
+    }
+
     #endregion
 
     public void CheckDeath()
@@ -524,6 +535,11 @@ public class ProzeduralAnimationLogic : MonoBehaviour
             MoveAllLegs();
 
             legs[_leg].legState ++;
+
+            if (onLegTakeDamage != null)
+            {
+                onLegTakeDamage.Invoke(_leg);
+            }
         }
     }
 

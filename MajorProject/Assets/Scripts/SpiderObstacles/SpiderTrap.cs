@@ -28,7 +28,6 @@ public class SpiderTrap : MonoBehaviour
         LegDamageSystem dmgSys = _legtodmg.GetComponentInParent<LegDamageSystem>();
 
 
-
         if (dmgSys != null)
         {
             dmgSys.TakeDamage(transform.position);
@@ -36,15 +35,21 @@ public class SpiderTrap : MonoBehaviour
         StopAllCoroutines();
         onOff = false;
         TurnOnOff(false);
-        StartCoroutine(C_WaitTillOnOff());
+        
     }
 
     private IEnumerator C_WaitTillOnOff()
     {
         yield return new WaitForSeconds(onOffTimer);
+
         onOff = !onOff;
+        
         TurnOnOff(onOff);
-        StartCoroutine(C_WaitTillOnOff());
+
+        if (!constantlyOn)
+        {
+            StartCoroutine(C_WaitTillOnOff());
+        }
     }
 
     private void TurnOnOff(bool _onoff)
