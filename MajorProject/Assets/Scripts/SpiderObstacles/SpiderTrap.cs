@@ -11,12 +11,15 @@ public class SpiderTrap : MonoBehaviour
     [SerializeField] private float onOffTimer;
 
     [SerializeField] private GameObject laser;
+    [SerializeField] private GameObject impactVFX;
 
-
+    private Collider col;
     private bool onOff = true;
 
     private void Start()
     {
+        col = GetComponent<Collider>();
+
         if (!constantlyOn)
         {
             StartCoroutine(C_WaitTillOnOff());
@@ -52,6 +55,16 @@ public class SpiderTrap : MonoBehaviour
         }
     }
 
+    private IEnumerator C_PlayImpactEffect(Vector3 _pos)
+    {
+        impactVFX.transform.position = _pos;
+        impactVFX.SetActive(true);
+
+        yield return new WaitForSeconds(0.75f);
+
+        impactVFX.SetActive(false);
+    }
+
     private void TurnOnOff(bool _onoff)
     {
         laser.SetActive(_onoff);
@@ -64,6 +77,8 @@ public class SpiderTrap : MonoBehaviour
         if (other.gameObject.layer == spiderLayer)
         {
             DoDamage(other);
+
+            StartCoroutine(C_PlayImpactEffect(col.ClosestPoint(other.transform.position)));
         }
     }
 }

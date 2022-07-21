@@ -64,7 +64,7 @@ public class HUD : MonoBehaviour
         StopAllCoroutines();
         playerFadeHealthBar.fillAmount = playerHealthNum.fillAmount;
         playerHealthNum.fillAmount = _percent;
-        playerHealthText.text = $"{_percent * 100}/100";
+        playerHealthText.text = $"{(_percent * 100).ToString("0")}/100";
         StartCoroutine(C_HealthFade(playerFadeHealthBar.fillAmount, _percent));
     }
 
