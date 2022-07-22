@@ -1,41 +1,107 @@
 fileFormatVersion: 2
 guid: c34ffbc0828494fb6a56eb0f678a02e6
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: Keyboard
-    100004: Screen
-    100006: Screen_Axis_01
-    100008: Screen_Axis_02
-    100010: Screen_Part_01
-    400000: //RootNode
-    400002: Keyboard
-    400004: Screen
-    400006: Screen_Axis_01
-    400008: Screen_Axis_02
-    400010: Screen_Part_01
-    2100000: Wall_Atlas_01_Dif
-    2100002: Wall_Atlas_08_Dif
-    2300000: //RootNode
-    2300002: Keyboard
-    2300004: Screen
-    2300006: Screen_Axis_01
-    2300008: Screen_Axis_02
-    2300010: Screen_Part_01
-    3300000: //RootNode
-    3300002: Keyboard
-    3300004: Screen
-    3300006: Screen_Axis_01
-    3300008: Screen_Axis_02
-    3300010: Screen_Part_01
-    4300000: Desktop_Computer_01
-    4300002: Screen_Axis_01
-    4300004: Screen_Axis_02
-    4300006: Screen_Part_01
-    4300008: Screen
-    4300010: Keyboard
-    2186277476908879412: ImportLogs
+  serializedVersion: 20300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: Keyboard
+  - first:
+      1: 100004
+    second: Screen
+  - first:
+      1: 100006
+    second: Screen_Axis_01
+  - first:
+      1: 100008
+    second: Screen_Axis_02
+  - first:
+      1: 100010
+    second: Screen_Part_01
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: Keyboard
+  - first:
+      4: 400004
+    second: Screen
+  - first:
+      4: 400006
+    second: Screen_Axis_01
+  - first:
+      4: 400008
+    second: Screen_Axis_02
+  - first:
+      4: 400010
+    second: Screen_Part_01
+  - first:
+      21: 2100000
+    second: Wall_Atlas_01_Dif
+  - first:
+      21: 2100002
+    second: Wall_Atlas_08_Dif
+  - first:
+      23: 2300000
+    second: //RootNode
+  - first:
+      23: 2300002
+    second: Keyboard
+  - first:
+      23: 2300004
+    second: Screen
+  - first:
+      23: 2300006
+    second: Screen_Axis_01
+  - first:
+      23: 2300008
+    second: Screen_Axis_02
+  - first:
+      23: 2300010
+    second: Screen_Part_01
+  - first:
+      33: 3300000
+    second: //RootNode
+  - first:
+      33: 3300002
+    second: Keyboard
+  - first:
+      33: 3300004
+    second: Screen
+  - first:
+      33: 3300006
+    second: Screen_Axis_01
+  - first:
+      33: 3300008
+    second: Screen_Axis_02
+  - first:
+      33: 3300010
+    second: Screen_Part_01
+  - first:
+      43: 4300000
+    second: Desktop_Computer_01
+  - first:
+      43: 4300002
+    second: Screen_Axis_01
+  - first:
+      43: 4300004
+    second: Screen_Axis_02
+  - first:
+      43: 4300006
+    second: Screen_Part_01
+  - first:
+      43: 4300008
+    second: Screen
+  - first:
+      43: 4300010
+    second: Keyboard
+  - first:
+      41386430: 2186277476908879412
+    second: ImportLogs
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -53,7 +119,7 @@ ModelImporter:
       name: Wall_Atlas_08_Dif
     second: {fileID: 2100000, guid: b1f6be534fb234305832b7e2e037e656, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -86,25 +152,32 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
     importLights: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 1
     useFileUnits: 1
-    optimizeMeshForGPU: 0
     keepQuads: 0
     weldVertices: 0
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -113,10 +186,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 1
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -126,13 +199,18 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

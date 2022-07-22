@@ -1,49 +1,131 @@
 fileFormatVersion: 2
 guid: 155e8689b3dfce5418fbf9eb83a73e83
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: Box025
-    100002: //RootNode
-    100004: Object149
-    100006: Object150
-    100008: Cryo_Pod_01
-    100010: Object152
-    100012: Screen
-    100014: Top
-    400000: Box025
-    400002: //RootNode
-    400004: Object149
-    400006: Object150
-    400008: Cryo_Pod_01
-    400010: Object152
-    400012: Screen
-    400014: Top
-    2100000: Wall_Atlas_01_Dif
-    2100002: Glass
-    2300000: Box025
-    2300002: Object149
-    2300004: Object150
-    2300006: Cryo_Pod_01
-    2300008: //RootNode
-    2300010: Object152
-    2300012: Screen
-    2300014: Top
-    3300000: Box025
-    3300002: Object149
-    3300004: Object150
-    3300006: Cryo_Pod_01
-    3300008: //RootNode
-    3300010: Object152
-    3300012: Screen
-    3300014: Top
-    4300000: Box025
-    4300002: Object149
-    4300004: Object150
-    4300006: Cryo_Pod_01
-    4300008: Object152
-    4300010: Top
-    4300012: Screen
+  serializedVersion: 20300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Box025
+  - first:
+      1: 100002
+    second: //RootNode
+  - first:
+      1: 100004
+    second: Object149
+  - first:
+      1: 100006
+    second: Object150
+  - first:
+      1: 100008
+    second: Cryo_Pod_01
+  - first:
+      1: 100010
+    second: Object152
+  - first:
+      1: 100012
+    second: Screen
+  - first:
+      1: 100014
+    second: Top
+  - first:
+      4: 400000
+    second: Box025
+  - first:
+      4: 400002
+    second: //RootNode
+  - first:
+      4: 400004
+    second: Object149
+  - first:
+      4: 400006
+    second: Object150
+  - first:
+      4: 400008
+    second: Cryo_Pod_01
+  - first:
+      4: 400010
+    second: Object152
+  - first:
+      4: 400012
+    second: Screen
+  - first:
+      4: 400014
+    second: Top
+  - first:
+      21: 2100000
+    second: Wall_Atlas_01_Dif
+  - first:
+      21: 2100002
+    second: Glass
+  - first:
+      23: 2300000
+    second: Box025
+  - first:
+      23: 2300002
+    second: Object149
+  - first:
+      23: 2300004
+    second: Object150
+  - first:
+      23: 2300006
+    second: Cryo_Pod_01
+  - first:
+      23: 2300008
+    second: //RootNode
+  - first:
+      23: 2300010
+    second: Object152
+  - first:
+      23: 2300012
+    second: Screen
+  - first:
+      23: 2300014
+    second: Top
+  - first:
+      33: 3300000
+    second: Box025
+  - first:
+      33: 3300002
+    second: Object149
+  - first:
+      33: 3300004
+    second: Object150
+  - first:
+      33: 3300006
+    second: Cryo_Pod_01
+  - first:
+      33: 3300008
+    second: //RootNode
+  - first:
+      33: 3300010
+    second: Object152
+  - first:
+      33: 3300012
+    second: Screen
+  - first:
+      33: 3300014
+    second: Top
+  - first:
+      43: 4300000
+    second: Box025
+  - first:
+      43: 4300002
+    second: Object149
+  - first:
+      43: 4300004
+    second: Object150
+  - first:
+      43: 4300006
+    second: Cryo_Pod_01
+  - first:
+      43: 4300008
+    second: Object152
+  - first:
+      43: 4300010
+    second: Top
+  - first:
+      43: 4300012
+    second: Screen
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -66,7 +148,7 @@ ModelImporter:
       name: Wall_Atlas_06_Dif
     second: {fileID: 2100000, guid: d0f93dbf9f16a43e2889f63e2540eb80, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -99,25 +181,32 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
     importLights: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 1
     useFileUnits: 1
-    optimizeMeshForGPU: 0
     keepQuads: 0
     weldVertices: 0
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -126,10 +215,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 1
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -139,13 +228,18 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

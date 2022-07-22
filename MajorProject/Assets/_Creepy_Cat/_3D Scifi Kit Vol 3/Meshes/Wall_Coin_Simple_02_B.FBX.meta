@@ -1,57 +1,155 @@
 fileFormatVersion: 2
 guid: 1b0430a14e1a84749b0e27a488c61a4d
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: Bassin
-    100004: Bed_A
-    100006: Bed_B
-    100008: Door_Left
-    100010: Door_Right
-    100012: Seat
-    100014: Tap
-    100016: WC_01
-    400000: //RootNode
-    400002: Bassin
-    400004: Bed_A
-    400006: Bed_B
-    400008: Door_Left
-    400010: Door_Right
-    400012: Seat
-    400014: Tap
-    400016: WC_01
-    2100000: Wall_Atlas_01_Dif
-    2100002: Wall_Atlas_02_Dif
-    2300000: //RootNode
-    2300002: Bassin
-    2300004: Bed_A
-    2300006: Bed_B
-    2300008: Door_Left
-    2300010: Door_Right
-    2300012: Seat
-    2300014: Tap
-    2300016: WC_01
-    3300000: //RootNode
-    3300002: Bassin
-    3300004: Bed_A
-    3300006: Bed_B
-    3300008: Door_Left
-    3300010: Door_Right
-    3300012: Seat
-    3300014: Tap
-    3300016: WC_01
-    4300000: Wall_Coin_Simple_02_B
-    4300002: Wall_Bed_Double_01_B
-    4300004: Bed_B
-    4300006: Bed_A
-    4300008: WC_01
-    4300010: Seat
-    4300012: Bassin
-    4300014: Tap
-    4300016: Door_Left
-    4300018: Door_Right
-    2186277476908879412: ImportLogs
+  serializedVersion: 20300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: Bassin
+  - first:
+      1: 100004
+    second: Bed_A
+  - first:
+      1: 100006
+    second: Bed_B
+  - first:
+      1: 100008
+    second: Door_Left
+  - first:
+      1: 100010
+    second: Door_Right
+  - first:
+      1: 100012
+    second: Seat
+  - first:
+      1: 100014
+    second: Tap
+  - first:
+      1: 100016
+    second: WC_01
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: Bassin
+  - first:
+      4: 400004
+    second: Bed_A
+  - first:
+      4: 400006
+    second: Bed_B
+  - first:
+      4: 400008
+    second: Door_Left
+  - first:
+      4: 400010
+    second: Door_Right
+  - first:
+      4: 400012
+    second: Seat
+  - first:
+      4: 400014
+    second: Tap
+  - first:
+      4: 400016
+    second: WC_01
+  - first:
+      21: 2100000
+    second: Wall_Atlas_01_Dif
+  - first:
+      21: 2100002
+    second: Wall_Atlas_02_Dif
+  - first:
+      23: 2300000
+    second: //RootNode
+  - first:
+      23: 2300002
+    second: Bassin
+  - first:
+      23: 2300004
+    second: Bed_A
+  - first:
+      23: 2300006
+    second: Bed_B
+  - first:
+      23: 2300008
+    second: Door_Left
+  - first:
+      23: 2300010
+    second: Door_Right
+  - first:
+      23: 2300012
+    second: Seat
+  - first:
+      23: 2300014
+    second: Tap
+  - first:
+      23: 2300016
+    second: WC_01
+  - first:
+      33: 3300000
+    second: //RootNode
+  - first:
+      33: 3300002
+    second: Bassin
+  - first:
+      33: 3300004
+    second: Bed_A
+  - first:
+      33: 3300006
+    second: Bed_B
+  - first:
+      33: 3300008
+    second: Door_Left
+  - first:
+      33: 3300010
+    second: Door_Right
+  - first:
+      33: 3300012
+    second: Seat
+  - first:
+      33: 3300014
+    second: Tap
+  - first:
+      33: 3300016
+    second: WC_01
+  - first:
+      43: 4300000
+    second: Wall_Coin_Simple_02_B
+  - first:
+      43: 4300002
+    second: Wall_Bed_Double_01_B
+  - first:
+      43: 4300004
+    second: Bed_B
+  - first:
+      43: 4300006
+    second: Bed_A
+  - first:
+      43: 4300008
+    second: WC_01
+  - first:
+      43: 4300010
+    second: Seat
+  - first:
+      43: 4300012
+    second: Bassin
+  - first:
+      43: 4300014
+    second: Tap
+  - first:
+      43: 4300016
+    second: Door_Left
+  - first:
+      43: 4300018
+    second: Door_Right
+  - first:
+      41386430: 2186277476908879412
+    second: ImportLogs
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -69,7 +167,7 @@ ModelImporter:
       name: Wall_Atlas_02_Dif
     second: {fileID: 2100000, guid: c0fa76df0602d4e8c9afa31f3397c578, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -102,25 +200,32 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
     importLights: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 1
     useFileUnits: 1
-    optimizeMeshForGPU: 0
     keepQuads: 0
     weldVertices: 0
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -129,10 +234,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 1
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -142,13 +247,18 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

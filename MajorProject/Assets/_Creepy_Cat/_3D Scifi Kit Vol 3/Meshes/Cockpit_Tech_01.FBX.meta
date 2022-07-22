@@ -1,59 +1,161 @@
 fileFormatVersion: 2
 guid: b1bc57dbfa16148d9ab1bc9bb74576bb
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: Cockpit_Tech_01
-    100004: Screen_A
-    100006: Screen_B
-    100008: Screen_C
-    100010: Screen_D
-    100012: HUD_Left
-    100014: HUD_Right
-    100016: Base_01
-    100018: HUD_Center
-    400000: //RootNode
-    400002: Cockpit_Tech_01
-    400004: Screen_A
-    400006: Screen_B
-    400008: Screen_C
-    400010: Screen_D
-    400012: HUD_Left
-    400014: HUD_Right
-    400016: Base_01
-    400018: HUD_Center
-    2100000: Wall_Atlas_01_Dif
-    2300000: //RootNode
-    2300002: Cockpit_Tech_01
-    2300004: Screen_A
-    2300006: Screen_B
-    2300008: Screen_C
-    2300010: Screen_D
-    2300012: HUD_Left
-    2300014: HUD_Right
-    2300016: Base_01
-    2300018: HUD_Center
-    3300000: //RootNode
-    3300002: Cockpit_Tech_01
-    3300004: Screen_A
-    3300006: Screen_B
-    3300008: Screen_C
-    3300010: Screen_D
-    3300012: HUD_Left
-    3300014: HUD_Right
-    3300016: Base_01
-    3300018: HUD_Center
-    4300000: Cockpit_Tech_01
-    4300002: Screen_A
-    4300004: Screen_B
-    4300006: Screen_C
-    4300008: Screen_D
-    4300010: HUD_Left
-    4300012: HUD_Right
-    4300014: Base_01
-    4300016: HUD_Center
-    2186277476908879412: ImportLogs
+  serializedVersion: 20300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: Cockpit_Tech_01
+  - first:
+      1: 100004
+    second: Screen_A
+  - first:
+      1: 100006
+    second: Screen_B
+  - first:
+      1: 100008
+    second: Screen_C
+  - first:
+      1: 100010
+    second: Screen_D
+  - first:
+      1: 100012
+    second: HUD_Left
+  - first:
+      1: 100014
+    second: HUD_Right
+  - first:
+      1: 100016
+    second: Base_01
+  - first:
+      1: 100018
+    second: HUD_Center
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: Cockpit_Tech_01
+  - first:
+      4: 400004
+    second: Screen_A
+  - first:
+      4: 400006
+    second: Screen_B
+  - first:
+      4: 400008
+    second: Screen_C
+  - first:
+      4: 400010
+    second: Screen_D
+  - first:
+      4: 400012
+    second: HUD_Left
+  - first:
+      4: 400014
+    second: HUD_Right
+  - first:
+      4: 400016
+    second: Base_01
+  - first:
+      4: 400018
+    second: HUD_Center
+  - first:
+      21: 2100000
+    second: Wall_Atlas_01_Dif
+  - first:
+      23: 2300000
+    second: //RootNode
+  - first:
+      23: 2300002
+    second: Cockpit_Tech_01
+  - first:
+      23: 2300004
+    second: Screen_A
+  - first:
+      23: 2300006
+    second: Screen_B
+  - first:
+      23: 2300008
+    second: Screen_C
+  - first:
+      23: 2300010
+    second: Screen_D
+  - first:
+      23: 2300012
+    second: HUD_Left
+  - first:
+      23: 2300014
+    second: HUD_Right
+  - first:
+      23: 2300016
+    second: Base_01
+  - first:
+      23: 2300018
+    second: HUD_Center
+  - first:
+      33: 3300000
+    second: //RootNode
+  - first:
+      33: 3300002
+    second: Cockpit_Tech_01
+  - first:
+      33: 3300004
+    second: Screen_A
+  - first:
+      33: 3300006
+    second: Screen_B
+  - first:
+      33: 3300008
+    second: Screen_C
+  - first:
+      33: 3300010
+    second: Screen_D
+  - first:
+      33: 3300012
+    second: HUD_Left
+  - first:
+      33: 3300014
+    second: HUD_Right
+  - first:
+      33: 3300016
+    second: Base_01
+  - first:
+      33: 3300018
+    second: HUD_Center
+  - first:
+      43: 4300000
+    second: Cockpit_Tech_01
+  - first:
+      43: 4300002
+    second: Screen_A
+  - first:
+      43: 4300004
+    second: Screen_B
+  - first:
+      43: 4300006
+    second: Screen_C
+  - first:
+      43: 4300008
+    second: Screen_D
+  - first:
+      43: 4300010
+    second: HUD_Left
+  - first:
+      43: 4300012
+    second: HUD_Right
+  - first:
+      43: 4300014
+    second: Base_01
+  - first:
+      43: 4300016
+    second: HUD_Center
+  - first:
+      41386430: 2186277476908879412
+    second: ImportLogs
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -76,7 +178,7 @@ ModelImporter:
       name: Wall_Atlas_10_Dif
     second: {fileID: 2100000, guid: a022401cccb7d48369034faed96e1bd5, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -109,25 +211,32 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
     importLights: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 1
     useFileUnits: 1
-    optimizeMeshForGPU: 0
     keepQuads: 0
     weldVertices: 0
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -136,10 +245,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 1
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -149,13 +258,18 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

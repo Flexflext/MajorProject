@@ -1,64 +1,176 @@
 fileFormatVersion: 2
 guid: 1fa7fc866f2f24450a9c03e1e5696f08
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: Body
-    100002: Chair_04
-    100004: Door_Back
-    100006: Floor
-    100008: Interior
-    100010: Object035
-    100012: //RootNode
-    100014: Door_Ext_01
-    100016: Floor001
-    100018: Glass
-    400000: Body
-    400002: Chair_04
-    400004: Door_Back
-    400006: Floor
-    400008: Interior
-    400010: Object035
-    400012: //RootNode
-    400014: Door_Ext_01
-    400016: Floor001
-    400018: Glass
-    2100000: Wall_Atlas_10_Dif
-    2100002: Wall_Atlas_01_Dif
-    2100004: Wall_Atlas_02_Dif
-    2100006: Wall_Atlas_07_Dif
-    2100008: Wall_Atlas_03_Dif
-    2100010: Wall_Atlas_06_Dif
-    2300000: Body
-    2300002: Chair_04
-    2300004: Door_Back
-    2300006: Floor
-    2300008: Interior
-    2300010: Object035
-    2300012: //RootNode
-    2300014: Door_Ext_01
-    2300016: Floor001
-    2300018: Glass
-    3300000: Body
-    3300002: Chair_04
-    3300004: Door_Back
-    3300006: Floor
-    3300008: Interior
-    3300010: Object035
-    3300012: //RootNode
-    3300014: Door_Ext_01
-    3300016: Floor001
-    3300018: Glass
-    4300000: Body
-    4300002: Interior
-    4300004: Floor
-    4300006: Door_Back
-    4300008: Object035
-    4300010: Chair_04
-    4300012: Door_Ext_01
-    4300014: Glass
-    4300016: Floor001
-    2186277476908879412: ImportLogs
+  serializedVersion: 20300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Body
+  - first:
+      1: 100002
+    second: Chair_04
+  - first:
+      1: 100004
+    second: Door_Back
+  - first:
+      1: 100006
+    second: Floor
+  - first:
+      1: 100008
+    second: Interior
+  - first:
+      1: 100010
+    second: Object035
+  - first:
+      1: 100012
+    second: //RootNode
+  - first:
+      1: 100014
+    second: Door_Ext_01
+  - first:
+      1: 100016
+    second: Floor001
+  - first:
+      1: 100018
+    second: Glass
+  - first:
+      4: 400000
+    second: Body
+  - first:
+      4: 400002
+    second: Chair_04
+  - first:
+      4: 400004
+    second: Door_Back
+  - first:
+      4: 400006
+    second: Floor
+  - first:
+      4: 400008
+    second: Interior
+  - first:
+      4: 400010
+    second: Object035
+  - first:
+      4: 400012
+    second: //RootNode
+  - first:
+      4: 400014
+    second: Door_Ext_01
+  - first:
+      4: 400016
+    second: Floor001
+  - first:
+      4: 400018
+    second: Glass
+  - first:
+      21: 2100000
+    second: Wall_Atlas_10_Dif
+  - first:
+      21: 2100002
+    second: Wall_Atlas_01_Dif
+  - first:
+      21: 2100004
+    second: Wall_Atlas_02_Dif
+  - first:
+      21: 2100006
+    second: Wall_Atlas_07_Dif
+  - first:
+      21: 2100008
+    second: Wall_Atlas_03_Dif
+  - first:
+      21: 2100010
+    second: Wall_Atlas_06_Dif
+  - first:
+      23: 2300000
+    second: Body
+  - first:
+      23: 2300002
+    second: Chair_04
+  - first:
+      23: 2300004
+    second: Door_Back
+  - first:
+      23: 2300006
+    second: Floor
+  - first:
+      23: 2300008
+    second: Interior
+  - first:
+      23: 2300010
+    second: Object035
+  - first:
+      23: 2300012
+    second: //RootNode
+  - first:
+      23: 2300014
+    second: Door_Ext_01
+  - first:
+      23: 2300016
+    second: Floor001
+  - first:
+      23: 2300018
+    second: Glass
+  - first:
+      33: 3300000
+    second: Body
+  - first:
+      33: 3300002
+    second: Chair_04
+  - first:
+      33: 3300004
+    second: Door_Back
+  - first:
+      33: 3300006
+    second: Floor
+  - first:
+      33: 3300008
+    second: Interior
+  - first:
+      33: 3300010
+    second: Object035
+  - first:
+      33: 3300012
+    second: //RootNode
+  - first:
+      33: 3300014
+    second: Door_Ext_01
+  - first:
+      33: 3300016
+    second: Floor001
+  - first:
+      33: 3300018
+    second: Glass
+  - first:
+      43: 4300000
+    second: Body
+  - first:
+      43: 4300002
+    second: Interior
+  - first:
+      43: 4300004
+    second: Floor
+  - first:
+      43: 4300006
+    second: Door_Back
+  - first:
+      43: 4300008
+    second: Object035
+  - first:
+      43: 4300010
+    second: Chair_04
+  - first:
+      43: 4300012
+    second: Door_Ext_01
+  - first:
+      43: 4300014
+    second: Glass
+  - first:
+      43: 4300016
+    second: Floor001
+  - first:
+      41386430: 2186277476908879412
+    second: ImportLogs
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -96,7 +208,7 @@ ModelImporter:
       name: Wall_Atlas_10_Dif
     second: {fileID: 2100000, guid: a022401cccb7d48369034faed96e1bd5, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -129,25 +241,32 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
     importLights: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 1
     useFileUnits: 1
-    optimizeMeshForGPU: 0
     keepQuads: 0
     weldVertices: 0
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -156,10 +275,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 1
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -169,13 +288,18 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

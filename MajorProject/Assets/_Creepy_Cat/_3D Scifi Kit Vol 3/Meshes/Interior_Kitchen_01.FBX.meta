@@ -1,36 +1,92 @@
 fileFormatVersion: 2
 guid: 29723537667408b418b532197b733e4c
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: Door_LeftA
-    100004: Door_LeftB
-    100006: Door_RightA
-    100008: Door_RightB
-    400000: //RootNode
-    400002: Door_LeftA
-    400004: Door_LeftB
-    400006: Door_RightA
-    400008: Door_RightB
-    2100000: Wall_Atlas_01_Dif
-    2100002: Wall_Atlas_03_Dif
-    2100004: Wall_Atlas_06_Dif
-    2300000: //RootNode
-    2300002: Door_LeftA
-    2300004: Door_LeftB
-    2300006: Door_RightA
-    2300008: Door_RightB
-    3300000: //RootNode
-    3300002: Door_LeftA
-    3300004: Door_LeftB
-    3300006: Door_RightA
-    3300008: Door_RightB
-    4300000: Interior_Kitchen_01
-    4300002: Door_LeftA
-    4300004: Door_RightA
-    4300006: Door_LeftB
-    4300008: Door_RightB
+  serializedVersion: 20300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: Door_LeftA
+  - first:
+      1: 100004
+    second: Door_LeftB
+  - first:
+      1: 100006
+    second: Door_RightA
+  - first:
+      1: 100008
+    second: Door_RightB
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: Door_LeftA
+  - first:
+      4: 400004
+    second: Door_LeftB
+  - first:
+      4: 400006
+    second: Door_RightA
+  - first:
+      4: 400008
+    second: Door_RightB
+  - first:
+      21: 2100000
+    second: Wall_Atlas_01_Dif
+  - first:
+      21: 2100002
+    second: Wall_Atlas_03_Dif
+  - first:
+      21: 2100004
+    second: Wall_Atlas_06_Dif
+  - first:
+      23: 2300000
+    second: //RootNode
+  - first:
+      23: 2300002
+    second: Door_LeftA
+  - first:
+      23: 2300004
+    second: Door_LeftB
+  - first:
+      23: 2300006
+    second: Door_RightA
+  - first:
+      23: 2300008
+    second: Door_RightB
+  - first:
+      33: 3300000
+    second: //RootNode
+  - first:
+      33: 3300002
+    second: Door_LeftA
+  - first:
+      33: 3300004
+    second: Door_LeftB
+  - first:
+      33: 3300006
+    second: Door_RightA
+  - first:
+      33: 3300008
+    second: Door_RightB
+  - first:
+      43: 4300000
+    second: Interior_Kitchen_01
+  - first:
+      43: 4300002
+    second: Door_LeftA
+  - first:
+      43: 4300004
+    second: Door_RightA
+  - first:
+      43: 4300006
+    second: Door_LeftB
+  - first:
+      43: 4300008
+    second: Door_RightB
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -58,7 +114,7 @@ ModelImporter:
       name: Wall_Atlas_06_Dif
     second: {fileID: 2100000, guid: d0f93dbf9f16a43e2889f63e2540eb80, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -91,25 +147,32 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
     importLights: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 1
     useFileUnits: 1
-    optimizeMeshForGPU: 0
     keepQuads: 0
     weldVertices: 0
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -118,10 +181,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 1
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -131,13 +194,18 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

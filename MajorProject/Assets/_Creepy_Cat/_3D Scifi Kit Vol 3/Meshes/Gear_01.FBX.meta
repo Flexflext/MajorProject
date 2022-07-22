@@ -1,33 +1,83 @@
 fileFormatVersion: 2
 guid: cca63200e726e413caf58d59450b9d54
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: Gear_Fold
-    100004: Gear_Pivot
-    100006: Wheel_01
-    400000: //RootNode
-    400002: Gear_Fold
-    400004: Gear_Pivot
-    400006: Wheel_01
-    2100000: Wall_Atlas_13_Dif
-    2100002: Wall_Atlas_14_Dif
-    2100004: Wall_Atlas_03_Dif
-    2100006: Wall_Atlas_01_Dif
-    2300000: //RootNode
-    2300002: Gear_Fold
-    2300004: Gear_Pivot
-    2300006: Wheel_01
-    3300000: //RootNode
-    3300002: Gear_Fold
-    3300004: Gear_Pivot
-    3300006: Wheel_01
-    4300000: Gear_Base
-    4300002: Gear_Pivot
-    4300004: Wheel_01
-    4300006: Gear_Fold
-    2186277476908879412: ImportLogs
+  serializedVersion: 20300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: Gear_Fold
+  - first:
+      1: 100004
+    second: Gear_Pivot
+  - first:
+      1: 100006
+    second: Wheel_01
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: Gear_Fold
+  - first:
+      4: 400004
+    second: Gear_Pivot
+  - first:
+      4: 400006
+    second: Wheel_01
+  - first:
+      21: 2100000
+    second: Wall_Atlas_13_Dif
+  - first:
+      21: 2100002
+    second: Wall_Atlas_14_Dif
+  - first:
+      21: 2100004
+    second: Wall_Atlas_03_Dif
+  - first:
+      21: 2100006
+    second: Wall_Atlas_01_Dif
+  - first:
+      23: 2300000
+    second: //RootNode
+  - first:
+      23: 2300002
+    second: Gear_Fold
+  - first:
+      23: 2300004
+    second: Gear_Pivot
+  - first:
+      23: 2300006
+    second: Wheel_01
+  - first:
+      33: 3300000
+    second: //RootNode
+  - first:
+      33: 3300002
+    second: Gear_Fold
+  - first:
+      33: 3300004
+    second: Gear_Pivot
+  - first:
+      33: 3300006
+    second: Wheel_01
+  - first:
+      43: 4300000
+    second: Gear_Base
+  - first:
+      43: 4300002
+    second: Gear_Pivot
+  - first:
+      43: 4300004
+    second: Wheel_01
+  - first:
+      43: 4300006
+    second: Gear_Fold
+  - first:
+      41386430: 2186277476908879412
+    second: ImportLogs
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -55,7 +105,7 @@ ModelImporter:
       name: Wall_Atlas_14_Dif
     second: {fileID: 2100000, guid: 33209e3ae99114cbeb59b1ca28962518, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -88,25 +138,32 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
     importLights: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 1
     useFileUnits: 1
-    optimizeMeshForGPU: 0
     keepQuads: 0
     weldVertices: 0
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -115,10 +172,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 1
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -128,13 +185,18 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

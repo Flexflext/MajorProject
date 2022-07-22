@@ -1,26 +1,62 @@
 fileFormatVersion: 2
 guid: 6ab8975bdcd59e44c8da976582041a08
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: Decals
-    100002: //RootNode
-    100004: Floor_Decal
-    400000: Decals
-    400002: //RootNode
-    400004: Floor_Decal
-    2100000: Wall_Atlas_02_Dif
-    2100002: Wall_Atlas_01_Dif
-    2100004: Wall_Atlas_20_ID_Decals
-    2300000: Decals
-    2300002: Floor_Decal
-    2300004: //RootNode
-    3300000: Decals
-    3300002: Floor_Decal
-    3300004: //RootNode
-    4300000: Floor_Decal
-    4300002: Decals
-    4300004: Floor_01_C
+  serializedVersion: 20300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Decals
+  - first:
+      1: 100002
+    second: //RootNode
+  - first:
+      1: 100004
+    second: Floor_Decal
+  - first:
+      4: 400000
+    second: Decals
+  - first:
+      4: 400002
+    second: //RootNode
+  - first:
+      4: 400004
+    second: Floor_Decal
+  - first:
+      21: 2100000
+    second: Wall_Atlas_02_Dif
+  - first:
+      21: 2100002
+    second: Wall_Atlas_01_Dif
+  - first:
+      21: 2100004
+    second: Wall_Atlas_20_ID_Decals
+  - first:
+      23: 2300000
+    second: Decals
+  - first:
+      23: 2300002
+    second: Floor_Decal
+  - first:
+      23: 2300004
+    second: //RootNode
+  - first:
+      33: 3300000
+    second: Decals
+  - first:
+      33: 3300002
+    second: Floor_Decal
+  - first:
+      33: 3300004
+    second: //RootNode
+  - first:
+      43: 4300000
+    second: Floor_Decal
+  - first:
+      43: 4300002
+    second: Decals
+  - first:
+      43: 4300004
+    second: Floor_01_C
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -43,7 +79,7 @@ ModelImporter:
       name: Wall_Atlas_20_ID_Decals
     second: {fileID: 2100000, guid: 4701a35c41b3336429fbae5fc352f477, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -76,25 +112,32 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
     importLights: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 1
     useFileUnits: 1
-    optimizeMeshForGPU: 0
     keepQuads: 0
     weldVertices: 0
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -103,10 +146,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 1
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -116,13 +159,18 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

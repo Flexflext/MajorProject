@@ -1,119 +1,341 @@
 fileFormatVersion: 2
 guid: 09be8c4799c2143ec96fca13c34e2594
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: Platerform_Base
-    100004: Platerform_Base_01
-    100006: Platerform_Base_02
-    100008: Platerform_Support_01
-    100010: Platerform_Support_02
-    100012: Platerform_Support_03
-    100014: Platerform_Support_04
-    100016: Platerform_Security
-    100018: Platerform_Fence_01
-    100020: Platerform_Fence_02
-    100022: Platerform_Fence_03
-    100024: Platerform_Fence_04
-    100026: Box002
-    100028: Object138
-    100030: Object139
-    100032: Object149
-    100034: Platerform_Metal_02
-    100036: Platerform_Metal_02 1
-    100038: Platerform_Metal_02_Stairs
-    100040: Platerform_Fence_05
-    100042: Platerform_Stairs_01
-    400000: //RootNode
-    400002: Platerform_Base
-    400004: Platerform_Base_01
-    400006: Platerform_Base_02
-    400008: Platerform_Support_01
-    400010: Platerform_Support_02
-    400012: Platerform_Support_03
-    400014: Platerform_Support_04
-    400016: Platerform_Security
-    400018: Platerform_Fence_01
-    400020: Platerform_Fence_02
-    400022: Platerform_Fence_03
-    400024: Platerform_Fence_04
-    400026: Box002
-    400028: Object138
-    400030: Object139
-    400032: Object149
-    400034: Platerform_Metal_02
-    400036: Platerform_Metal_02 1
-    400038: Platerform_Metal_02_Stairs
-    400040: Platerform_Fence_05
-    400042: Platerform_Stairs_01
-    2100000: Wall_Atlas_01_Dif
-    2100002: Wall_Atlas_13_Dif
-    2100004: Wall_Atlas_16_Dif
-    2100006: Wall_Atlas_18_Dif
-    2300000: //RootNode
-    2300002: Platerform_Base
-    2300004: Platerform_Base_01
-    2300006: Platerform_Base_02
-    2300008: Platerform_Support_01
-    2300010: Platerform_Support_02
-    2300012: Platerform_Support_03
-    2300014: Platerform_Support_04
-    2300016: Platerform_Security
-    2300018: Platerform_Fence_01
-    2300020: Platerform_Fence_02
-    2300022: Platerform_Fence_03
-    2300024: Platerform_Fence_04
-    2300026: Box002
-    2300028: Object139
-    2300030: Object149
-    2300032: Platerform_Metal_02
-    2300034: Platerform_Metal_02 1
-    2300036: Platerform_Metal_02_Stairs
-    2300038: Platerform_Fence_05
-    2300040: Platerform_Stairs_01
-    3300000: //RootNode
-    3300002: Platerform_Base
-    3300004: Platerform_Base_01
-    3300006: Platerform_Base_02
-    3300008: Platerform_Support_01
-    3300010: Platerform_Support_02
-    3300012: Platerform_Support_03
-    3300014: Platerform_Support_04
-    3300016: Platerform_Security
-    3300018: Platerform_Fence_01
-    3300020: Platerform_Fence_02
-    3300022: Platerform_Fence_03
-    3300024: Platerform_Fence_04
-    3300026: Box002
-    3300028: Object139
-    3300030: Object149
-    3300032: Platerform_Metal_02
-    3300034: Platerform_Metal_02 1
-    3300036: Platerform_Metal_02_Stairs
-    3300038: Platerform_Fence_05
-    3300040: Platerform_Stairs_01
-    4300000: Platerform_Metal_02
-    4300002: Platerform_Base
-    4300004: Platerform_Base_02
-    4300006: Platerform_Base_01
-    4300008: Platerform_Support_04
-    4300010: Platerform_Support_03
-    4300012: Platerform_Support_02
-    4300014: Platerform_Support_01
-    4300016: Platerform_Security
-    4300018: Platerform_Fence_01
-    4300020: Platerform_Fence_03
-    4300022: Platerform_Fence_04
-    4300024: Platerform_Fence_02
-    4300026: Platerform_Metal_02
-    4300028: Box002
-    4300030: Object139
-    4300032: Platerform_Metal_02_Stairs
-    4300034: Object149
-    4300036: Platerform_Fence_05
-    4300038: Platerform_Stairs_01
-    2186277476908879412: ImportLogs
+  serializedVersion: 20300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: Platerform_Base
+  - first:
+      1: 100004
+    second: Platerform_Base_01
+  - first:
+      1: 100006
+    second: Platerform_Base_02
+  - first:
+      1: 100008
+    second: Platerform_Support_01
+  - first:
+      1: 100010
+    second: Platerform_Support_02
+  - first:
+      1: 100012
+    second: Platerform_Support_03
+  - first:
+      1: 100014
+    second: Platerform_Support_04
+  - first:
+      1: 100016
+    second: Platerform_Security
+  - first:
+      1: 100018
+    second: Platerform_Fence_01
+  - first:
+      1: 100020
+    second: Platerform_Fence_02
+  - first:
+      1: 100022
+    second: Platerform_Fence_03
+  - first:
+      1: 100024
+    second: Platerform_Fence_04
+  - first:
+      1: 100026
+    second: Box002
+  - first:
+      1: 100028
+    second: Object138
+  - first:
+      1: 100030
+    second: Object139
+  - first:
+      1: 100032
+    second: Object149
+  - first:
+      1: 100034
+    second: Platerform_Metal_02
+  - first:
+      1: 100036
+    second: Platerform_Metal_02 1
+  - first:
+      1: 100038
+    second: Platerform_Metal_02_Stairs
+  - first:
+      1: 100040
+    second: Platerform_Fence_05
+  - first:
+      1: 100042
+    second: Platerform_Stairs_01
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: Platerform_Base
+  - first:
+      4: 400004
+    second: Platerform_Base_01
+  - first:
+      4: 400006
+    second: Platerform_Base_02
+  - first:
+      4: 400008
+    second: Platerform_Support_01
+  - first:
+      4: 400010
+    second: Platerform_Support_02
+  - first:
+      4: 400012
+    second: Platerform_Support_03
+  - first:
+      4: 400014
+    second: Platerform_Support_04
+  - first:
+      4: 400016
+    second: Platerform_Security
+  - first:
+      4: 400018
+    second: Platerform_Fence_01
+  - first:
+      4: 400020
+    second: Platerform_Fence_02
+  - first:
+      4: 400022
+    second: Platerform_Fence_03
+  - first:
+      4: 400024
+    second: Platerform_Fence_04
+  - first:
+      4: 400026
+    second: Box002
+  - first:
+      4: 400028
+    second: Object138
+  - first:
+      4: 400030
+    second: Object139
+  - first:
+      4: 400032
+    second: Object149
+  - first:
+      4: 400034
+    second: Platerform_Metal_02
+  - first:
+      4: 400036
+    second: Platerform_Metal_02 1
+  - first:
+      4: 400038
+    second: Platerform_Metal_02_Stairs
+  - first:
+      4: 400040
+    second: Platerform_Fence_05
+  - first:
+      4: 400042
+    second: Platerform_Stairs_01
+  - first:
+      21: 2100000
+    second: Wall_Atlas_01_Dif
+  - first:
+      21: 2100002
+    second: Wall_Atlas_13_Dif
+  - first:
+      21: 2100004
+    second: Wall_Atlas_16_Dif
+  - first:
+      21: 2100006
+    second: Wall_Atlas_18_Dif
+  - first:
+      23: 2300000
+    second: //RootNode
+  - first:
+      23: 2300002
+    second: Platerform_Base
+  - first:
+      23: 2300004
+    second: Platerform_Base_01
+  - first:
+      23: 2300006
+    second: Platerform_Base_02
+  - first:
+      23: 2300008
+    second: Platerform_Support_01
+  - first:
+      23: 2300010
+    second: Platerform_Support_02
+  - first:
+      23: 2300012
+    second: Platerform_Support_03
+  - first:
+      23: 2300014
+    second: Platerform_Support_04
+  - first:
+      23: 2300016
+    second: Platerform_Security
+  - first:
+      23: 2300018
+    second: Platerform_Fence_01
+  - first:
+      23: 2300020
+    second: Platerform_Fence_02
+  - first:
+      23: 2300022
+    second: Platerform_Fence_03
+  - first:
+      23: 2300024
+    second: Platerform_Fence_04
+  - first:
+      23: 2300026
+    second: Box002
+  - first:
+      23: 2300028
+    second: Object139
+  - first:
+      23: 2300030
+    second: Object149
+  - first:
+      23: 2300032
+    second: Platerform_Metal_02
+  - first:
+      23: 2300034
+    second: Platerform_Metal_02 1
+  - first:
+      23: 2300036
+    second: Platerform_Metal_02_Stairs
+  - first:
+      23: 2300038
+    second: Platerform_Fence_05
+  - first:
+      23: 2300040
+    second: Platerform_Stairs_01
+  - first:
+      33: 3300000
+    second: //RootNode
+  - first:
+      33: 3300002
+    second: Platerform_Base
+  - first:
+      33: 3300004
+    second: Platerform_Base_01
+  - first:
+      33: 3300006
+    second: Platerform_Base_02
+  - first:
+      33: 3300008
+    second: Platerform_Support_01
+  - first:
+      33: 3300010
+    second: Platerform_Support_02
+  - first:
+      33: 3300012
+    second: Platerform_Support_03
+  - first:
+      33: 3300014
+    second: Platerform_Support_04
+  - first:
+      33: 3300016
+    second: Platerform_Security
+  - first:
+      33: 3300018
+    second: Platerform_Fence_01
+  - first:
+      33: 3300020
+    second: Platerform_Fence_02
+  - first:
+      33: 3300022
+    second: Platerform_Fence_03
+  - first:
+      33: 3300024
+    second: Platerform_Fence_04
+  - first:
+      33: 3300026
+    second: Box002
+  - first:
+      33: 3300028
+    second: Object139
+  - first:
+      33: 3300030
+    second: Object149
+  - first:
+      33: 3300032
+    second: Platerform_Metal_02
+  - first:
+      33: 3300034
+    second: Platerform_Metal_02 1
+  - first:
+      33: 3300036
+    second: Platerform_Metal_02_Stairs
+  - first:
+      33: 3300038
+    second: Platerform_Fence_05
+  - first:
+      33: 3300040
+    second: Platerform_Stairs_01
+  - first:
+      43: 4300000
+    second: Platerform_Metal_02
+  - first:
+      43: 4300002
+    second: Platerform_Base
+  - first:
+      43: 4300004
+    second: Platerform_Base_02
+  - first:
+      43: 4300006
+    second: Platerform_Base_01
+  - first:
+      43: 4300008
+    second: Platerform_Support_04
+  - first:
+      43: 4300010
+    second: Platerform_Support_03
+  - first:
+      43: 4300012
+    second: Platerform_Support_02
+  - first:
+      43: 4300014
+    second: Platerform_Support_01
+  - first:
+      43: 4300016
+    second: Platerform_Security
+  - first:
+      43: 4300018
+    second: Platerform_Fence_01
+  - first:
+      43: 4300020
+    second: Platerform_Fence_03
+  - first:
+      43: 4300022
+    second: Platerform_Fence_04
+  - first:
+      43: 4300024
+    second: Platerform_Fence_02
+  - first:
+      43: 4300026
+    second: Platerform_Metal_02
+  - first:
+      43: 4300028
+    second: Box002
+  - first:
+      43: 4300030
+    second: Object139
+  - first:
+      43: 4300032
+    second: Platerform_Metal_02_Stairs
+  - first:
+      43: 4300034
+    second: Object149
+  - first:
+      43: 4300036
+    second: Platerform_Fence_05
+  - first:
+      43: 4300038
+    second: Platerform_Stairs_01
+  - first:
+      41386430: 2186277476908879412
+    second: ImportLogs
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -146,7 +368,7 @@ ModelImporter:
       name: Wall_Atlas_18_Dif
     second: {fileID: 2100000, guid: 2a3738557299040c9a00fc6a524b7265, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -179,25 +401,32 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
     importLights: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 1
     useFileUnits: 1
-    optimizeMeshForGPU: 0
     keepQuads: 0
     weldVertices: 0
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -206,10 +435,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 1
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -219,13 +448,18 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

@@ -1,70 +1,194 @@
 fileFormatVersion: 2
 guid: f1fa456c6c455418e91cfe5d5c7ca797
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: Lava_01
-    100004: Lava_02
-    100006: Lava_03
-    100008: Lava_04
-    100010: Lava_06
-    100012: Lava_07
-    100014: Lava_05
-    100016: Lava_08
-    100018: Lava_09
-    100020: Lava_10
-    100022: Lava_11
-    400000: //RootNode
-    400002: Lava_01
-    400004: Lava_02
-    400006: Lava_03
-    400008: Lava_04
-    400010: Lava_06
-    400012: Lava_07
-    400014: Lava_05
-    400016: Lava_08
-    400018: Lava_09
-    400020: Lava_10
-    400022: Lava_11
-    2100000: Lava
-    2300000: //RootNode
-    2300002: Lava_01
-    2300004: Lava_02
-    2300006: Lava_03
-    2300008: Lava_04
-    2300010: Lava_06
-    2300012: Lava_07
-    2300014: Lava_05
-    2300016: Lava_08
-    2300018: Lava_09
-    2300020: Lava_10
-    2300022: Lava_11
-    3300000: //RootNode
-    3300002: Lava_01
-    3300004: Lava_02
-    3300006: Lava_03
-    3300008: Lava_04
-    3300010: Lava_06
-    3300012: Lava_07
-    3300014: Lava_05
-    3300016: Lava_08
-    3300018: Lava_09
-    3300020: Lava_10
-    3300022: Lava_11
-    4300000: Plane001
-    4300002: Lava_01
-    4300004: Lava_05
-    4300006: Lava_04
-    4300008: Lava_06
-    4300010: Lava_07
-    4300012: Lava_03
-    4300014: Lava_02
-    4300016: Lava_11
-    4300018: Lava_08
-    4300020: Lava_09
-    4300022: Lava_10
-    2186277476908879412: ImportLogs
+  serializedVersion: 20300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: Lava_01
+  - first:
+      1: 100004
+    second: Lava_02
+  - first:
+      1: 100006
+    second: Lava_03
+  - first:
+      1: 100008
+    second: Lava_04
+  - first:
+      1: 100010
+    second: Lava_06
+  - first:
+      1: 100012
+    second: Lava_07
+  - first:
+      1: 100014
+    second: Lava_05
+  - first:
+      1: 100016
+    second: Lava_08
+  - first:
+      1: 100018
+    second: Lava_09
+  - first:
+      1: 100020
+    second: Lava_10
+  - first:
+      1: 100022
+    second: Lava_11
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: Lava_01
+  - first:
+      4: 400004
+    second: Lava_02
+  - first:
+      4: 400006
+    second: Lava_03
+  - first:
+      4: 400008
+    second: Lava_04
+  - first:
+      4: 400010
+    second: Lava_06
+  - first:
+      4: 400012
+    second: Lava_07
+  - first:
+      4: 400014
+    second: Lava_05
+  - first:
+      4: 400016
+    second: Lava_08
+  - first:
+      4: 400018
+    second: Lava_09
+  - first:
+      4: 400020
+    second: Lava_10
+  - first:
+      4: 400022
+    second: Lava_11
+  - first:
+      21: 2100000
+    second: Lava
+  - first:
+      23: 2300000
+    second: //RootNode
+  - first:
+      23: 2300002
+    second: Lava_01
+  - first:
+      23: 2300004
+    second: Lava_02
+  - first:
+      23: 2300006
+    second: Lava_03
+  - first:
+      23: 2300008
+    second: Lava_04
+  - first:
+      23: 2300010
+    second: Lava_06
+  - first:
+      23: 2300012
+    second: Lava_07
+  - first:
+      23: 2300014
+    second: Lava_05
+  - first:
+      23: 2300016
+    second: Lava_08
+  - first:
+      23: 2300018
+    second: Lava_09
+  - first:
+      23: 2300020
+    second: Lava_10
+  - first:
+      23: 2300022
+    second: Lava_11
+  - first:
+      33: 3300000
+    second: //RootNode
+  - first:
+      33: 3300002
+    second: Lava_01
+  - first:
+      33: 3300004
+    second: Lava_02
+  - first:
+      33: 3300006
+    second: Lava_03
+  - first:
+      33: 3300008
+    second: Lava_04
+  - first:
+      33: 3300010
+    second: Lava_06
+  - first:
+      33: 3300012
+    second: Lava_07
+  - first:
+      33: 3300014
+    second: Lava_05
+  - first:
+      33: 3300016
+    second: Lava_08
+  - first:
+      33: 3300018
+    second: Lava_09
+  - first:
+      33: 3300020
+    second: Lava_10
+  - first:
+      33: 3300022
+    second: Lava_11
+  - first:
+      43: 4300000
+    second: Plane001
+  - first:
+      43: 4300002
+    second: Lava_01
+  - first:
+      43: 4300004
+    second: Lava_05
+  - first:
+      43: 4300006
+    second: Lava_04
+  - first:
+      43: 4300008
+    second: Lava_06
+  - first:
+      43: 4300010
+    second: Lava_07
+  - first:
+      43: 4300012
+    second: Lava_03
+  - first:
+      43: 4300014
+    second: Lava_02
+  - first:
+      43: 4300016
+    second: Lava_11
+  - first:
+      43: 4300018
+    second: Lava_08
+  - first:
+      43: 4300020
+    second: Lava_09
+  - first:
+      43: 4300022
+    second: Lava_10
+  - first:
+      41386430: 2186277476908879412
+    second: ImportLogs
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -77,7 +201,7 @@ ModelImporter:
       name: Lava
     second: {fileID: 2100000, guid: 11a019740937b4400aece283e18d52ae, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -110,25 +234,32 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
     importLights: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 1
     useFileUnits: 1
-    optimizeMeshForGPU: 0
     keepQuads: 0
     weldVertices: 0
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -137,10 +268,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 1
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -150,13 +281,18 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

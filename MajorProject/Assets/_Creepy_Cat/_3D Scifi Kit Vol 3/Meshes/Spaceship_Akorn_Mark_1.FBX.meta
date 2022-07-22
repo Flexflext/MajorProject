@@ -1,100 +1,284 @@
 fileFormatVersion: 2
 guid: 9b9ca0d499b2b40ecbef32791a128a5d
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: Box009
-    100002: Box011
-    100004: //RootNode
-    100006: Armrest_Left001
-    100008: Armrest_Right001
-    100010: Chair_006
-    100012: Box010
-    100014: Spaceship_Akorn_Mark_1
-    100016: Tube002
-    100018: Tube003
-    100020: Object056
-    100022: Object057
-    100024: Chair_007
-    100026: Chair_008
-    100028: Ext_Glass
-    100030: Int_Glass
-    100032: Door_Left
-    100034: Door_Right
-    400000: Box009
-    400002: Box011
-    400004: //RootNode
-    400006: Armrest_Left001
-    400008: Armrest_Right001
-    400010: Chair_006
-    400012: Box010
-    400014: Spaceship_Akorn_Mark_1
-    400016: Tube002
-    400018: Tube003
-    400020: Object056
-    400022: Object057
-    400024: Chair_007
-    400026: Chair_008
-    400028: Ext_Glass
-    400030: Int_Glass
-    400032: Door_Left
-    400034: Door_Right
-    2100000: GreyBox
-    2100002: Glass
-    2300000: Box009
-    2300002: Box011
-    2300004: //RootNode
-    2300006: Armrest_Left001
-    2300008: Armrest_Right001
-    2300010: Chair_006
-    2300012: Box010
-    2300014: Spaceship_Akorn_Mark_1
-    2300016: Tube002
-    2300018: Tube003
-    2300020: Object056
-    2300022: Object057
-    2300024: Chair_007
-    2300026: Chair_008
-    2300028: Ext_Glass
-    2300030: Int_Glass
-    2300032: Door_Left
-    2300034: Door_Right
-    3300000: Box009
-    3300002: Box011
-    3300004: //RootNode
-    3300006: Armrest_Left001
-    3300008: Armrest_Right001
-    3300010: Chair_006
-    3300012: Box010
-    3300014: Spaceship_Akorn_Mark_1
-    3300016: Tube002
-    3300018: Tube003
-    3300020: Object056
-    3300022: Object057
-    3300024: Chair_007
-    3300026: Chair_008
-    3300028: Ext_Glass
-    3300030: Int_Glass
-    3300032: Door_Left
-    3300034: Door_Right
-    4300000: Box009
-    4300002: Box011
-    4300004: Chair_006
-    4300006: Armrest_Left001
-    4300008: Armrest_Right001
-    4300010: Spaceship_Akorn_Mark_1
-    4300012: Box010
-    4300014: Tube002
-    4300016: Tube003
-    4300018: Object056
-    4300020: Object057
-    4300022: Chair_007
-    4300024: Chair_008
-    4300026: Int_Glass
-    4300028: Ext_Glass
-    4300030: Door_Left
-    4300032: Door_Right
-    2186277476908879412: ImportLogs
+  serializedVersion: 20300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Box009
+  - first:
+      1: 100002
+    second: Box011
+  - first:
+      1: 100004
+    second: //RootNode
+  - first:
+      1: 100006
+    second: Armrest_Left001
+  - first:
+      1: 100008
+    second: Armrest_Right001
+  - first:
+      1: 100010
+    second: Chair_006
+  - first:
+      1: 100012
+    second: Box010
+  - first:
+      1: 100014
+    second: Spaceship_Akorn_Mark_1
+  - first:
+      1: 100016
+    second: Tube002
+  - first:
+      1: 100018
+    second: Tube003
+  - first:
+      1: 100020
+    second: Object056
+  - first:
+      1: 100022
+    second: Object057
+  - first:
+      1: 100024
+    second: Chair_007
+  - first:
+      1: 100026
+    second: Chair_008
+  - first:
+      1: 100028
+    second: Ext_Glass
+  - first:
+      1: 100030
+    second: Int_Glass
+  - first:
+      1: 100032
+    second: Door_Left
+  - first:
+      1: 100034
+    second: Door_Right
+  - first:
+      4: 400000
+    second: Box009
+  - first:
+      4: 400002
+    second: Box011
+  - first:
+      4: 400004
+    second: //RootNode
+  - first:
+      4: 400006
+    second: Armrest_Left001
+  - first:
+      4: 400008
+    second: Armrest_Right001
+  - first:
+      4: 400010
+    second: Chair_006
+  - first:
+      4: 400012
+    second: Box010
+  - first:
+      4: 400014
+    second: Spaceship_Akorn_Mark_1
+  - first:
+      4: 400016
+    second: Tube002
+  - first:
+      4: 400018
+    second: Tube003
+  - first:
+      4: 400020
+    second: Object056
+  - first:
+      4: 400022
+    second: Object057
+  - first:
+      4: 400024
+    second: Chair_007
+  - first:
+      4: 400026
+    second: Chair_008
+  - first:
+      4: 400028
+    second: Ext_Glass
+  - first:
+      4: 400030
+    second: Int_Glass
+  - first:
+      4: 400032
+    second: Door_Left
+  - first:
+      4: 400034
+    second: Door_Right
+  - first:
+      21: 2100000
+    second: GreyBox
+  - first:
+      21: 2100002
+    second: Glass
+  - first:
+      23: 2300000
+    second: Box009
+  - first:
+      23: 2300002
+    second: Box011
+  - first:
+      23: 2300004
+    second: //RootNode
+  - first:
+      23: 2300006
+    second: Armrest_Left001
+  - first:
+      23: 2300008
+    second: Armrest_Right001
+  - first:
+      23: 2300010
+    second: Chair_006
+  - first:
+      23: 2300012
+    second: Box010
+  - first:
+      23: 2300014
+    second: Spaceship_Akorn_Mark_1
+  - first:
+      23: 2300016
+    second: Tube002
+  - first:
+      23: 2300018
+    second: Tube003
+  - first:
+      23: 2300020
+    second: Object056
+  - first:
+      23: 2300022
+    second: Object057
+  - first:
+      23: 2300024
+    second: Chair_007
+  - first:
+      23: 2300026
+    second: Chair_008
+  - first:
+      23: 2300028
+    second: Ext_Glass
+  - first:
+      23: 2300030
+    second: Int_Glass
+  - first:
+      23: 2300032
+    second: Door_Left
+  - first:
+      23: 2300034
+    second: Door_Right
+  - first:
+      33: 3300000
+    second: Box009
+  - first:
+      33: 3300002
+    second: Box011
+  - first:
+      33: 3300004
+    second: //RootNode
+  - first:
+      33: 3300006
+    second: Armrest_Left001
+  - first:
+      33: 3300008
+    second: Armrest_Right001
+  - first:
+      33: 3300010
+    second: Chair_006
+  - first:
+      33: 3300012
+    second: Box010
+  - first:
+      33: 3300014
+    second: Spaceship_Akorn_Mark_1
+  - first:
+      33: 3300016
+    second: Tube002
+  - first:
+      33: 3300018
+    second: Tube003
+  - first:
+      33: 3300020
+    second: Object056
+  - first:
+      33: 3300022
+    second: Object057
+  - first:
+      33: 3300024
+    second: Chair_007
+  - first:
+      33: 3300026
+    second: Chair_008
+  - first:
+      33: 3300028
+    second: Ext_Glass
+  - first:
+      33: 3300030
+    second: Int_Glass
+  - first:
+      33: 3300032
+    second: Door_Left
+  - first:
+      33: 3300034
+    second: Door_Right
+  - first:
+      43: 4300000
+    second: Box009
+  - first:
+      43: 4300002
+    second: Box011
+  - first:
+      43: 4300004
+    second: Chair_006
+  - first:
+      43: 4300006
+    second: Armrest_Left001
+  - first:
+      43: 4300008
+    second: Armrest_Right001
+  - first:
+      43: 4300010
+    second: Spaceship_Akorn_Mark_1
+  - first:
+      43: 4300012
+    second: Box010
+  - first:
+      43: 4300014
+    second: Tube002
+  - first:
+      43: 4300016
+    second: Tube003
+  - first:
+      43: 4300018
+    second: Object056
+  - first:
+      43: 4300020
+    second: Object057
+  - first:
+      43: 4300022
+    second: Chair_007
+  - first:
+      43: 4300024
+    second: Chair_008
+  - first:
+      43: 4300026
+    second: Int_Glass
+  - first:
+      43: 4300028
+    second: Ext_Glass
+  - first:
+      43: 4300030
+    second: Door_Left
+  - first:
+      43: 4300032
+    second: Door_Right
+  - first:
+      41386430: 2186277476908879412
+    second: ImportLogs
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -122,7 +306,7 @@ ModelImporter:
       name: Wall_Atlas_11_Dif
     second: {fileID: 2100000, guid: 3b73d2eab60ba47c4ab140f23e2da046, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -155,25 +339,32 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
     importLights: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 1
     useFileUnits: 1
-    optimizeMeshForGPU: 0
     keepQuads: 0
     weldVertices: 0
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -182,10 +373,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 1
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -195,13 +386,18 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
