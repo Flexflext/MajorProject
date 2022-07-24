@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dmg = 5f;
     [SerializeField] private LayerMask hittableLayers;
     [SerializeField] private Transform shootTransform;
+    [SerializeField] private Transform shotVFX;
+    [SerializeField] private Transform impactVFX;
+    [SerializeField] private Transform[] shotVFXPos;
+    [SerializeField] private VisualEffect muzzleFlash;
     private float curJumpCoyoteTimer;
 
     private bool isControllingPlayer = true;
@@ -139,6 +144,7 @@ public class PlayerController : MonoBehaviour
     private void Shoot()
     {
         weaponAnimator.SetTrigger("Shoot");
+        muzzleFlash.Play();
         playerCameraController.ShootShake();
         playerCameraController.AddRecoil(0, -2.5f);
         curshootdelay = shootdelay;
@@ -158,7 +164,26 @@ public class PlayerController : MonoBehaviour
 
                 HUD.Instance.HitObjAnim();
             }
+
+            impactVFX.gameObject.SetActive(true);
+            impactVFX.position = hit.point;
+            Vector3 fromTo = shotVFX.transform.position - hit.point;
+
+            shotVFX.gameObject.SetActive(true);
+            shotVFXPos[0].position = shotVFX.position;
+            shotVFXPos[1].position = shotVFX.transform.position + fromTo * (1 / 3);
+            shotVFXPos[2].position = shotVFX.transform.position + fromTo * (2 / 3);
+            shotVFXPos[3].position = hit.point;
+
+            StartCoroutine(C_WaitForShotEnd());         
         }
+    }
+
+    private IEnumerator C_WaitForShotEnd()
+    {
+        yield return new WaitForSeconds(0.2f);
+        shotVFX.gameObject.SetActive(false);
+        impactVFX.gameObject.SetActive(false);
     }
 
     public Transform GetCamParent()
