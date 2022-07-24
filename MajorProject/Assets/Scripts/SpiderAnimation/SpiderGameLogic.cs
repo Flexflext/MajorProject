@@ -11,12 +11,18 @@ public class SpiderGameLogic : MonoBehaviour
     [SerializeField] private GameObject dmgVFX;
     [SerializeField] private float dmgVFXTime;
 
+    [SerializeField] private AudioClip startLeg;
+    [SerializeField] private AudioClip endLeg;
+    private AudioSource source;
+
+
     private RaycastHit hit;
 
     private ProzeduralAnimationLogic animationLogic;
 
     private void Start()
     {
+        source = GetComponent<AudioSource>();
         animationLogic = GetComponentInChildren<ProzeduralAnimationLogic>();
         animationLogic.AddLegTakeDmgEventListener(OnSpiderTakeDmg);
     }
@@ -26,7 +32,6 @@ public class SpiderGameLogic : MonoBehaviour
     {
         if (Input.GetKeyDown(doorOpenerKey))
         {
-            //Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + transform.forward * range, Color.red, 1);
             if (Physics.Raycast(Camera.main.transform.position, transform.forward, out hit, range, rayLayerMask))
             {
                 StartCoroutine(C_OpenDoor(hit.collider.GetComponent<DoorOpener>()));
@@ -36,7 +41,6 @@ public class SpiderGameLogic : MonoBehaviour
 
     private IEnumerator C_OpenDoor(DoorOpener _dooropener)
     {
-            Debug.Log("HUHU");
         if (_dooropener != null)
         {
             int leg = animationLogic.GetFrontLeg();
@@ -45,6 +49,8 @@ public class SpiderGameLogic : MonoBehaviour
             Vector3 newPos = Vector3.zero;
             Vector3 originalPos = animationLogic.GetLegTargetPosition(leg);
             float curtime = 0;
+
+            source.PlayOneShot(startLeg);
 
             while (curtime < timeTillOpenDoor)
             {
@@ -58,6 +64,8 @@ public class SpiderGameLogic : MonoBehaviour
 
             curtime = 0;
             _dooropener.OpenDoor();
+
+            source.PlayOneShot(endLeg);
 
             while (curtime < timeTillOpenDoor)
             {

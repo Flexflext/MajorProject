@@ -10,14 +10,20 @@ public class SpiderTrap : MonoBehaviour
     [SerializeField] private bool constantlyOn;
     [SerializeField] private float onOffTimer;
 
+    [SerializeField] private AudioClip[] randomAudioClips;
+
     [SerializeField] private GameObject laser;
     [SerializeField] private GameObject impactVFX;
+
+
+    private AudioSource source;
 
     private Collider col;
     private bool onOff = true;
 
     private void Start()
     {
+        source = GetComponent<AudioSource>();
         col = GetComponent<Collider>();
 
         if (!constantlyOn)
@@ -38,7 +44,10 @@ public class SpiderTrap : MonoBehaviour
         StopAllCoroutines();
         onOff = false;
         TurnOnOff(false);
-        
+
+        source.clip = randomAudioClips[Random.Range(0, randomAudioClips.Length)];
+
+        source.Play();
     }
 
     private IEnumerator C_WaitTillOnOff()

@@ -10,6 +10,8 @@ public class Door : MonoBehaviour
     [SerializeField] private Vector3 localEndPosRight;
 
     [SerializeField] private float timeTillOpenDoor = 1;
+    [SerializeField] private AudioSource toggleSource;
+    [SerializeField] private AudioSource doorSource;
 
     private bool open = false;
 
@@ -17,6 +19,7 @@ public class Door : MonoBehaviour
     {
         if (open) return;
 
+        toggleSource.Play();
         open = true;
         StartCoroutine(C_OpenSliderDoor());
     }
@@ -27,10 +30,9 @@ public class Door : MonoBehaviour
 
         Vector3 startPosLeft = leftDoor.localPosition;
         Vector3 startPosRight = rightDoor.localPosition;
-
+        doorSource.Play();
         while (curTime < timeTillOpenDoor)
         {
-            Debug.Log("WTF");
 
             leftDoor.localPosition = Vector3.Lerp(startPosLeft, localEndPosLeft, curTime / timeTillOpenDoor);
 
