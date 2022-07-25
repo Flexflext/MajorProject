@@ -24,6 +24,7 @@ public class LevelManager : MonoBehaviour
 
     private bool paused;
     private bool isdead;
+    private bool switching;
 
     private void Awake()
     {
@@ -65,7 +66,11 @@ public class LevelManager : MonoBehaviour
         {
             if (canchange)
             {
-                ChangeInControllCharacter();
+                if (!switching)
+                {
+                    StartCoroutine(C_SwitchAnim());
+                }
+                
             }
         }
 
@@ -90,6 +95,16 @@ public class LevelManager : MonoBehaviour
         {
             SetSpiderControlling();
         }
+    }
+
+    private IEnumerator C_SwitchAnim()
+    {
+        switching = true;
+        HUD.Instance.Switch();
+        yield return new WaitForSecondsRealtime(0.2f);
+        ChangeInControllCharacter();
+        yield return new WaitForSecondsRealtime(0.2f);
+        switching = false;
     }
 
     private void SetPlayerControlling()

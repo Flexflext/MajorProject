@@ -17,7 +17,6 @@ public class AudioMixerManager : MonoBehaviour
     [SerializeField] private AudioMixerGroup ambientMixerGroup;
     [SerializeField] private AudioMixerGroup sfxMixerGroup;
 
-
     private void Awake()
     {
         if (Instance == null)

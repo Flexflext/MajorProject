@@ -11,6 +11,7 @@ public class SpiderAudioManager : MonoBehaviour
     [SerializeField] private AudioClip takeDmgSoundSound;
 
     private ProzeduralAnimationLogic animationLogic;
+    private AudioSource source;
 
     [System.Serializable]
     private struct LegStateAudioCues
@@ -28,11 +29,8 @@ public class SpiderAudioManager : MonoBehaviour
 
     private void Awake()
     {
-        //for (int i = 0; i < spiderLegStates.Length; i++)
-        //{
-        //    spiderLegStates[i].legSource = gameObject.AddComponent<AudioSource>();
-        //}
         animationLogic = GetComponentInChildren<ProzeduralAnimationLogic>();
+        source = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -70,12 +68,13 @@ public class SpiderAudioManager : MonoBehaviour
 
     private void PlayDeathSound()
     {
-
+        source.volume = 1;
+        source.PlayOneShot(deathSound);
     }
 
     private void PlayTakeDmgSound(int _leg)
     {
-
+        source.PlayOneShot(takeDmgSoundSound);
     }
 
     private void OnDestroy()

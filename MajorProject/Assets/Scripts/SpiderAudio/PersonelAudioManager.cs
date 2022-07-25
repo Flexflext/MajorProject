@@ -108,7 +108,6 @@ public class PersonelAudioManager : MonoBehaviour
         source.pitch = _sourcesettings.Pitch;
         source.volume = _sourcesettings.Volume;
         source.spatialBlend = _sourcesettings.SpatialBlend;
-
         source.loop = _sourcesettings.Loop;
         source.playOnAwake = _sourcesettings.PlayOnAwake;
 
@@ -199,7 +198,9 @@ public class PersonelAudioManager : MonoBehaviour
 
         foreach (Sound curSound in allSounds)
         {
-            allSources.Add((int)curSound.SoundType, CreateAudioSource(curSound.source));
+            AudioSource source = CreateAudioSource(curSound.source);
+            source.clip = curSound.staticSound;
+            allSources.Add((int)curSound.SoundType, source);
         }
     }
 

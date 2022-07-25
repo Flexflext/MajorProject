@@ -70,12 +70,16 @@ public class EnemyController : MonoBehaviour , IStateMachineController
     protected EnemyState currentEnemyState;
     protected Dictionary<EnemyState, Dictionary<StateMachineSwitchDelegate, EnemyState>> stateDictionary;
 
+    protected PersonelAudioManager audioManager;
+    protected float timebetweenMoveSounds;
+
     #endregion
 
     #region Unity Methods
 
     private void Start()
     {
+        audioManager = GetComponent<PersonelAudioManager>();
         EnemyManager.Instance.EnemySubscribe(this);
         myAgent = GetComponent<NavMeshAgent>();
         enemyHealth = GetComponent<EnemyHealth>();
@@ -100,6 +104,19 @@ public class EnemyController : MonoBehaviour , IStateMachineController
         SetAnimationVelo();
         isAgressive = CheckIfEnemyIsAgressive();
         UpdateStateMachine();
+
+        if (myAgent.velocity.magnitude > 0.2f)
+        {
+            if (timebetweenMoveSounds <= 0)
+            {
+                timebetweenMoveSounds = 0.35f;
+                audioManager.Play(EPossibleSounds.Walk, ERandomSound.Static, true);
+            }
+            else
+            {
+                timebetweenMoveSounds -= Time.deltaTime;
+            }
+        }
     }
 
     private void OnDestroy()
@@ -211,16 +228,16 @@ public class EnemyController : MonoBehaviour , IStateMachineController
         //if (Physics.Raycast(origin, Vector3.down, out hit, float.MaxValue, walkableLayer))
         //{
         if (PositionIsOnNavMesh(origin))
-            {
-                return origin;
-            }
-            else
-            {
-                Debug.Log("HUHU");
-                Debug.DrawRay(origin, Vector3.down, Color.blue, 2);
-                Instantiate(bulletPrefab, origin, Quaternion.identity);
-                return transform.position;
-            }        
+        {
+            return origin;
+        }
+        else
+        {
+            Debug.Log("HUHU");
+            Debug.DrawRay(origin, Vector3.down, Color.blue, 2);
+            Instantiate(bulletPrefab, origin, Quaternion.identity);
+            return transform.position;
+        }        
         //}
     }
 
@@ -308,7 +325,7 @@ public class EnemyController : MonoBehaviour , IStateMachineController
         Vector3 velo = ((EnemyManager.Instance.PlayerPosition - barrel.transform.position).normalized + barrel.up * bulletUpMultiplier) * bulletSpeed;
 
         Rigidbody bulletRB = Instantiate(bulletPrefab, barrel.position, Quaternion.identity).GetComponent<Rigidbody>();
-
+        audioManager.Play(EPossibleSounds.Attack, ERandomSound.Static, true);
         bulletRB.AddForce(velo, ForceMode.Impulse);
     }
 

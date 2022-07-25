@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform[] shotVFXPos;
     [SerializeField] private VisualEffect muzzleFlash;
     private float curJumpCoyoteTimer;
+    private float timeBetweenWalkSounds = 0.1f;
 
     private bool isControllingPlayer = true;
     private Vector3 input;
@@ -32,12 +33,14 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded = true;
 
     private Animator weaponAnimator;
+    private PersonelAudioManager audioManager;
 
     private void Awake()
     {
         weaponAnimator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         playerCameraController = GetComponent<PlayerCameraController>();
+        audioManager = GetComponent<PersonelAudioManager>();
         rb.maxDepenetrationVelocity = maxSpeed;
     }
 
@@ -48,6 +51,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale < 1) return;
         if (!isControllingPlayer) return;
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -112,7 +116,7 @@ public class PlayerController : MonoBehaviour
             curJumpCoyoteTimer -= Time.deltaTime;
         }
 
-
+        
         
 
         rb.velocity += input * Time.deltaTime;
@@ -123,6 +127,21 @@ public class PlayerController : MonoBehaviour
         if (currentSpeed > maxSpeed)
         {
             rb.velocity -= (rb.velocity) * Time.deltaTime * deceleration;
+        }
+
+        if (currentSpeed <= 0.2f)
+        {
+            return;
+        }
+
+        if (timeBetweenWalkSounds <= 0)
+        {
+            audioManager.Play(EPossibleSounds.Walk, ERandomSound.Random, true);
+            timeBetweenWalkSounds = 0.35f;
+        }
+        else
+        {
+            timeBetweenWalkSounds -= Time.deltaTime;
         }
     }
 
@@ -143,6 +162,7 @@ public class PlayerController : MonoBehaviour
 
     private void Shoot()
     {
+        audioManager.Play(EPossibleSounds.Attack, ERandomSound.Static, true);
         weaponAnimator.SetTrigger("Shoot");
         muzzleFlash.Play();
         playerCameraController.ShootShake();
@@ -193,6 +213,7 @@ public class PlayerController : MonoBehaviour
 
     public void SetPlayerControlling(bool _tosetto)
     {
+        audioManager.Play(EPossibleSounds.Foley, ERandomSound.Static, true);
         isControllingPlayer = _tosetto;
         rb.velocity = Vector3.zero;
         playerCameraController.SetPlayerControll(_tosetto);

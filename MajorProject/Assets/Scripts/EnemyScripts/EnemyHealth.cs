@@ -12,9 +12,11 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     private NavMeshAgent agent;
     private EnemyController controller;
+    private PersonelAudioManager audioManager;
 
     private void Awake()
     {
+        audioManager = GetComponent<PersonelAudioManager>();
         agent = GetComponent<NavMeshAgent>();
         controller = GetComponent<EnemyController>();
         ChangeHealth(maxHealth);
@@ -43,6 +45,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         {
             onDeath.Invoke();
         }
+
+        audioManager.Play(EPossibleSounds.Die, ERandomSound.Static, true);
     }
 
     public void SubToOnDeath(System.Action _tosub)

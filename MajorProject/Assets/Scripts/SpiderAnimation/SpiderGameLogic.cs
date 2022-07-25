@@ -19,10 +19,12 @@ public class SpiderGameLogic : MonoBehaviour
     private RaycastHit hit;
 
     private ProzeduralAnimationLogic animationLogic;
+    private ThirdPersonSpiderMovement spiderMovement;
 
     private void Start()
     {
         source = GetComponent<AudioSource>();
+        spiderMovement = GetComponent<ThirdPersonSpiderMovement>();
         animationLogic = GetComponentInChildren<ProzeduralAnimationLogic>();
         animationLogic.AddLegTakeDmgEventListener(OnSpiderTakeDmg);
     }
@@ -30,6 +32,8 @@ public class SpiderGameLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.timeScale < 1) return;
+
         if (Input.GetKeyDown(doorOpenerKey))
         {
             if (Physics.Raycast(Camera.main.transform.position, transform.forward, out hit, range, rayLayerMask))
@@ -43,6 +47,8 @@ public class SpiderGameLogic : MonoBehaviour
     {
         if (_dooropener != null)
         {
+            spiderMovement.StopUserInput();
+
             int leg = animationLogic.GetFrontLeg();
             animationLogic.StartStoplegAnimation(leg, true);
 
@@ -78,6 +84,7 @@ public class SpiderGameLogic : MonoBehaviour
             }
 
             animationLogic.StartStoplegAnimation(leg, false);
+            spiderMovement.StartUserInput();
         }
         
     }

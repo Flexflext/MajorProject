@@ -15,6 +15,7 @@ public class HUD : MonoBehaviour
     [SerializeField] private Image playerFadeHealthBar;
     [SerializeField] private Animator hitAnimator;
     [SerializeField] private Animator killAnimator;
+    [SerializeField] private Animator switchAnimator;
 
     private int hitHash;
 
@@ -57,6 +58,11 @@ public class HUD : MonoBehaviour
     public void KillObjAnim()
     {
         killAnimator.SetTrigger(hitHash);
+    }
+
+    public void Switch()
+    {
+        switchAnimator.SetTrigger(hitHash);
     }
 
     public void SetPlayerHealth(float _percent)

@@ -195,7 +195,7 @@ AudioSource:
   m_GameObject: {fileID: 9215881604633449687}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3295384301704715028, guid: da09ec197a0e92d42aef190313fd6b36, type: 2}
   m_audioClip: {fileID: 8300000, guid: 95aa7a3c22b7812418d1f6ca93acb0c5, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5
@@ -677,6 +677,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 2.9999998
       objectReference: {fileID: 0}
+    - target: {fileID: 2300002, guid: 1828960a5b7b6432ba63cfaa8999eaa7, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: f589cb425aaaec94c99706923c4b7270, type: 2}
+    - target: {fileID: 2300004, guid: 1828960a5b7b6432ba63cfaa8999eaa7, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: f589cb425aaaec94c99706923c4b7270, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1828960a5b7b6432ba63cfaa8999eaa7, type: 3}
 --- !u!1 &8311297812956595300 stripped

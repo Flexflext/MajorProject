@@ -9,10 +9,12 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     [SerializeField] private float healthRegenMultiplier;
     private float curHealth;
     private bool regen;
+    private PersonelAudioManager audioManager;
 
     private void Start()
     {
         ChangeHealth(maxHealth);
+        audioManager = GetComponent<PersonelAudioManager>();
     }
 
     private void Update()
@@ -27,6 +29,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         ChangeHealth(curHealth - _damage);
         regen = false;
+        audioManager.Play(EPossibleSounds.Hit, ERandomSound.Static, true);
         StopAllCoroutines();
         StartCoroutine(C_WaitForRegen());
     }
