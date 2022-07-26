@@ -328,6 +328,8 @@ public class LocalChainIK : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
+
     private void OnDrawGizmos()
     {
         if (debugGizmos)
@@ -363,4 +365,6 @@ public class LocalChainIK : MonoBehaviour
                 Gizmos.DrawSphere(hint.position, gizmosRadius);
         }
     }
+
+#endif
 }

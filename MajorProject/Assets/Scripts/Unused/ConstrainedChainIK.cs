@@ -296,9 +296,9 @@ public class ConstrainedChainIK : MonoBehaviour
             for (int i = 0; i < chainLength && current != null && current.parent != null; i++)
             {
                 float scale = Vector3.Distance(current.position, current.parent.position) * 0.1f;
-                Handles.matrix = Matrix4x4.TRS(current.position, Quaternion.FromToRotation(Vector3.up, current.parent.position - current.position), new Vector3(scale, Vector3.Distance(current.parent.position, current.position), scale));
-                Handles.color = Color.blue;
-                Handles.DrawWireCube(Vector3.up * 0.5f, Vector3.one);
+                //Handles.matrix = Matrix4x4.TRS(current.position, Quaternion.FromToRotation(Vector3.up, current.parent.position - current.position), new Vector3(scale, Vector3.Distance(current.parent.position, current.position), scale));
+                //Handles.color = Color.blue;
+                //Handles.DrawWireCube(Vector3.up * 0.5f, Vector3.one);
                 current = current.parent;
             }
 

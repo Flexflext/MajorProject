@@ -21,11 +21,14 @@ public class SpiderTrap : MonoBehaviour
     private Collider col;
     private bool onOff = true;
 
-    private void Start()
+    private void Awake()
     {
         source = GetComponent<AudioSource>();
         col = GetComponent<Collider>();
+    }
 
+    private void Start()
+    {
         if (!constantlyOn)
         {
             StartCoroutine(C_WaitTillOnOff());

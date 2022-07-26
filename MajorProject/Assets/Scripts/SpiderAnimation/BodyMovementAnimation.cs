@@ -38,6 +38,12 @@ public class BodyMovementAnimation : MonoBehaviour
 
         localVelo = transform.InverseTransformDirection(velocity);
         localVelo.Set(localVelo.z * rotationMultiplier, 0, -localVelo.x * rotationMultiplier);
+
+        if (float.IsNaN(localVelo.x) || float.IsNaN(localVelo.y) || float.IsNaN(localVelo.z))
+        {
+            return;
+        }
+
         transform.localEulerAngles = localVelo;
 
         newPos = GetAnimatedPosition(Time.deltaTime, target.position, null);

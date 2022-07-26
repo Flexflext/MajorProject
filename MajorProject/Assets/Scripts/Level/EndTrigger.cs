@@ -6,6 +6,6 @@ public class EndTrigger : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        LevelManager.Instance.SetDeath();
+        LevelManager.Instance.SetDeathNoTimer();
     }
 }

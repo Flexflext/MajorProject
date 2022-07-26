@@ -433,8 +433,11 @@ public class IKSystem : MonoBehaviour
         }
     }
 
+
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
+
         if (debugGizmos)
         {
             Transform current = this.transform;
@@ -468,4 +471,7 @@ public class IKSystem : MonoBehaviour
                 Gizmos.DrawSphere(hint.position, gizmosRadius);
         }
     }
+#endif
+
+
 }

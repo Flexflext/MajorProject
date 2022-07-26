@@ -208,8 +208,6 @@ public class EnemyController : MonoBehaviour , IStateMachineController
 
     public Vector3 FindNewWalkPosition()
     {
-        RaycastHit hit = new RaycastHit();
-
         Vector3 origin = Vector3.zero;
         Vector3 dir = Vector3.zero;
         
@@ -220,25 +218,17 @@ public class EnemyController : MonoBehaviour , IStateMachineController
 
 
         origin = transform.position + (dir * range);
-        Debug.DrawRay(transform.position, dir * range, Color.red, 2);
 
-
-        //origin += transform.position + (Vector3.up * walkPositionYCheckOffset);
-
-        //if (Physics.Raycast(origin, Vector3.down, out hit, float.MaxValue, walkableLayer))
-        //{
         if (PositionIsOnNavMesh(origin))
         {
             return origin;
         }
         else
         {
-            Debug.Log("HUHU");
             Debug.DrawRay(origin, Vector3.down, Color.blue, 2);
             Instantiate(bulletPrefab, origin, Quaternion.identity);
             return transform.position;
-        }        
-        //}
+        }
     }
 
     public void ResetHidingPosition()

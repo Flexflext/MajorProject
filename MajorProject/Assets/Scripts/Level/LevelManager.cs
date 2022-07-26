@@ -169,6 +169,15 @@ public class LevelManager : MonoBehaviour
         StartCoroutine(C_DeathTimer());
     }
 
+    public void SetDeathNoTimer()
+    {
+        isdead = true;
+        Time.timeScale = 0;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        pauseMenu.OpenDeathScreen();
+    }
+
     private IEnumerator C_DeathTimer()
     {
         yield return new WaitForSeconds(deathTimer);

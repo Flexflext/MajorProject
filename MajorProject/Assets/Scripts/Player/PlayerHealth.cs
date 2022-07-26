@@ -58,7 +58,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     private void OnDeath()
     {
-        LevelManager.Instance.SetDeath();
+        LevelManager.Instance.SetDeathNoTimer();
     }
     
 }
