@@ -1050,7 +1050,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
             nextLeg++;
         }
 
-        legs[nextLeg].animationRaycastOrigin.position += (legs[_leg].animationRaycastOrigin.position - legs[nextLeg].animationRaycastOrigin.position) / 2;
+        legs[nextLeg].animationRaycastOrigin.position += (legs[_leg].animationRaycastOrigin.position - legs[nextLeg].animationRaycastOrigin.position) * 0.25f;
 
         
     }

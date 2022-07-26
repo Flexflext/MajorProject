@@ -13,7 +13,7 @@ public class RoomTurnOnOff : MonoBehaviour
     [SerializeField] private float rangeWhole;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         CheckPlayerMid();
         CheckPlayerWhole();
