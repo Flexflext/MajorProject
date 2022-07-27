@@ -31,11 +31,21 @@ public class SpiderTrap : MonoBehaviour
     {
         if (!constantlyOn)
         {
+            StopAllCoroutines();
             StartCoroutine(C_WaitTillOnOff());
         }
     }
 
-    private void DoDamage(Collider _legtodmg)
+    private void OnEnable()
+    {
+        if (!constantlyOn)
+        {
+            StopAllCoroutines();
+            StartCoroutine(C_WaitTillOnOff());
+        }
+    }
+
+    private bool DoDamage(Collider _legtodmg)
     {
         LegDamageSystem dmgSys = _legtodmg.GetComponentInParent<LegDamageSystem>();
 
@@ -44,6 +54,11 @@ public class SpiderTrap : MonoBehaviour
         {
             dmgSys.TakeDamage(transform.position);
         }
+        else
+        {
+            return false;
+        }
+
         StopAllCoroutines();
         onOff = false;
         TurnOnOff(false);
@@ -51,6 +66,8 @@ public class SpiderTrap : MonoBehaviour
         source.clip = randomAudioClips[Random.Range(0, randomAudioClips.Length)];
 
         source.Play();
+
+        return true;
     }
 
     private IEnumerator C_WaitTillOnOff()
@@ -88,9 +105,10 @@ public class SpiderTrap : MonoBehaviour
 
         if (other.gameObject.layer == spiderLayer)
         {
-            DoDamage(other);
-
-            StartCoroutine(C_PlayImpactEffect(col.ClosestPoint(other.transform.position)));
+            if (DoDamage(other))
+            {
+                StartCoroutine(C_PlayImpactEffect(col.ClosestPoint(other.transform.position)));
+            }       
         }
     }
 }

@@ -9,9 +9,11 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
     [SerializeField] private float rotationSpeed = 20.0f;
 
     [SerializeField] private float spiderMovementSpeed;
+    [SerializeField] private float camSens;
     [SerializeField] private float predictionMultiplier;
     [SerializeField] private float predictionSmoothing = 20;
     [SerializeField] private Transform rayOriginsAndHints;
+    [SerializeField] private Transform camFollowTransform;
 
 
     private NavMeshAgent agent;
@@ -25,6 +27,7 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
     private bool useMovement = true;
 
     private bool iscontrolled = true;
+    private float xRotation;
 
 
     private Vector3 originLocalStartPos;
@@ -40,6 +43,11 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.timeScale < 1)
+        {
+            return;
+        }
+
         if (!iscontrolled)
         {
             Vector3 dir = transform.InverseTransformDirection(agent.velocity);
@@ -53,7 +61,7 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
         HandlePlayerInput();
         RotateSpider();
         MoveSpider();
-
+        HandleCamControll();
 
         if (Input.GetKeyDown(KeyCode.M))
         {
@@ -118,6 +126,13 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
         mouseInput = Input.GetAxis("Mouse X");
 
         input.Normalize();
+    }
+
+    private void HandleCamControll()
+    {
+        xRotation += Input.GetAxis("Mouse Y") * camSens * Time.deltaTime;
+
+        camFollowTransform.localRotation = Quaternion.Euler(xRotation, 0, 0);
     }
 
     private void OnDisable()

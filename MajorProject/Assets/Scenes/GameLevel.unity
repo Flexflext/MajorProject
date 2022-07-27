@@ -2339,136 +2339,52 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 410272853, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: m_Speed
-      value: 2.8
+    - target: {fileID: 590889987, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: m_Volume
+      value: 0.2
       objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: maxLegRange
-      value: 0.35
+    - target: {fileID: 590889987, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: MaxDistance
+      value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementTime
-      value: 0.175
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: randomExtraLegMovementTime.x
-      value: -0.035
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: randomExtraLegMovementTime.y
-      value: 0.035
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[1].time
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[2].time
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[3].time
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[4].time
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[5].time
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[0].value
-      value: -0.00018310547
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[1].value
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[2].value
+    - target: {fileID: 590889987, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: spreadCustomCurve.m_Curve.Array.data[0].value
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[3].value
+    - target: {fileID: 704002148, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: m_Volume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 704002148, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: MaxDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 704002148, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: spreadCustomCurve.m_Curve.Array.data[0].value
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[4].value
+    - target: {fileID: 856926881, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: m_Volume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 856926881, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: MaxDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 856926881, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: spreadCustomCurve.m_Curve.Array.data[0].value
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[0].inSlope
-      value: 0.5383828
+    - target: {fileID: 910159901, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: m_Volume
+      value: 0.2
       objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[1].inSlope
-      value: 0
+    - target: {fileID: 910159901, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: MaxDistance
+      value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[2].inSlope
-      value: -0.60594064
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[3].inSlope
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[4].inSlope
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[0].outSlope
-      value: 0.5383828
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[1].outSlope
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[2].inWeight
-      value: 0.02521944
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[2].outSlope
-      value: -0.60594064
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[3].inWeight
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[3].outSlope
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[4].inWeight
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[4].outSlope
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[0].outWeight
-      value: 0.0372807
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[2].outWeight
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[3].outWeight
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: legMovementCurve.m_Curve.Array.data[4].outWeight
+    - target: {fileID: 910159901, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: spreadCustomCurve.m_Curve.Array.data[0].value
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
@@ -2485,7 +2401,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3355469690992127889, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.3899994
+      value: -1.25
       objectReference: {fileID: 0}
     - target: {fileID: 3355469690992127889, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2493,7 +2409,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3355469690992127889, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.279999
+      value: -9.5
       objectReference: {fileID: 0}
     - target: {fileID: 3355469690992127889, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2526,18 +2442,6 @@ PrefabInstance:
     - target: {fileID: 3355469690992127892, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: m_Name
       value: SpiderRobot4Legs
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690992127894, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: positionSmoothing
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690992127895, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: spiderMovementSpeed
-      value: 2.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355469690992127895, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: predictionMultiplier
-      value: 0.45
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
@@ -3890,11 +3794,11 @@ PrefabInstance:
     - target: {fileID: 7694291289689612739, guid: 1041e28605f35c847a70bdea19030bd5, type: 3}
       propertyPath: m_Follow
       value: 
-      objectReference: {fileID: 545921463}
+      objectReference: {fileID: 656794840}
     - target: {fileID: 7694291289689612739, guid: 1041e28605f35c847a70bdea19030bd5, type: 3}
       propertyPath: m_LookAt
       value: 
-      objectReference: {fileID: 545921463}
+      objectReference: {fileID: 656794840}
     - target: {fileID: 7694291289689612765, guid: 1041e28605f35c847a70bdea19030bd5, type: 3}
       propertyPath: AimTargetReticle
       value: 
@@ -3952,11 +3856,6 @@ MonoBehaviour:
   masterMixer: {fileID: 24300002, guid: da09ec197a0e92d42aef190313fd6b36, type: 2}
   ambientMixerGroup: {fileID: 7905944192304918951, guid: da09ec197a0e92d42aef190313fd6b36, type: 2}
   sfxMixerGroup: {fileID: -3295384301704715028, guid: da09ec197a0e92d42aef190313fd6b36, type: 2}
---- !u!4 &545921463 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3355469690992127889, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-  m_PrefabInstance: {fileID: 98695991}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &578431019 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2819617430841908647, guid: 6ab239482a0fe294c930d8d2eb3387ff, type: 3}
@@ -4218,6 +4117,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3298308840265250058, guid: d3799ae0a4c575f468163e4022d87e42, type: 3}
   m_PrefabInstance: {fileID: 1819724171}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &656794840 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 656794840, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+  m_PrefabInstance: {fileID: 98695991}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &668165082
 PrefabInstance:

@@ -36,7 +36,7 @@ public class SpiderGameLogic : MonoBehaviour
 
         if (Input.GetKeyDown(doorOpenerKey))
         {
-            if (Physics.Raycast(Camera.main.transform.position, transform.forward, out hit, range, rayLayerMask))
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range, rayLayerMask))
             {
                 StartCoroutine(C_OpenDoor(hit.collider.GetComponent<DoorOpener>()));
             }

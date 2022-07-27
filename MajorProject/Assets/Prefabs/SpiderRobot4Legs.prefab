@@ -976,6 +976,36 @@ MonoBehaviour:
   m_Property:
     m_Name: StartDirectionTransform
   Target: {fileID: 1098397714}
+--- !u!1 &656794839
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 656794840}
+  m_Layer: 6
+  m_Name: CameraFollow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &656794840
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 656794839}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3355469690992127889}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &685129357
 GameObject:
   m_ObjectHideFlags: 0
@@ -4429,7 +4459,7 @@ MonoBehaviour:
   target: {fileID: 3355469690992127889}
   rotationMultiplier: 5
   frequency: 3
-  damping: 0.8
+  damping: 0.5
   systemResponse: 0.5
 --- !u!1 &3355469689609270819
 GameObject:
@@ -4635,29 +4665,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebugGizmos: 1
-  legMovementTime: 0.225
-  randomExtraLegMovementTime: {x: -0.05, y: 0.05}
+  legMovementTime: 0.175
+  randomExtraLegMovementTime: {x: -0.035, y: 0.035}
   legMovementCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      value: -0.00018310547
+      inSlope: 0.5383828
+      outSlope: 0.5383828
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.25
-      value: 0.1
-      inSlope: 0.41243556
-      outSlope: 0.41243556
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.0372807
     - serializedVersion: 3
       time: 0.5
       value: 0.15
@@ -4668,27 +4689,18 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.75
-      value: 0.1
-      inSlope: -0.4365807
-      outSlope: -0.4365807
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -0.60594064
+      outSlope: -0.60594064
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.02521944
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  maxLegRange: 0.4
+  maxLegRange: 0.35
   useFarthestPoint: 1
   additionalLegRangeCheck: 1
   adjustLastLimbToNormal: 1
@@ -9776,7 +9788,7 @@ MonoBehaviour:
       amplitude: 0.4
       seed: 0.54
       randomScale: 0.61
-  legDeathFoldTime: 1
+  legDeathFoldTime: 2
   legDeathFoldRndTimeAddMinMax: {x: -0.15, y: 0.15}
   legDeathFoldPositionToBodyPercent: 0.5
   legDeathFoldRndPositionAddMinMax: {x: -0.15, y: 0.15}
@@ -10261,6 +10273,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3355469689411140084}
+  - {fileID: 656794840}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -10297,7 +10310,7 @@ MonoBehaviour:
   movementRayRadius: 0.75
   movementRayRotationSmoothing: 20
   rotationSmoothing: 2.5
-  positionSmoothing: 15
+  positionSmoothing: 25
   useCoyoteTimer: 1
   rotationCoyoteTimer: 0.02
   hitRecoil: 1
@@ -10314,10 +10327,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 200
-  spiderMovementSpeed: 2
-  predictionMultiplier: 0.35
+  spiderMovementSpeed: 2.8
+  camSens: 100
+  predictionMultiplier: 0.45
   predictionSmoothing: 20
   rayOriginsAndHints: {fileID: 3355469690534166810}
+  camFollowTransform: {fileID: 656794840}
 --- !u!114 &410272850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10375,7 +10390,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 1.5
+  m_Speed: 2.8
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
