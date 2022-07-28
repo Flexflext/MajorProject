@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class EnemyHealth : MonoBehaviour, IDamageable
 {
     [SerializeField] private float maxHealth;
+    [SerializeField] private GameObject dmgVFX;
     private float curHealth;
 
     private System.Action onDeath;
@@ -62,7 +63,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     private IEnumerator C_AddKnockback(Vector3 _knockback)
     {
         float curtime = 0;
-
+        dmgVFX.SetActive(true);
         while (curtime <= 0.2f)
         {
             transform.position += _knockback * Time.deltaTime;
@@ -70,5 +71,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             curtime += Time.deltaTime;
             yield return null;
         }
+
+        dmgVFX.SetActive(false);
     }
 }

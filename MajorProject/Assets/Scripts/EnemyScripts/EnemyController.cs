@@ -49,7 +49,6 @@ public class EnemyController : MonoBehaviour , IStateMachineController
     [SerializeField] protected Vector2 randomIdleAfterAttackTime;
     [SerializeField] protected bool timeReadyAfterAttack;
 
-
     private bool canAttack;
     public bool CanAttack { get { return canAttack; } set { canAttack = value; } }
 
@@ -61,7 +60,7 @@ public class EnemyController : MonoBehaviour , IStateMachineController
     protected bool nextIdleState;
 
     protected AttackWaitingPosition currentWaitingPosition;
-    protected Animator enemyAnimator;
+    protected Rigidbody enemyrb;
     protected Rig rig;
 
     protected bool isDead;
@@ -84,39 +83,39 @@ public class EnemyController : MonoBehaviour , IStateMachineController
         myAgent = GetComponent<NavMeshAgent>();
         enemyHealth = GetComponent<EnemyHealth>();
         enemyHealth.SubToOnDeath(OnDeath);
-        enemyAnimator = GetComponentInChildren<Animator>();
-        rig = GetComponentInChildren<Rig>();
+        //enemyAnimator = GetComponentInChildren<Animator>();
+        //rig = GetComponentInChildren<Rig>();
         InitializeStateMachine();
 
         MultiAimConstraint[] aim = GetComponentsInChildren<MultiAimConstraint>();
-        RigBuilder builder = GetComponentInChildren<RigBuilder>();
+        //RigBuilder builder = GetComponentInChildren<RigBuilder>();
 
-        for (int i = 0; i < aim.Length; i++)
-        {
-            aim[i].data.sourceObjects = new WeightedTransformArray { new WeightedTransform(EnemyManager.Instance.Player, 1) };
-        }
+        //for (int i = 0; i < aim.Length; i++)
+        //{
+        //    aim[i].data.sourceObjects = new WeightedTransformArray { new WeightedTransform(EnemyManager.Instance.Player, 1) };
+        //}
 
-        builder.Build();
+        //builder.Build();
     }
 
     private void Update()
     {
-        SetAnimationVelo();
+        //SetAnimationVelo();
         isAgressive = CheckIfEnemyIsAgressive();
         UpdateStateMachine();
 
-        if (myAgent.velocity.magnitude > 0.2f)
-        {
-            if (timebetweenMoveSounds <= 0)
-            {
-                timebetweenMoveSounds = 0.35f;
-                audioManager.Play(EPossibleSounds.Walk, ERandomSound.Static, true);
-            }
-            else
-            {
-                timebetweenMoveSounds -= Time.deltaTime;
-            }
-        }
+        //if (myAgent.velocity.magnitude > 0.2f)
+        //{
+        //    if (timebetweenMoveSounds <= 0)
+        //    {
+        //        timebetweenMoveSounds = 0.35f;
+        //        audioManager.Play(EPossibleSounds.Walk, ERandomSound.Static, true);
+        //    }
+        //    else
+        //    {
+        //        timebetweenMoveSounds -= Time.deltaTime;
+        //    }
+        //}
     }
 
     private void OnDestroy()
@@ -321,7 +320,7 @@ public class EnemyController : MonoBehaviour , IStateMachineController
 
     public void SetAttackAnimations(int _setto)
     {
-        enemyAnimator.SetLayerWeight(1, _setto);
+        //enemyAnimator.SetLayerWeight(1, _setto);
         rig.weight = _setto;
     } 
 
@@ -388,8 +387,8 @@ public class EnemyController : MonoBehaviour , IStateMachineController
     {
         Vector2 velo = ExtraMath.GetAnimatorVeloFromAgent(new Vector2(transform.right.x, transform.right.z), new Vector2(myAgent.velocity.x, myAgent.velocity.z));
 
-        enemyAnimator.SetFloat("XVelo", velo.x);
-        enemyAnimator.SetFloat("YVelo", velo.y);
+        //enemyAnimator.SetFloat("XVelo", velo.x);
+        //enemyAnimator.SetFloat("YVelo", velo.y);
     }
 
     protected void OnDeath()
@@ -399,7 +398,11 @@ public class EnemyController : MonoBehaviour , IStateMachineController
         {
             isDead = true;
             myAgent.isStopped = true;
-            enemyAnimator.SetTrigger("isDead");
+            //enemyAnimator.SetTrigger("isDead");
+            enemyrb = gameObject.AddComponent<Rigidbody>();
+            enemyrb.WakeUp();
+            enemyrb.useGravity = true;
+            myAgent.enabled = false;
             HUD.Instance.KillObjAnim();
         }
 

@@ -15,8 +15,8 @@ public class EnemyArmor : MonoBehaviour , IDamageable
         EnemyHealth health = GetComponentInParent<EnemyHealth>();
         health.TakeDamage(_damage, _knockback);
 
+        //armorToTurnOff.SetActive(false);
         this.gameObject.SetActive(false);
-        armorToTurnOff.SetActive(false);
     }
 
 

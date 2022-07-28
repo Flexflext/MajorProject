@@ -27,14 +27,12 @@ public class EnemyAttackState : EnemyState
         myEnemy.CurrentState = EnemyController.EEnemyStates.ES_Attacking;
         attackingIdx = EnemyManager.Instance.SubscribeToAttacking(myEnemy);
         hidingPosition = myEnemy.FindNewHidingPosition();
-        myEnemy.SetAttackAnimations(1);
     }
 
     public override void ExitState()
     {
         myEnemy.ResetHidingPosition();
         EnemyManager.Instance.UnSubscribeToAttacking(myEnemy);
-        myEnemy.SetAttackAnimations(0);
     }
 
     public override void UpdateState()
@@ -45,7 +43,6 @@ public class EnemyAttackState : EnemyState
             if (!wasAttacking)
             {
                 myEnemy.ResetHidingPosition();
-                myEnemy.SetAttackAnimations(1);
                 wasAttacking = true;
             }
 

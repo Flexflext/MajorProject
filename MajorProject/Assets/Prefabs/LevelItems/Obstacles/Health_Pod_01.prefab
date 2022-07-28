@@ -304,6 +304,7 @@ GameObject:
   - component: {fileID: 7619679592452215739}
   - component: {fileID: 7619679592453312891}
   - component: {fileID: 7619679592216447334}
+  - component: {fileID: 5009322696095050486}
   m_Layer: 0
   m_Name: Pod
   m_TagString: Untagged
@@ -392,6 +393,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300026, guid: 72162500093b24190853ab3c7b62a3e8, type: 3}
+--- !u!65 &5009322696095050486
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7619679592451379131}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.4657768, y: 1.4137406, z: 1.467477}
+  m_Center: {x: 0.13466236, y: -0.95170283, z: -0.00000011920928}
 --- !u!1 &7619679592451379133
 GameObject:
   m_ObjectHideFlags: 0
