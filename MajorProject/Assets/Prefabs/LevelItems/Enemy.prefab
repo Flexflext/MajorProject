@@ -1222,6 +1222,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Etasphera53
       objectReference: {fileID: 0}
+    - target: {fileID: 834828364833885996, guid: d3ea42e5bed3eb343b4c6f701598fced, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 843380797149908378, guid: d3ea42e5bed3eb343b4c6f701598fced, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 1.6699411
