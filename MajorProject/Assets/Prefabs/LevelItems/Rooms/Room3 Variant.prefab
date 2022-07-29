@@ -935,7 +935,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb67e9621f4164afb8487814b568cd96, type: 3}
       propertyPath: m_RootOrder
-      value: 89
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb67e9621f4164afb8487814b568cd96, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4155,9 +4155,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4925823180340230690}
     m_Modifications:
+    - target: {fileID: 3174154168774963347, guid: 0134e037a2fcd7149b0b6b39b30c71a0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3174154168774963347, guid: 0134e037a2fcd7149b0b6b39b30c71a0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3822678821427801440, guid: 0134e037a2fcd7149b0b6b39b30c71a0, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4224264936719010130, guid: 0134e037a2fcd7149b0b6b39b30c71a0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4224264936719010130, guid: 0134e037a2fcd7149b0b6b39b30c71a0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.39
       objectReference: {fileID: 0}
     - target: {fileID: 6244315777086647893, guid: 0134e037a2fcd7149b0b6b39b30c71a0, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -9081,7 +9097,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb67e9621f4164afb8487814b568cd96, type: 3}
       propertyPath: m_RootOrder
-      value: 90
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb67e9621f4164afb8487814b568cd96, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14509,7 +14525,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8142404368744601628, guid: eb6d28454df56c64b8c6756a580bab7d, type: 3}
       propertyPath: m_Name
-      value: Room3
+      value: Room3 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8142404368744601628, guid: eb6d28454df56c64b8c6756a580bab7d, type: 3}
       propertyPath: m_StaticEditorFlags
