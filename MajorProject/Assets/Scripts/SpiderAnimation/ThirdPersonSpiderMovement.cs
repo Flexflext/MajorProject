@@ -106,7 +106,7 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
 
     private void MoveSpider()
     {
-        if (!useMovement)
+        if (!useMovement || !iscontrolled)
         {
             controller.SetPlayerMovementInput(Vector2.zero);
             return;

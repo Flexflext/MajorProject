@@ -10301,10 +10301,10 @@ MonoBehaviour:
   rayHitLayers:
     serializedVersion: 2
     m_Bits: 1
-  innerRayWeight: 1
+  innerRayWeight: 3
   outerRayWeight: 2
   movementRayAmount: 6
-  movementRayWeight: 17.5
+  movementRayWeight: 5
   angleBetweenMovementRays: 10
   movementRayTilt: -70
   movementRayRadius: 0.75
