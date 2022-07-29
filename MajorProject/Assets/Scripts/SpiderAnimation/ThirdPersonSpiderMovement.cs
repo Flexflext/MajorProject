@@ -50,11 +50,15 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
 
         if (!iscontrolled)
         {
-            Vector3 dir = transform.InverseTransformDirection(agent.velocity);
-            dir.Normalize();
+            if (agent)
+            {
+                Vector3 dir = transform.InverseTransformDirection(agent.velocity);
+                dir.Normalize();
 
-            rayOriginsAndHints.localPosition = Vector3.Lerp(rayOriginsAndHints.localPosition, originLocalStartPos + new Vector3(dir.x, 0, dir.z) * predictionMultiplier, predictionSmoothing * Time.deltaTime);
+                rayOriginsAndHints.localPosition = Vector3.Lerp(rayOriginsAndHints.localPosition, originLocalStartPos + new Vector3(dir.x, 0, dir.z) * predictionMultiplier, predictionSmoothing * Time.deltaTime);
+            }
 
+            controller.SetPlayerMovementInput(Vector2.zero);
             return;
         }
 
@@ -108,7 +112,6 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
     {
         if (!useMovement || !iscontrolled)
         {
-            controller.SetPlayerMovementInput(Vector2.zero);
             return;
         }
 

@@ -663,6 +663,7 @@ GameObject:
   - component: {fileID: 8996826135850803163}
   - component: {fileID: 8996826135850803160}
   - component: {fileID: 8996826135850803161}
+  - component: {fileID: 428830024}
   m_Layer: 6
   m_Name: SpiderTestRobotBig
   m_TagString: Untagged
@@ -742,6 +743,20 @@ MonoBehaviour:
   predictionSmoothing: 20
   rayOriginsAndHints: {fileID: 8996826137159370457}
   camFollowTransform: {fileID: 271290177}
+--- !u!114 &428830024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826135850803142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42a535e69b960cc45b50b192263297b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followObj: {fileID: 271290177}
+  offset: {x: 0, y: 0.5, z: -8}
 --- !u!1 &8996826135904396022
 GameObject:
   m_ObjectHideFlags: 0
@@ -1443,8 +1458,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebugGizmos: 1
-  legMovementTime: 0.3
-  randomExtraLegMovementTime: {x: 0, y: 0}
+  legMovementTime: 0.5
+  randomExtraLegMovementTime: {x: 0.1, y: -0.1}
   legMovementCurve:
     serializedVersion: 2
     m_Curve:
@@ -1504,8 +1519,8 @@ MonoBehaviour:
   alwaysCheckLegState: 0
   checkDeathState: 0
   alwaysCheckDeathState: 0
-  preventLegOverreach: 0
-  animateBody: 0
+  preventLegOverreach: 1
+  animateBody: 1
   xAnimation:
     AnimationParameter:
       useAnimation: 1
@@ -1837,7 +1852,7 @@ MonoBehaviour:
         m_Curve:
         - serializedVersion: 3
           time: -0.05882353
-          value: 2.45
+          value: 4.5445476
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1846,7 +1861,7 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 0
-          value: -2.45
+          value: -0.35545257
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1855,7 +1870,7 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 0.05882353
-          value: 2.45
+          value: 3.810463
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1864,7 +1879,7 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 0.11764706
-          value: -2.45
+          value: -0.9786904
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1873,7 +1888,7 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 0.1764706
-          value: 2.45
+          value: 5.5003257
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1882,7 +1897,7 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 0.23529412
-          value: -2.45
+          value: -1.0895371
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1891,7 +1906,7 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 0.29411766
-          value: 2.45
+          value: 3.076378
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1900,7 +1915,7 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 0.3529412
-          value: -2.45
+          value: -0.9786904
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1909,7 +1924,7 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 0.4117647
-          value: 2.45
+          value: 4.766241
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1918,7 +1933,7 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 0.47058824
-          value: -2.45
+          value: 0.48947904
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1927,7 +1942,7 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 0.5294118
-          value: 2.45
+          value: 5.389479
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1936,7 +1951,7 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 0.5882353
-          value: -2.45
+          value: 0.48947904
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1945,7 +1960,7 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 0.64705884
-          value: 2.45
+          value: 3.810463
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1954,7 +1969,7 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 0.7058824
-          value: -2.45
+          value: -0.9786904
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1963,7 +1978,7 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 0.7647059
-          value: 2.45
+          value: 6.2344103
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1972,7 +1987,7 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 0.8235294
-          value: -2.45
+          value: 0.48947904
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1981,7 +1996,7 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 0.88235295
-          value: 2.45
+          value: 4.6553946
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1990,7 +2005,7 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 0.9411765
-          value: -2.45
+          value: -0.9786904
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -3481,6 +3496,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8996826136519468459}
+  - component: {fileID: 1588140532}
   m_Layer: 6
   m_Name: Spider
   m_TagString: Untagged
@@ -3505,6 +3521,23 @@ Transform:
   m_Father: {fileID: 8996826135850803163}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1588140532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826136519468456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7022a43a2201b8449d561d2b03da494, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8996826135850803163}
+  rotationMultiplier: 5
+  frequency: 3
+  damping: 0.5
+  systemResponse: 0.5
 --- !u!1 &8996826136529971712
 GameObject:
   m_ObjectHideFlags: 0

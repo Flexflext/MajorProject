@@ -50,6 +50,7 @@ public class SpiderBodyRotationController : MonoBehaviour
     [SerializeField] private float rotationSmoothing = 20;
     [Tooltip("Lerp Smoothing of the Position")]
     [SerializeField] private float positionSmoothing = 20;
+    [SerializeField] private float maxHorizontalRotationInput = 100;
 
     [Header("Coyote Timer")]
     [SerializeField] private bool useCoyoteTimer = true;
@@ -175,7 +176,9 @@ public class SpiderBodyRotationController : MonoBehaviour
     /// <param name="_rotationangle"></param>
     public void SetPlayerInputRotation(float _rotationangle)
     {
-        currentPlayerRotationInput = _rotationangle;
+        currentPlayerRotationInput = Mathf.Clamp(_rotationangle, -maxHorizontalRotationInput, maxHorizontalRotationInput);
+
+        //currentPlayerRotationInput = _rotationangle;
     }
 
     /// <summary>
