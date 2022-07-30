@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlaygroundManager : MonoBehaviour
 {
     public static PlaygroundManager Instance;
+    [SerializeField] private float deathTimer;
     [SerializeField] private Menu pauseMenu;
     [SerializeField] private Cinemachine.CinemachineVirtualCamera cam;
     [SerializeField] private List<SpiderPlayGroundManager> spiders = new List<SpiderPlayGroundManager>();
@@ -13,6 +14,7 @@ public class PlaygroundManager : MonoBehaviour
 
     private int curSpiderIndex = 0;
     private bool paused;
+    private bool isdead;
 
     // Start is called before the first frame update
     void Awake()
@@ -27,7 +29,11 @@ public class PlaygroundManager : MonoBehaviour
         }
         camTansposer = cam.GetCinemachineComponent<Cinemachine.CinemachineTransposer>();
 
-        
+    }
+
+    private void Start()
+    {
+        Time.timeScale = 1;
         pauseMenu.OpenMainMenu(false);
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -35,12 +41,12 @@ public class PlaygroundManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G) && !isdead && !paused)
         {
             SwitchToNextSpider();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !isdead)
         {
             TogglePauseMenu();
         }
@@ -92,6 +98,45 @@ public class PlaygroundManager : MonoBehaviour
         }
 
     }
+
+    public void SetDeath()
+    {
+        isdead = true;
+        StartCoroutine(C_DeathTimer());
+    }
+
+    public void SetDeathNoTimer()
+    {
+        isdead = true;
+        Time.timeScale = 0;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        pauseMenu.OpenDeathScreen();
+    }
+
+    private IEnumerator C_DeathTimer()
+    {
+        yield return new WaitForSeconds(deathTimer);
+
+        float curTime = 1;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        pauseMenu.OpenDeathScreen();
+
+        while (curTime > 0)
+        {
+            if (curTime <= 0)
+            {
+                curTime = 0;
+            }
+
+            Time.timeScale = curTime;
+            yield return null;
+            curTime -= Time.deltaTime;
+        }
+    }
+
 
     public void Subscribe(SpiderPlayGroundManager _spider)
     {

@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
     [SerializeField] private int levelSceneIndex;
+    [SerializeField] private int playgroundManager = 2;
     [SerializeField] private int mainSceneIndex;
 
     [SerializeField] private GameObject settingsMenu;
@@ -23,6 +24,11 @@ public class Menu : MonoBehaviour
         personelAudioManager = GetComponent<PersonelAudioManager>();
         confirmPanel = GetComponentInChildren<ConfirmPanel>();
         confirmPanel.gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        Time.timeScale = 1;
     }
 
 
@@ -60,6 +66,13 @@ public class Menu : MonoBehaviour
         confirmPanel.SetPanel("Play Level?", OnPlayConfirm);
     }
 
+    public void PlaygroundButton()
+    {
+        personelAudioManager.Play(EPossibleSounds.UI, ERandomSound.Static, true);
+        confirmPanel.gameObject.SetActive(true);
+        confirmPanel.SetPanel("Play Playground?", OnPlaygroundConfirm);
+    }
+
     public void MainMenuButton()
     {
         personelAudioManager.Play(EPossibleSounds.UI, ERandomSound.Static, true);
@@ -94,6 +107,14 @@ public class Menu : MonoBehaviour
         if (!_confirm) return;
         loadingPanel.SetActive(true);
         SceneManager.LoadScene(levelSceneIndex);
+    }
+
+    private void OnPlaygroundConfirm(bool _confirm)
+    {
+        if (!_confirm) return;
+        personelAudioManager.Play(EPossibleSounds.MagicSelection, ERandomSound.Static, true);
+        loadingPanel.SetActive(true);
+        SceneManager.LoadScene(playgroundManager);
     }
 
     private void OnMenuConfirm(bool _confirm)

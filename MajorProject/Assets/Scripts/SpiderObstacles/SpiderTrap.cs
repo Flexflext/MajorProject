@@ -60,8 +60,11 @@ public class SpiderTrap : MonoBehaviour
         }
 
         StopAllCoroutines();
+
+
         onOff = false;
         TurnOnOff(false);
+        StartCoroutine(C_WaitTillOnOff());
 
         source.clip = randomAudioClips[Random.Range(0, randomAudioClips.Length)];
 

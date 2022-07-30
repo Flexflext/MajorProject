@@ -359,6 +359,7 @@ GameObject:
   - component: {fileID: 8996826135804329846}
   - component: {fileID: 8996826135804329864}
   - component: {fileID: 8996826135804329865}
+  - component: {fileID: 8090209167082125501}
   m_Layer: 0
   m_Name: SpiderSmokeVFX (2)
   m_TagString: Untagged
@@ -468,6 +469,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &8090209167082125501
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826135804329847}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1923215, y: 0.23792416, z: 1.9437475}
+  m_Center: {x: 0, y: 0, z: 0.9802828}
 --- !u!1 &8996826135811334349
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,6 +493,7 @@ GameObject:
   - component: {fileID: 8996826135811334348}
   - component: {fileID: 8996826135811334350}
   - component: {fileID: 8996826135811334351}
+  - component: {fileID: 832540350262336120}
   m_Layer: 0
   m_Name: SpiderSmokeVFX
   m_TagString: Untagged
@@ -588,6 +603,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &832540350262336120
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826135811334349}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1923215, y: 0.23792416, z: 1.9437475}
+  m_Center: {x: 0, y: 0, z: 0.9802828}
 --- !u!1 &8996826135823470990
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,9 +749,10 @@ MonoBehaviour:
   movementRayRotationSmoothing: 20
   rotationSmoothing: 15
   positionSmoothing: 20
+  maxHorizontalRotationInput: 120
   useCoyoteTimer: 1
   rotationCoyoteTimer: 0.02
-  hitRecoil: 0.01
+  hitRecoil: 1
 --- !u!114 &8996826135850803161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -739,7 +768,7 @@ MonoBehaviour:
   rotationSpeed: 200
   spiderMovementSpeed: 4
   camSens: 100
-  predictionMultiplier: 0.25
+  predictionMultiplier: 0.5
   predictionSmoothing: 20
   rayOriginsAndHints: {fileID: 8996826137159370457}
   camFollowTransform: {fileID: 271290177}
@@ -879,6 +908,7 @@ GameObject:
   - component: {fileID: 8996826135911023482}
   - component: {fileID: 8996826135911023484}
   - component: {fileID: 8996826135911023485}
+  - component: {fileID: 1351201800181319981}
   m_Layer: 0
   m_Name: SpiderSmokeVFX
   m_TagString: Untagged
@@ -988,6 +1018,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &1351201800181319981
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826135911023483}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1923215, y: 0.23792416, z: 1.9437475}
+  m_Center: {x: 0, y: 0, z: 0.9802828}
 --- !u!1 &8996826135916766637
 GameObject:
   m_ObjectHideFlags: 0
@@ -1109,6 +1152,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8996826135925503413}
   - component: {fileID: 8996826135925503412}
+  - component: {fileID: 1652119188}
   m_Layer: 6
   m_Name: RootLegRF
   m_TagString: Untagged
@@ -1158,6 +1202,19 @@ MonoBehaviour:
   snapbackStrenght: 0
   boxColliderDiamater: 0.1
   rootRotation: {fileID: 0}
+--- !u!114 &1652119188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826135925503410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6d945de0504364da6686bd6c2ce548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  legIndex: 3
 --- !u!1 &8996826135979367087
 GameObject:
   m_ObjectHideFlags: 0
@@ -1360,6 +1417,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8996826136048885244}
   - component: {fileID: 8996826136048885247}
+  - component: {fileID: 806431555}
   m_Layer: 6
   m_Name: RootLegLF
   m_TagString: Untagged
@@ -1409,6 +1467,19 @@ MonoBehaviour:
   snapbackStrenght: 0
   boxColliderDiamater: 0.1
   rootRotation: {fileID: 0}
+--- !u!114 &806431555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826136048885245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6d945de0504364da6686bd6c2ce548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  legIndex: 0
 --- !u!1 &8996826136059031181
 GameObject:
   m_ObjectHideFlags: 0
@@ -1419,6 +1490,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8996826136059031180}
   - component: {fileID: 8996826136059031183}
+  - component: {fileID: 1966547440}
   m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
@@ -1458,7 +1530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebugGizmos: 1
-  legMovementTime: 0.5
+  legMovementTime: 0.4
   randomExtraLegMovementTime: {x: 0.1, y: -0.1}
   legMovementCurve:
     serializedVersion: 2
@@ -2110,7 +2182,7 @@ MonoBehaviour:
   hintBackwardsMultiplier: 1
   downAddPerBrokenLeg: 0.1
   maxDownAddPerBrokenLeg: 0.2
-  legSlideRange: 0.2
+  legSlideRange: 1.2
   percentOfLegHeightMovement: 0.1
   brokenLegRangeMultiplier: 0
   legRayNumber: 5
@@ -2250,6 +2322,19 @@ MonoBehaviour:
   onLegTakeDamage:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1966547440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826136059031181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6d945de0504364da6686bd6c2ce548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  legIndex: -1
 --- !u!1 &8996826136144514178
 GameObject:
   m_ObjectHideFlags: 0
@@ -2324,9 +2409,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8996826136160360420}
   m_Layer: 6
-  m_Name: TargetLB (1)
+  m_Name: TargetLM
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2670,6 +2755,7 @@ GameObject:
   - component: {fileID: 8996826136307008259}
   - component: {fileID: 8996826136307008261}
   - component: {fileID: 8996826136307008258}
+  - component: {fileID: 6414740069388388667}
   m_Layer: 0
   m_Name: SpiderSmokeVFX (1)
   m_TagString: Untagged
@@ -2779,6 +2865,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &6414740069388388667
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826136307008256}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1923215, y: 0.23792416, z: 1.9437475}
+  m_Center: {x: 0, y: 0, z: 0.9802828}
 --- !u!1 &8996826136340600590
 GameObject:
   m_ObjectHideFlags: 0
@@ -3156,6 +3255,7 @@ GameObject:
   - component: {fileID: 8996826136391995315}
   - component: {fileID: 8996826136391995317}
   - component: {fileID: 8996826136391995314}
+  - component: {fileID: 2678935855647754655}
   m_Layer: 0
   m_Name: SpiderSmokeVFX
   m_TagString: Untagged
@@ -3265,6 +3365,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &2678935855647754655
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826136391995312}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1923215, y: 0.23792416, z: 1.9437475}
+  m_Center: {x: 0, y: 0, z: 0.9802828}
 --- !u!1 &8996826136392395445
 GameObject:
   m_ObjectHideFlags: 0
@@ -3549,6 +3662,7 @@ GameObject:
   - component: {fileID: 8996826136529971715}
   - component: {fileID: 8996826136529971717}
   - component: {fileID: 8996826136529971714}
+  - component: {fileID: 4641410340784676196}
   m_Layer: 0
   m_Name: SpiderSmokeVFX (1)
   m_TagString: Untagged
@@ -3658,6 +3772,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &4641410340784676196
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826136529971712}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1923215, y: 0.23792416, z: 1.9437475}
+  m_Center: {x: 0, y: 0, z: 0.9802828}
 --- !u!1 &8996826136530251486
 GameObject:
   m_ObjectHideFlags: 0
@@ -4015,6 +4142,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8996826136621553964}
   - component: {fileID: 8996826136621553967}
+  - component: {fileID: 1007783016}
   m_Layer: 6
   m_Name: RootLegLM
   m_TagString: Untagged
@@ -4064,6 +4192,19 @@ MonoBehaviour:
   snapbackStrenght: 0
   boxColliderDiamater: 0.1
   rootRotation: {fileID: 0}
+--- !u!114 &1007783016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826136621553965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6d945de0504364da6686bd6c2ce548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  legIndex: 1
 --- !u!1 &8996826136623045941
 GameObject:
   m_ObjectHideFlags: 0
@@ -4075,6 +4216,7 @@ GameObject:
   - component: {fileID: 8996826136623045940}
   - component: {fileID: 8996826136623045942}
   - component: {fileID: 8996826136623045943}
+  - component: {fileID: 439350704104757}
   m_Layer: 0
   m_Name: SpiderSmokeVFX (1)
   m_TagString: Untagged
@@ -4184,6 +4326,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &439350704104757
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826136623045941}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1923215, y: 0.23792416, z: 1.9437475}
+  m_Center: {x: 0, y: 0, z: 0.9802828}
 --- !u!1 &8996826136654563677
 GameObject:
   m_ObjectHideFlags: 0
@@ -4305,6 +4460,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8996826136659544473}
   - component: {fileID: 8996826136659544472}
+  - component: {fileID: 1316701794}
   m_Layer: 6
   m_Name: RootLegRM
   m_TagString: Untagged
@@ -4354,6 +4510,19 @@ MonoBehaviour:
   snapbackStrenght: 0
   boxColliderDiamater: 0.1
   rootRotation: {fileID: 0}
+--- !u!114 &1316701794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826136659544454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6d945de0504364da6686bd6c2ce548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  legIndex: 4
 --- !u!1 &8996826136677132981
 GameObject:
   m_ObjectHideFlags: 0
@@ -4688,7 +4857,7 @@ GameObject:
   m_Layer: 6
   m_Name: TargetRF
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -4717,6 +4886,7 @@ GameObject:
   - component: {fileID: 8996826136715833645}
   - component: {fileID: 8996826136715833647}
   - component: {fileID: 8996826136715833644}
+  - component: {fileID: 7622331678635751373}
   m_Layer: 0
   m_Name: SpiderSmokeVFX (1)
   m_TagString: Untagged
@@ -4826,6 +4996,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &7622331678635751373
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826136715833642}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1923215, y: 0.23792416, z: 1.9437475}
+  m_Center: {x: 0, y: 0, z: 0.9802828}
 --- !u!1 &8996826136765852858
 GameObject:
   m_ObjectHideFlags: 0
@@ -4947,9 +5130,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8996826136798338654}
   m_Layer: 6
-  m_Name: TargetRB (1)
+  m_Name: TargetRM
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -4978,6 +5161,7 @@ GameObject:
   - component: {fileID: 8996826136816853624}
   - component: {fileID: 8996826136816853626}
   - component: {fileID: 8996826136816853627}
+  - component: {fileID: 1839184641811783209}
   m_Layer: 0
   m_Name: SpiderSmokeVFX (1)
   m_TagString: Untagged
@@ -5087,6 +5271,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &1839184641811783209
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826136816853625}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1923215, y: 0.23792416, z: 1.9437475}
+  m_Center: {x: 0, y: 0, z: 0.9802828}
 --- !u!1 &8996826136854340805
 GameObject:
   m_ObjectHideFlags: 0
@@ -5239,6 +5436,7 @@ GameObject:
   - component: {fileID: 8996826136924715451}
   - component: {fileID: 8996826136924715453}
   - component: {fileID: 8996826136924715450}
+  - component: {fileID: 3463880982334628358}
   m_Layer: 0
   m_Name: SpiderSmokeVFX (1)
   m_TagString: Untagged
@@ -5348,6 +5546,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &3463880982334628358
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826136924715448}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1923215, y: 0.23792416, z: 1.9437475}
+  m_Center: {x: 0, y: 0, z: 0.9802828}
 --- !u!1 &8996826136933554743
 GameObject:
   m_ObjectHideFlags: 0
@@ -5360,7 +5571,7 @@ GameObject:
   m_Layer: 6
   m_Name: TargetRB
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -5372,7 +5583,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8996826136933554743}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.24999994, y: 0.152, z: -0.49999994}
+  m_LocalPosition: {x: -0.5, y: 0.152, z: -0.49999994}
   m_LocalScale: {x: 0.099999994, y: 0.099999994, z: 0.099999994}
   m_Children: []
   m_Father: {fileID: 8996826137159370457}
@@ -5389,6 +5600,7 @@ GameObject:
   - component: {fileID: 8996826136948724179}
   - component: {fileID: 8996826136948724181}
   - component: {fileID: 8996826136948724178}
+  - component: {fileID: 6024176573346663778}
   m_Layer: 0
   m_Name: SpiderSmokeVFX (2)
   m_TagString: Untagged
@@ -5498,6 +5710,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &6024176573346663778
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826136948724176}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1923215, y: 0.23792416, z: 1.9437475}
+  m_Center: {x: 0, y: 0, z: 0.9802828}
 --- !u!1 &8996826136968313136
 GameObject:
   m_ObjectHideFlags: 0
@@ -5509,6 +5734,7 @@ GameObject:
   - component: {fileID: 8996826136968313139}
   - component: {fileID: 8996826136968313141}
   - component: {fileID: 8996826136968313138}
+  - component: {fileID: 1109297813483444538}
   m_Layer: 0
   m_Name: SpiderSmokeVFX
   m_TagString: Untagged
@@ -5618,6 +5844,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &1109297813483444538
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826136968313136}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1923215, y: 0.23792416, z: 1.9437475}
+  m_Center: {x: 0, y: 0, z: 0.9802828}
 --- !u!1 &8996826136984014865
 GameObject:
   m_ObjectHideFlags: 0
@@ -5920,6 +6159,7 @@ GameObject:
   - component: {fileID: 8996826137069646237}
   - component: {fileID: 8996826137069646239}
   - component: {fileID: 8996826137069646236}
+  - component: {fileID: 5074104926283248788}
   m_Layer: 0
   m_Name: SpiderSmokeVFX (1)
   m_TagString: Untagged
@@ -6029,6 +6269,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &5074104926283248788
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826137069646234}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1923215, y: 0.23792416, z: 1.9437475}
+  m_Center: {x: 0, y: 0, z: 0.9802828}
 --- !u!1 &8996826137117229986
 GameObject:
   m_ObjectHideFlags: 0
@@ -6222,6 +6475,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8996826137174052690}
   - component: {fileID: 8996826137174052693}
+  - component: {fileID: 1405410581}
   m_Layer: 6
   m_Name: RootLegLB
   m_TagString: Untagged
@@ -6271,6 +6525,19 @@ MonoBehaviour:
   snapbackStrenght: 0
   boxColliderDiamater: 0.1
   rootRotation: {fileID: 0}
+--- !u!114 &1405410581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826137174052691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6d945de0504364da6686bd6c2ce548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  legIndex: 2
 --- !u!1 &8996826137223997060
 GameObject:
   m_ObjectHideFlags: 0
@@ -6313,6 +6580,7 @@ GameObject:
   - component: {fileID: 8996826137229004004}
   - component: {fileID: 8996826137229004006}
   - component: {fileID: 8996826137229004007}
+  - component: {fileID: 8611907890823828272}
   m_Layer: 0
   m_Name: SpiderSmokeVFX (1)
   m_TagString: Untagged
@@ -6422,6 +6690,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &8611907890823828272
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826137229004005}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1923215, y: 0.23792416, z: 1.9437475}
+  m_Center: {x: 0, y: 0, z: 0.9802828}
 --- !u!1 &8996826137233334201
 GameObject:
   m_ObjectHideFlags: 0
@@ -6751,6 +7032,7 @@ GameObject:
   - component: {fileID: 8996826137306817979}
   - component: {fileID: 8996826137306817981}
   - component: {fileID: 8996826137306817978}
+  - component: {fileID: 5653676758505737899}
   m_Layer: 0
   m_Name: SpiderSmokeVFX (2)
   m_TagString: Untagged
@@ -6860,6 +7142,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &5653676758505737899
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826137306817976}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1923215, y: 0.23792416, z: 1.9437475}
+  m_Center: {x: 0, y: 0, z: 0.9802828}
 --- !u!1 &8996826137335240901
 GameObject:
   m_ObjectHideFlags: 0
@@ -7126,6 +7421,7 @@ GameObject:
   - component: {fileID: 8996826137414716850}
   - component: {fileID: 8996826137414716852}
   - component: {fileID: 8996826137414716853}
+  - component: {fileID: 6620510167074579370}
   m_Layer: 0
   m_Name: SpiderSmokeVFX
   m_TagString: Untagged
@@ -7235,6 +7531,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &6620510167074579370
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826137414716851}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1923215, y: 0.23792416, z: 1.9437475}
+  m_Center: {x: 0, y: 0, z: 0.9802828}
 --- !u!1 &8996826137474410427
 GameObject:
   m_ObjectHideFlags: 0
@@ -7247,7 +7556,7 @@ GameObject:
   m_Layer: 6
   m_Name: TargetLB
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -7259,7 +7568,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8996826137474410427}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.24999994, y: 0.152, z: 0.49999994}
+  m_LocalPosition: {x: -0.5, y: 0.152, z: 0.49999994}
   m_LocalScale: {x: 0.099999994, y: 0.099999994, z: 0.099999994}
   m_Children: []
   m_Father: {fileID: 8996826137159370457}
@@ -7312,6 +7621,7 @@ GameObject:
   - component: {fileID: 8996826137516861839}
   - component: {fileID: 8996826137516861825}
   - component: {fileID: 8996826137516861838}
+  - component: {fileID: 1307454315539074392}
   m_Layer: 0
   m_Name: SpiderSmokeVFX (1)
   m_TagString: Untagged
@@ -7421,6 +7731,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &1307454315539074392
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826137516861836}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1923215, y: 0.23792416, z: 1.9437475}
+  m_Center: {x: 0, y: 0, z: 0.9802828}
 --- !u!1 &8996826137564586553
 GameObject:
   m_ObjectHideFlags: 0
@@ -7644,7 +7967,7 @@ GameObject:
   m_Layer: 6
   m_Name: TargetLF
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -7733,6 +8056,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8996826137732165935}
   - component: {fileID: 8996826137732165934}
+  - component: {fileID: 424994731}
   m_Layer: 6
   m_Name: RootLegRB
   m_TagString: Untagged
@@ -7782,6 +8106,19 @@ MonoBehaviour:
   snapbackStrenght: 0
   boxColliderDiamater: 0.1
   rootRotation: {fileID: 0}
+--- !u!114 &424994731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826137732165932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6d945de0504364da6686bd6c2ce548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  legIndex: 5
 --- !u!1 &8996826137732377499
 GameObject:
   m_ObjectHideFlags: 0
@@ -7793,6 +8130,7 @@ GameObject:
   - component: {fileID: 8996826137732377498}
   - component: {fileID: 8996826137732377500}
   - component: {fileID: 8996826137732377501}
+  - component: {fileID: 7906958981741504002}
   m_Layer: 0
   m_Name: SpiderSmokeVFX
   m_TagString: Untagged
@@ -7902,6 +8240,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &7906958981741504002
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996826137732377499}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1923215, y: 0.23792416, z: 1.9437475}
+  m_Center: {x: 0, y: 0, z: 0.9802828}
 --- !u!1 &8996826137741256092
 GameObject:
   m_ObjectHideFlags: 0
