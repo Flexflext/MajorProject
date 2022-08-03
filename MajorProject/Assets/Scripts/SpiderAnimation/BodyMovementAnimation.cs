@@ -65,8 +65,8 @@ public class BodyMovementAnimation : MonoBehaviour
     private void AnimatePosition()
     {
         newPos = GetAnimatedPosition(Time.deltaTime, target.position, null);
-        transform.InverseTransformVector(newPos);
-        transform.localPosition = new Vector3(newPos.x, 0, newPos.z);
+        transform.position = newPos;
+        transform.localPosition = new Vector3(transform.localPosition.x, 0, z: transform.localPosition.z);
     }
 
     /// <summary>

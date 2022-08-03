@@ -12,6 +12,9 @@ public class Door : MonoBehaviour
     [SerializeField] private Transform rightDoor;
     [SerializeField] private Vector3 localEndPosRight;
 
+    [SerializeField] private Light onDoorLight;
+    [SerializeField] private Light onRecieverLight;
+
     [SerializeField] private float timeTillOpenDoor = 1;
     [SerializeField] private AudioSource toggleSource;
     [SerializeField] private AudioSource doorSource;
@@ -24,6 +27,11 @@ public class Door : MonoBehaviour
     public void OpenDoor()
     {
         if (open) return;
+
+
+        onDoorLight.color = Color.green;
+        onRecieverLight.color = Color.red;
+        
 
         toggleSource.Play();
         open = true;
