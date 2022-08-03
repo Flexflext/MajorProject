@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.9339623, g: 0.9339623, b: 0.9339623, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 7dc728ec3a5a35040aed0b30c6bc1498, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -12354,6 +12354,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: additionalLegCollisionCheck
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: onDeathEvent.m_PersistentCalls.m_Calls.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -12441,9 +12445,9 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3355469690992127894, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
-      propertyPath: maxHorizontalRotationInput
-      value: 120
+    - target: {fileID: 3355469690992127895, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: predictionMultiplier
+      value: 0.35
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 410272850, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
