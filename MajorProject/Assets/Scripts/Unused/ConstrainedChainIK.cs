@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+
+/// <summary>
+/// Test-Script: Do not Use
+/// </summary>
 public class ConstrainedChainIK : MonoBehaviour
 {
     [SerializeField] private bool debugGizmos = true;

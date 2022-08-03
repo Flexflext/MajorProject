@@ -2,19 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Bullet Script to do Dmg to any IDamageable Objects
+/// </summary>
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private float dmg;
 
-    private Rigidbody rb;
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
-
-
     private void OnCollisionEnter(Collision collision)
     {
+        //Check what to do Damage to
         IDamageable damageObj = collision.collider.GetComponent<IDamageable>();
 
         if (damageObj == null)
@@ -27,7 +24,7 @@ public class Bullet : MonoBehaviour
             damageObj.TakeDamage(dmg, transform.forward);
         }
 
-
+        //Destroy after collision
         Destroy(this.gameObject);
     }
 }

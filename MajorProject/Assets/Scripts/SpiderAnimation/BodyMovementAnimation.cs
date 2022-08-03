@@ -2,13 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Spider Animation Lerping Script for a more Mechanical Correct Lerping
+/// </summary>
 public class BodyMovementAnimation : MonoBehaviour
 {
+    [Tooltip("Target to Lerp to in Update")]
     [SerializeField] private Transform target;
+    [Tooltip("Multiplier on the Angle the Body Rotates to")]
     [SerializeField] private float rotationMultiplier;
 
-    [SerializeField] private float frequency; // Speed the System will Respond to a Change
+    [Tooltip("Speed the System will Respond to a Change")]
+    [SerializeField] private float frequency;
+    [Tooltip("Speed in wich the Vibration of the Frequency stops")]
     [SerializeField] private float damping;
+    [Tooltip("Speed in wich the System responds to changes in the Motion")]
     [SerializeField] private float systemResponse;
 
     private float k1;
@@ -26,16 +34,46 @@ public class BodyMovementAnimation : MonoBehaviour
         Initialize();
     }
 
+#if UNITY_EDITOR
     private void OnValidate()
     {
         Initialize();
     }
+#endif
 
 
     private void Update()
     {
         if (Time.timeScale < 1) return;
 
+        AnimateBody();
+    }
+
+    /// <summary>
+    /// Animates the Body Position and Rotation
+    /// </summary>
+    private void AnimateBody()
+    {
+        AnimateRotation();
+
+        AnimatePosition();
+    }
+
+    /// <summary>
+    /// Animates the Position of this Object to the Position the System Calculated In LocalSpace
+    /// </summary>
+    private void AnimatePosition()
+    {
+        newPos = GetAnimatedPosition(Time.deltaTime, target.position, null);
+        transform.InverseTransformVector(newPos);
+        transform.localPosition = new Vector3(newPos.x, 0, newPos.z);
+    }
+
+    /// <summary>
+    /// Animates the Rotation of this Object based of the current local velocity
+    /// </summary>
+    private void AnimateRotation()
+    {
         localVelo = transform.InverseTransformDirection(velocity);
         localVelo.Set(localVelo.z * rotationMultiplier, 0, -localVelo.x * rotationMultiplier);
 
@@ -45,14 +83,11 @@ public class BodyMovementAnimation : MonoBehaviour
         }
 
         transform.localEulerAngles = localVelo;
-
-        newPos = GetAnimatedPosition(Time.deltaTime, target.position, null);
-        transform.position = newPos;
-        transform.localPosition = new Vector3(transform.localPosition.x, 0, transform.localPosition.z);
-
     }
 
-
+    /// <summary>
+    /// Initializes the Koefficients k1, k2, k3 and the Initial Positions
+    /// </summary>
     private void Initialize()
     {
         k1 = damping / (Mathf.PI * frequency);
@@ -64,7 +99,14 @@ public class BodyMovementAnimation : MonoBehaviour
         velocity = Vector3.zero;
     }
 
-    //--> Semi Implicity Euler Method
+
+    /// <summary>
+    /// Animate a given Bodyposition for a new Timestep with the Semi Implicit Euler Method
+    /// </summary>
+    /// <param name="_deltatime"></param>
+    /// <param name="_inputtargetposition"></param>
+    /// <param name="_inputvelocity"></param>
+    /// <returns>New Position Based on the Lerping-System</returns>
     private Vector3 GetAnimatedPosition(float _deltatime, Vector3 _inputtargetposition, Vector3? _inputvelocity = null)
     {
         if (_inputvelocity == null) // Estimate the Input Velocity -> Averrage Velo since previous Sample

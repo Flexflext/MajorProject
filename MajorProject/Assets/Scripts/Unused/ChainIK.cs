@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+/// <summary>
+/// Testing Script: Do not Use (Deprecated)
+/// </summary>
 public class ChainIK : MonoBehaviour
 {
     public bool DebugGizmos = true;

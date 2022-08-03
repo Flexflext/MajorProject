@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script for the Door-Functionality
+/// </summary>
 public class Door : MonoBehaviour
 {
     [SerializeField] private Transform leftDoor;
@@ -15,6 +18,9 @@ public class Door : MonoBehaviour
 
     private bool open = false;
 
+    /// <summary>
+    /// Opens the Sliding Doors and Sets the open paramgter
+    /// </summary>
     public void OpenDoor()
     {
         if (open) return;
