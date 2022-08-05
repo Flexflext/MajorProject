@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform impactVFX;
     [SerializeField] private Transform[] shotVFXPos;
     [SerializeField] private VisualEffect muzzleFlash;
+    [SerializeField] private GameObject fpsGun;
+    [SerializeField] private GameObject thirdPersonPlayer;
     private float curJumpCoyoteTimer;
     private float timeBetweenWalkSounds = 0.1f;
 
@@ -32,12 +34,12 @@ public class PlayerController : MonoBehaviour
 
     private bool isGrounded = true;
 
-    private Animator weaponAnimator;
+    [SerializeField] private Animator weaponAnimator;
     private PersonelAudioManager audioManager;
 
     private void Awake()
     {
-        weaponAnimator = GetComponentInChildren<Animator>();
+        //weaponAnimator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         playerCameraController = GetComponent<PlayerCameraController>();
         audioManager = GetComponent<PersonelAudioManager>();
@@ -217,6 +219,17 @@ public class PlayerController : MonoBehaviour
         isControllingPlayer = _tosetto;
         rb.velocity = Vector3.zero;
         playerCameraController.SetPlayerControll(_tosetto);
+
+        if (!_tosetto)
+        {
+            fpsGun.SetActive(false);
+            thirdPersonPlayer.SetActive(true);
+        }
+        else
+        {
+            fpsGun.SetActive(true);
+            thirdPersonPlayer.SetActive(false);
+        }
     }
 
     private void OnDrawGizmos()
