@@ -49,10 +49,6 @@ public class IKSystem : MonoBehaviour
     [Min(0.001f)]
     [SerializeField] private float errorMargain = 0.01f;
 
-    [Tooltip("Snapback to the Start Position")]
-    [Range(0f, 1f)]
-    [SerializeField] private float snapbackStrenght = 0.0f;
-
     [SerializeField] private float boxColliderDiamater = 0.1f;
 
     #region//--> Position <--\\
@@ -116,8 +112,6 @@ public class IKSystem : MonoBehaviour
     private Quaternion rootRotDiff;
 
     #endregion
-
-    public Transform rootRotation;
 
     private BoxCollider[] boxColliders;
     private Rigidbody[] rigidbodys;
@@ -400,12 +394,6 @@ public class IKSystem : MonoBehaviour
         }
         else
         {
-            //Snapback to the Previous Position //-> More Dynamic Realistic Movement
-            for (int i = 0; i < currentPositions.Length - 1; i++)
-            {
-                currentPositions[i + 1] = Vector3.Lerp(currentPositions[i + 1], currentPositions[i] + rootRotDiff * startdirectionsSucc[i], snapbackStrenght);
-            }
-
             //Check Iterations
             for (int iterations = 0; iterations < maxIterations; iterations++)
             {
