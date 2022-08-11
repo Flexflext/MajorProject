@@ -645,6 +645,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
             curPoint = Vector3.zero;
             //Reset ClosestPoint
             closestPoint = Vector3.zero;
+            closestPoint = Vector3.zero;
             first = true;
 
             if (useFarthestPoint)
@@ -655,7 +656,6 @@ public class ProzeduralAnimationLogic : MonoBehaviour
             {
                 closestPoint = legs[i].ikTarget.position;
             }
-
 
             //Create Ray for each legnum
             for (int j = 0; j < legRayNumber; j++)
@@ -684,7 +684,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                     if (first)
                     {
                         //Set ClosestPoint
-                        if (additionalLegRangeCheck && ((legs[i].legIKSystem.transform.position - hit.point).sqrMagnitude > (legs[i].legIKSystem.GetMaxRangeOfChain() * legs[i].legIKSystem.GetMaxRangeOfChain())))
+                        if (additionalLegRangeCheck && ((legs[i].legIKSystem.transform.position - hit.point).sqrMagnitude > ((legs[i].legIKSystem.GetMaxRangeOfChain() * legs[i].legIKSystem.GetMaxRangeOfChain()))))
                         {
                             continue;
                         }
@@ -707,12 +707,16 @@ public class ProzeduralAnimationLogic : MonoBehaviour
                             }
                         }
 
-                        
 
-                        if (additionalLegRangeCheck && ((legs[i].legIKSystem.transform.position - hit.point).sqrMagnitude > (legs[i].legIKSystem.GetMaxRangeOfChain() * legs[i].legIKSystem.GetMaxRangeOfChain())))
+
+                        if (additionalLegRangeCheck && ((legs[i].legIKSystem.transform.position - hit.point).sqrMagnitude > ((legs[i].legIKSystem.GetMaxRangeOfChain() * legs[i].legIKSystem.GetMaxRangeOfChain()))))
                         {
+                            Debug.Log("hier huhu");
                             continue;
                         }
+
+                        Debug.DrawLine(legs[i].legIKSystem.transform.position, hit.point, Color.red);
+                        Debug.DrawLine(legs[i].legIKSystem.transform.position, legs[i].legIKSystem.transform.position + (hit.point - legs[i].legIKSystem.transform.position).normalized * legs[i].legIKSystem.GetMaxRangeOfChain(), Color.green);
 
                         //Set ClosestPoint
                         SetClosestPoint(hit, i);

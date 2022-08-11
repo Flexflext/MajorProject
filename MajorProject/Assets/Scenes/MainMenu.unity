@@ -988,6 +988,10 @@ PrefabInstance:
       propertyPath: legSlideRange
       value: 2.6
       objectReference: {fileID: 0}
+    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: showDebugGizmos
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3355469690534166810, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
@@ -1851,6 +1855,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1040612951042602816, guid: 74e6420b16a87864689bde857af72a80, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: ed8a52a5f5e8a7f4fbd39117f96e9832, type: 2}
+    - target: {fileID: 1040612951042602816, guid: 74e6420b16a87864689bde857af72a80, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -5545593660317172111, guid: ed8a52a5f5e8a7f4fbd39117f96e9832, type: 2}
     - target: {fileID: 1040612952029634338, guid: 74e6420b16a87864689bde857af72a80, type: 3}
       propertyPath: m_Name
       value: Menu
@@ -1981,6 +1993,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1308332034130697184, guid: 74e6420b16a87864689bde857af72a80, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1774634397723804623, guid: 74e6420b16a87864689bde857af72a80, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1838806938451662727, guid: 74e6420b16a87864689bde857af72a80, type: 3}

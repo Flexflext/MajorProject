@@ -542,7 +542,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 108920312341903044, guid: 1dec98c92186e48139201a46d1996824, type: 3}
       propertyPath: m_Range
-      value: 21.92
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 108920312341903044, guid: 1dec98c92186e48139201a46d1996824, type: 3}
       propertyPath: m_Color.b
@@ -563,6 +563,10 @@ PrefabInstance:
     - target: {fileID: 108920312341903044, guid: 1dec98c92186e48139201a46d1996824, type: 3}
       propertyPath: m_SpotAngle
       value: 145.93747
+      objectReference: {fileID: 0}
+    - target: {fileID: 108920312341903044, guid: 1dec98c92186e48139201a46d1996824, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 108920312341903044, guid: 1dec98c92186e48139201a46d1996824, type: 3}
       propertyPath: m_Lightmapping

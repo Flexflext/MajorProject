@@ -39,6 +39,10 @@ public class RoomTurnOnOff : MonoBehaviour
 
     private void CheckPlayerWhole()
     {
+        //Bounds bo = new Bounds(transform.position, Vector3.one * rangeWhole);
+
+        //bo.Contains()
+
         if (Physics.CheckSphere(transform.position, rangeWhole, toCheck))
         {
             if (!wholeSpawnObj.activeSelf)
