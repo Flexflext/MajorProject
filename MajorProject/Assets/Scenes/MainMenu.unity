@@ -2463,6 +2463,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1040612951042602816, guid: 74e6420b16a87864689bde857af72a80, type: 3}
+      propertyPath: m_text
+      value: Procedural Animation Game
+      objectReference: {fileID: 0}
+    - target: {fileID: 1040612951042602816, guid: 74e6420b16a87864689bde857af72a80, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: ed8a52a5f5e8a7f4fbd39117f96e9832, type: 2}

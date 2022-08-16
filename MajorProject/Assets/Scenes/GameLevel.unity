@@ -5,7 +5,7 @@ OcclusionCullingSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_OcclusionBakeSettings:
-    smallestOccluder: 1
+    smallestOccluder: 0.5
     smallestHole: 0.25
     backfaceThreshold: 100
   m_SceneGUID: 6c9bc5497614e7c49a8862ad89e36b77
@@ -2287,7 +2287,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3355469690992127889, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -88
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3355469690992127889, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2295,7 +2295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3355469690992127889, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 64.75
+      value: -10.25
       objectReference: {fileID: 0}
     - target: {fileID: 3355469690992127889, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4735,7 +4735,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2819617430841908647, guid: 6ab239482a0fe294c930d8d2eb3387ff, type: 3}
       propertyPath: controllPlayer
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2819617430841908648, guid: 6ab239482a0fe294c930d8d2eb3387ff, type: 3}
       propertyPath: m_RootOrder
@@ -14026,6 +14026,18 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3252182964659862838, guid: cfc6c4f99d4836343aae62980c3dac90, type: 3}
+      propertyPath: m_Color.b
+      value: 0.121568635
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252182964659862838, guid: cfc6c4f99d4836343aae62980c3dac90, type: 3}
+      propertyPath: m_Color.g
+      value: 0.098039225
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252182964659862838, guid: cfc6c4f99d4836343aae62980c3dac90, type: 3}
+      propertyPath: m_Color.r
+      value: 0.08235294
+      objectReference: {fileID: 0}
     - target: {fileID: 3475795769491679974, guid: cfc6c4f99d4836343aae62980c3dac90, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -14179,6 +14191,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 775995883, guid: 5f66d9f6f43b95246ae725b1cd4491a9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 11.972
+      objectReference: {fileID: 0}
     - target: {fileID: 1673397095, guid: 5f66d9f6f43b95246ae725b1cd4491a9, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
@@ -14194,6 +14210,10 @@ PrefabInstance:
     - target: {fileID: 2139989002, guid: 5f66d9f6f43b95246ae725b1cd4491a9, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2139989003, guid: 5f66d9f6f43b95246ae725b1cd4491a9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.022
       objectReference: {fileID: 0}
     - target: {fileID: 16109318236163380, guid: 5f66d9f6f43b95246ae725b1cd4491a9, type: 3}
       propertyPath: m_Intensity
@@ -14605,7 +14625,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1370204928991375498, guid: 5f66d9f6f43b95246ae725b1cd4491a9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.359
+      value: -0.92
       objectReference: {fileID: 0}
     - target: {fileID: 1391476814043707740, guid: 5f66d9f6f43b95246ae725b1cd4491a9, type: 3}
       propertyPath: m_StaticEditorFlags

@@ -6,6 +6,9 @@ public class DoorOpener : MonoBehaviour
 {
     [SerializeField] private Door myDoor;
 
+    /// <summary>
+    /// Open the Door
+    /// </summary>
     public void OpenDoor()
     {
         myDoor.OpenDoor();

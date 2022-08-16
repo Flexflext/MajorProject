@@ -5,13 +5,13 @@ using UnityEngine;
 public class PlaygroundManager : MonoBehaviour
 {
     public static PlaygroundManager Instance;
+
     [SerializeField] private float deathTimer;
     [SerializeField] private Menu pauseMenu;
     [SerializeField] private Cinemachine.CinemachineVirtualCamera cam;
     [SerializeField] private List<SpiderPlayGroundManager> spiders = new List<SpiderPlayGroundManager>();
-    private Cinemachine.CinemachineTransposer camTansposer;
-    
 
+    private Cinemachine.CinemachineTransposer camTansposer;
     private int curSpiderIndex = 0;
     private bool paused;
     private bool isdead;
@@ -52,12 +52,18 @@ public class PlaygroundManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Switches to the Next Spider in Playground
+    /// </summary>
     private void SwitchToNextSpider()
     {
         StopCurrentSpider();
         StartNewSpider();
     }
 
+    /// <summary>
+    /// Stop the Current Spider Controller
+    /// </summary>
     private void StopCurrentSpider()
     {
         spiders[curSpiderIndex].StartStopSpider(false);
@@ -68,6 +74,9 @@ public class PlaygroundManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Start the next Spider Controller
+    /// </summary>
     private void StartNewSpider()
     {
         cam.Follow = spiders[curSpiderIndex].followObj;
@@ -77,6 +86,9 @@ public class PlaygroundManager : MonoBehaviour
         spiders[curSpiderIndex].StartStopSpider(true);
     }
 
+    /// <summary>
+    /// Toggle the Pause Menu
+    /// </summary>
     private void TogglePauseMenu()
     {
 
@@ -99,12 +111,18 @@ public class PlaygroundManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Set Death Animation
+    /// </summary>
     public void SetDeath()
     {
         isdead = true;
         StartCoroutine(C_DeathTimer());
     }
 
+    /// <summary>
+    /// Set Death Without Animation
+    /// </summary>
     public void SetDeathNoTimer()
     {
         isdead = true;
@@ -114,6 +132,11 @@ public class PlaygroundManager : MonoBehaviour
         pauseMenu.OpenDeathScreen();
     }
 
+
+    /// <summary>
+    /// Croutine to Play Death Animation
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator C_DeathTimer()
     {
         yield return new WaitForSeconds(deathTimer);
@@ -137,7 +160,10 @@ public class PlaygroundManager : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Subscribe Spider to Manager
+    /// </summary>
+    /// <param name="_spider"></param>
     public void Subscribe(SpiderPlayGroundManager _spider)
     {
         spiders.Add(_spider);
@@ -153,6 +179,10 @@ public class PlaygroundManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Unsubscribe to Manager
+    /// </summary>
+    /// <param name="_spider"></param>
     public void Unsubscribe(SpiderPlayGroundManager _spider)
     {
         spiders.Remove(_spider);

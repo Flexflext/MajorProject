@@ -15,6 +15,10 @@ public class SpiderPlayGroundManager : MonoBehaviour
         PlaygroundManager.Instance.Subscribe(this);
     }
 
+    /// <summary>
+    /// Start Stop a Spider
+    /// </summary>
+    /// <param name="_tosetto"></param>
     public void StartStopSpider(bool _tosetto)
     {
         if (_tosetto)
@@ -26,6 +30,14 @@ public class SpiderPlayGroundManager : MonoBehaviour
             movementController.SetPlayerStopControll();
         }
 
+    }
+
+    /// <summary>
+    /// Let the Spider Die
+    /// </summary>
+    public void Die()
+    {
+        PlaygroundManager.Instance.SetDeath();
     }
 
     private void OnDestroy()

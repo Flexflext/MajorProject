@@ -60,6 +60,8 @@ public class IKSystem : MonoBehaviour
     //Current Calculated Position for the Bone
     private Vector3[] currentPositions;
 
+    private Vector3 localStartPosition;
+
     //Each Lenght of the Bones
     private float[] boneLenghts;
 
@@ -302,6 +304,7 @@ public class IKSystem : MonoBehaviour
             }
         }
 
+        localStartPosition = bones[0].localPosition;
         startRotationRoot = (bones[0].parent != null) ? bones[0].parent.rotation : Quaternion.identity;
     }
 
@@ -343,6 +346,8 @@ public class IKSystem : MonoBehaviour
             //Set Transform Position
             bones[i].position = currentPositions[i];
         }
+
+        bones[0].localPosition = localStartPosition;
 
 
     }

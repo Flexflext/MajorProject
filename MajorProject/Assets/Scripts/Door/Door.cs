@@ -38,6 +38,10 @@ public class Door : MonoBehaviour
         StartCoroutine(C_OpenSliderDoor());
     }
 
+    /// <summary>
+    /// Coroutine to Open the Slide Door
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator C_OpenSliderDoor()
     {
         float curTime = 0;

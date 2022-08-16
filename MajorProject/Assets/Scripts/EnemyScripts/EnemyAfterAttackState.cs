@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class EnemyAfterAttackState : EnemyState
 {
-    protected NavMeshAgent agent;
     protected float curTime;
 
 

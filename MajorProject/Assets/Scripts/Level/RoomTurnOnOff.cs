@@ -19,6 +19,9 @@ public class RoomTurnOnOff : MonoBehaviour
         CheckPlayerWhole();
     }
 
+    /// <summary>
+    /// Check if Player is near to Turn on Mid Object
+    /// </summary>
     private void CheckPlayerMid()
     {
         if (Physics.CheckSphere(transform.position, rangeMid, toCheck))
@@ -37,6 +40,9 @@ public class RoomTurnOnOff : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Check if to Turn on all Objects of the Room
+    /// </summary>
     private void CheckPlayerWhole()
     {
         //Bounds bo = new Bounds(transform.position, Vector3.one * rangeWhole);

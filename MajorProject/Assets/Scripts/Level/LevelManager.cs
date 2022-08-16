@@ -83,6 +83,9 @@ public class LevelManager : MonoBehaviour
         HUD.Instance.SetCanChange(canchange);
     }
 
+    /// <summary>
+    /// Chnage which Contoller the Player plays
+    /// </summary>
     private void ChangeInControllCharacter()
     {
         controllPlayer = !controllPlayer;
@@ -97,6 +100,11 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Coroutine to Play the Switch Animation
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator C_SwitchAnim()
     {
         switching = true;
@@ -107,6 +115,9 @@ public class LevelManager : MonoBehaviour
         switching = false;
     }
 
+    /// <summary>
+    /// Set Player-Controller
+    /// </summary>
     private void SetPlayerControlling()
     {
         player.SetPlayerControlling(true);
@@ -118,6 +129,9 @@ public class LevelManager : MonoBehaviour
         spider.GiveUpControll();
     }
 
+    /// <summary>
+    /// Set Spider-Controller
+    /// </summary>
     private void SetSpiderControlling()
     {
         player.SetPlayerControlling(false);
@@ -126,6 +140,10 @@ public class LevelManager : MonoBehaviour
         cineBrain.enabled = true;
     }
 
+    /// <summary>
+    /// Check if Player Can Switch Controllers
+    /// </summary>
+    /// <returns></returns>
     private bool CheckIfCanSwitchToPLayer()
     {
         dir = player.transform.position - spider.transform.position;
@@ -141,6 +159,9 @@ public class LevelManager : MonoBehaviour
         else return false;
     }
 
+    /// <summary>
+    /// Toggle the Pause Menu
+    /// </summary>
     private void TogglePauseMenu()
     {
 
@@ -163,12 +184,18 @@ public class LevelManager : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Set the Death Screen
+    /// </summary>
     public void SetDeath()
     {
         isdead = true;
         StartCoroutine(C_DeathTimer());
     }
 
+    /// <summary>
+    /// Set the Death-Screen witchout a Death Timer
+    /// </summary>
     public void SetDeathNoTimer()
     {
         isdead = true;
@@ -178,6 +205,10 @@ public class LevelManager : MonoBehaviour
         pauseMenu.OpenDeathScreen();
     }
 
+    /// <summary>
+    /// Coroutine to Play a death Time Animation
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator C_DeathTimer()
     {
         yield return new WaitForSeconds(deathTimer);
@@ -201,11 +232,20 @@ public class LevelManager : MonoBehaviour
 	    }   
     }
 
+
+    /// <summary>
+    /// Lets the Player Controller Subscribe to Level Manager
+    /// </summary>
+    /// <param name="_player"></param>
     public void PlayerSubscribe(PlayerController _player)
     {
         player = _player;
     }
 
+    /// <summary>
+    /// Lets Spider Controller Subscribe to Level Manager
+    /// </summary>
+    /// <param name="_spider"></param>
     public void SpiderSubscribe(SpiderController _spider)
     {
         spider = _spider;

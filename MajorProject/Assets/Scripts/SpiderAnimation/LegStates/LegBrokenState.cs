@@ -9,23 +9,33 @@ public class LegBrokenState : LegState
     {
     }
 
+
+    /// <summary>
+    /// Move Leg Coroutine
+    /// </summary>
+    /// <param name="_leg"></param>
+    /// <returns></returns>
     public override IEnumerator C_MoveLegCoroutine(int _leg)
     {
         float passedTime = 0f;
         float maxTime = legController.LegMovementTime;
 
+        //Adjust lef to be Broken
         legController.AdjustBrokenLegRotation(_leg);
 
         if (onMove != null)
         {
+            //Set OnMove Event
             onMove.Invoke(_leg);
         }
 
+        //Set Old Pos
         Vector3 oldPos = legController.transform.localPosition;
 
-        //Move the Leg for the Given Time
+        //Move the Leg after the Given Time
         while (passedTime <= maxTime)
         {
+
             if (passedTime <= maxTime / 2)
             {
                 legController.CurrentDownAddPerBrokenLeg += 0.0025f;
@@ -57,11 +67,13 @@ public class LegBrokenState : LegState
 
     public override void EnterLegState(int _leg)
     {
+        //Set Enter Event to Set the Controller
         if (legEnterSet != null)
         {
             legEnterSet.Invoke(_leg);
         }
 
+        //Invoke Enter Event
         if (onEnter != null)
         {
             onEnter.Invoke(_leg, ELegStates.LS_Broken);
@@ -70,6 +82,7 @@ public class LegBrokenState : LegState
 
     public override void ExitLegState(int _leg)
     {
+        //Invoke Exit Set Event
         if (legExitReset != null)
         {
             legExitReset.Invoke(_leg);
