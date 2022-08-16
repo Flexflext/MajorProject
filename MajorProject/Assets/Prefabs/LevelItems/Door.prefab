@@ -476,6 +476,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LightToDoor
       objectReference: {fileID: 0}
+    - target: {fileID: 1935102330031908, guid: 1dec98c92186e48139201a46d1996824, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4147611146580540, guid: 1dec98c92186e48139201a46d1996824, type: 3}
       propertyPath: m_RootOrder
       value: 2
