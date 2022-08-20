@@ -9,6 +9,11 @@ public class LegNormalState : LegState
     {
     }
 
+    /// <summary>
+    /// Move Leg Normally
+    /// </summary>
+    /// <param name="_leg"></param>
+    /// <returns></returns>
     public override IEnumerator C_MoveLegCoroutine(int _leg)
     {
         float passedExtraAnimTime = 0f;
@@ -53,6 +58,10 @@ public class LegNormalState : LegState
         legs[_leg].isOnMoveDelay = false;
     }
 
+    /// <summary>
+    /// Enter Normal State
+    /// </summary>
+    /// <param name="_leg"></param>
     public override void EnterLegState(int _leg)
     {
         if (legEnterSet != null)
@@ -66,6 +75,10 @@ public class LegNormalState : LegState
         }
     }
 
+    /// <summary>
+    /// Exit Normal State
+    /// </summary>
+    /// <param name="_leg"></param>
     public override void ExitLegState(int _leg)
     {
         if (legExitReset != null)

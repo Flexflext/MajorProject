@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+
+/// <summary>
+/// Leg State for Limping with a Half Leg
+/// </summary>
 public class LegLimpingHalfLegState : LegState
 {
     public LegLimpingHalfLegState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset, ProzeduralAnimationLogic.LegParams[] _legs, UnityEvent<int, ELegStates> _onenter, UnityEvent<int> _onmove) : base(_controller, _legenterset, _legexitreset, _legs, _onenter, _onmove)
     {
     }
 
+    /// <summary>
+    /// Move Leg and Adjust Body for Lower Movement
+    /// </summary>
+    /// <param name="_leg"></param>
+    /// <returns></returns>
     public override IEnumerator C_MoveLegCoroutine(int _leg)
     {
         float maxTime = legController.LegMovementTime;
@@ -47,6 +56,11 @@ public class LegLimpingHalfLegState : LegState
 
     }
 
+
+    /// <summary>
+    /// Enter Limping Half Leg State
+    /// </summary>
+    /// <param name="_leg"></param>
     public override void EnterLegState(int _leg)
     {
         if (legEnterSet != null)
@@ -60,6 +74,10 @@ public class LegLimpingHalfLegState : LegState
         }
     }
 
+    /// <summary>
+    /// Exit Limping Half Leg State
+    /// </summary>
+    /// <param name="_leg"></param>
     public override void ExitLegState(int _leg)
     {
         if (legExitReset != null)

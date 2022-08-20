@@ -2,16 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class for InGame Logic
+/// </summary>
 public class SpiderGameLogic : MonoBehaviour
 {
+    [Tooltip("Animation time till spider opens the door")]
     [SerializeField] private float timeTillOpenDoor = 1f;
+    [Tooltip("Raycast Length from Camera")]
     [SerializeField] private float range = 1f;
+    [Tooltip("Open-Door Button")]
     [SerializeField] private KeyCode doorOpenerKey = KeyCode.Mouse0;
+    [Tooltip("Door Ray Mask")]
     [SerializeField] private LayerMask rayLayerMask;
+    [Tooltip("Spider Damage VFX")]
     [SerializeField] private GameObject dmgVFX;
+    [Tooltip("Spider Damage VFX Time")]
     [SerializeField] private float dmgVFXTime;
 
+    [Tooltip("Animation Start Sound")]
     [SerializeField] private AudioClip startLeg;
+    [Tooltip("Animation End Sound")]
     [SerializeField] private AudioClip endLeg;
     private AudioSource source;
 
@@ -43,6 +54,11 @@ public class SpiderGameLogic : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Coroutine to Play an Open Door Animation
+    /// </summary>
+    /// <param name="_dooropener"></param>
+    /// <returns></returns>
     private IEnumerator C_OpenDoor(DoorOpener _dooropener)
     {
         if (_dooropener != null)
@@ -89,11 +105,19 @@ public class SpiderGameLogic : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Event when Spider takes Dmg
+    /// </summary>
+    /// <param name="_leg"></param>
     private void OnSpiderTakeDmg(int _leg)
     {
         StartCoroutine(C_TurnOnOffVFX());
     }
 
+    /// <summary>
+    /// Coroutine to turn the Take Dmg VFX on and Off
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator C_TurnOnOffVFX()
     {
         dmgVFX.SetActive(true);

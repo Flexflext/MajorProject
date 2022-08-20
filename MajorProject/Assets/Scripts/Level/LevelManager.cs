@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
+/// <summary>
+/// Level Manager to Handle Switching between Spider and Player
+/// </summary>
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;

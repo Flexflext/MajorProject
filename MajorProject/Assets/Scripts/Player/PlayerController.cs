@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
+/// <summary>
+/// Basic Player Controller with Running, Walking, Jumping and Shooting
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float playerSpeed;

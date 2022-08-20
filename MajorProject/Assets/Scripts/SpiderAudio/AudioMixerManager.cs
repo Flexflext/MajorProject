@@ -7,9 +7,11 @@ public enum EAudioMixer
     SFX,
 }
 
+/// <summary>
+/// Audio Mixer Manager to Handle Audio
+/// </summary>
 public class AudioMixerManager : MonoBehaviour
 {
-
     public static AudioMixerManager Instance;
 
     [Header("AllMixer")]

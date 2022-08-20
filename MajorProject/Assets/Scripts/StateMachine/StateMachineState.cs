@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Base State for  Statemachine
+/// </summary>
 public abstract class StateMachineState
 {
     protected IStateMachineController stateMachineController;

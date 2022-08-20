@@ -4,6 +4,10 @@ using UnityEngine;
 
 public delegate bool StateMachineSwitchDelegate();
 
+
+/// <summary>
+/// State Machine Interface Parent
+/// </summary>
 public interface IStateMachineController
 {
     void InitializeStateMachine();

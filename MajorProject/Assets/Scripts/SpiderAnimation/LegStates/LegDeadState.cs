@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Leg State when the Spider Dies
+/// </summary>
 public class LegDeadState : LegState
 {
     private float deathTime = 1f;
@@ -33,6 +36,10 @@ public class LegDeadState : LegState
         yield return null;
     }
 
+    /// <summary>
+    /// Save Pre Death Data for Exit
+    /// </summary>
+    /// <param name="_leg"></param>
     public override void EnterLegState(int _leg)
     {
         targetParents[_leg] = legs[_leg].ikTarget.parent;
@@ -48,8 +55,14 @@ public class LegDeadState : LegState
         }
     }
 
+    /// <summary>
+    /// Reset Pre Death Data on Legs to Reset Death State
+    /// </summary>
+    /// <param name="_leg"></param>
     public override void ExitLegState(int _leg) 
     {
+        legController.StopCoroutine(PlayDeathAnimation(_leg));
+
         legs[_leg].legIKSystem.SolveIK = true;
         //legs[_leg].legIKSystem.ResetBoxCollidersOnChain();
         legs[_leg].legIKSystem.ResetRigidbodysOnChain();
@@ -63,16 +76,19 @@ public class LegDeadState : LegState
         legs[_leg].animationHint.localPosition = hintprevPos[_leg];
     }
 
+
+    /// <summary>
+    /// Coroutine to Play the Death Leg Animation -> Fold Leg
+    /// </summary>
+    /// <param name="_leg"></param>
+    /// <returns></returns>
     private IEnumerator PlayDeathAnimation(int _leg)
-    {
-        //legs[_leg].legIKSystem.CreateBoxCollidersOnChain();
-        
+    {   
         legs[_leg].stopLegAnimationFlag = true;
 
         Vector3 dir = legs[_leg].ikTarget.localPosition;
 
         dir *= deathPos + Random.Range(posRndAdd.x, posRndAdd.y);
-        //dir += legs[_leg].ikTarget.localPosition;
 
         float curTime = 0f;
         float maxTime = deathTime + Random.Range(timeRndAdd.x, timeRndAdd.y);

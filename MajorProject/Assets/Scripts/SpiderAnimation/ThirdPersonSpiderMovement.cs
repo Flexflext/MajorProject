@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
+/// <summary>
+/// Movement Class for the Spider to Handle Input
+/// </summary>
 [RequireComponent(typeof(SpiderBodyRotationController))]
 public class ThirdPersonSpiderMovement : MonoBehaviour
 {
@@ -65,7 +69,6 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
         HandlePlayerInput();
         RotateSpider();
         MoveSpider();
-        HandleCamControll();
 
         if (Input.GetKeyDown(KeyCode.M))
         {
@@ -73,30 +76,45 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Stop User Input
+    /// </summary>
     public void StopUserInput()
     {
         useMovement = false;
         useCameraMovement = false;
     }
 
+    /// <summary>
+    /// Stop Player Controller
+    /// </summary>
     public void SetPlayerStopControll()
     {
         //rayOriginsAndHints.localPosition = new Vector3(0, 0, 0.5f) + originLocalStartPos;
         iscontrolled = false;
     }
 
+    /// <summary>
+    /// Start Player Controller
+    /// </summary>
     public void SetPlayerStartControll()
     {
         //rayOriginsAndHints.localPosition = originLocalStartPos + new Vector3(0, 0, 0.5f);
         iscontrolled = true;
     }
 
+    /// <summary>
+    /// Start User Input to Controller
+    /// </summary>
     public void StartUserInput()
     {
         useMovement = true;
         useCameraMovement = true;
     }
 
+    /// <summary>
+    /// Rotate Spider Controller
+    /// </summary>
     private void RotateSpider()
     {
         if (!useCameraMovement)
@@ -108,6 +126,9 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
         controller.SetPlayerInputRotation(mouseInput * rotationSpeed);
     }
 
+    /// <summary>
+    /// Move Spider Controller
+    /// </summary>
     private void MoveSpider()
     {
         if (!useMovement || !iscontrolled)
@@ -119,6 +140,9 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
         controller.SetPlayerMovementInput(input * spiderMovementSpeed);
     }
 
+    /// <summary>
+    /// Handle Player Movement Input
+    /// </summary>
     private void HandlePlayerInput()
     {
         input = Vector3.zero;
@@ -126,15 +150,18 @@ public class ThirdPersonSpiderMovement : MonoBehaviour
         input += Input.GetAxis("Horizontal") * transform.right;
         input += Input.GetAxis("Vertical") * transform.forward;
 
-        mouseInput = Input.GetAxis("Mouse X");
+        HandleCamControll();
 
         input.Normalize();
     }
 
+    /// <summary>
+    /// Handle Cameara Input
+    /// </summary>
     private void HandleCamControll()
     {
         xRotation += Input.GetAxis("Mouse Y") * camSens * Time.deltaTime;
-
+        mouseInput = Input.GetAxis("Mouse X");
         camFollowTransform.localRotation = Quaternion.Euler(xRotation, 0, 0);
     }
 

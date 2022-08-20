@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
+/// <summary>
+/// Basic Player Camera Functionality
+/// </summary>
 public class PlayerCameraController : MonoBehaviour
 {
     [SerializeField] private float camSensitivity = 100.0f;

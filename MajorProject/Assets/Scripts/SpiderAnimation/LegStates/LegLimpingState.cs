@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+
+/// <summary>
+/// Leg State Limping
+/// </summary>
 public class LegLimpingState : LegState
 {
     
@@ -11,6 +15,12 @@ public class LegLimpingState : LegState
     {
     }
 
+
+    /// <summary>
+    /// Move Leg as Limping Multiplys Curve to Create the Limp
+    /// </summary>
+    /// <param name="_leg"></param>
+    /// <returns></returns>
     public override IEnumerator C_MoveLegCoroutine(int _leg)
     {
         float passedTime = 0f;
@@ -47,6 +57,11 @@ public class LegLimpingState : LegState
         legs[_leg].isOnMoveDelay = false;
     }
 
+
+    /// <summary>
+    /// Enter Limpoing State
+    /// </summary>
+    /// <param name="_leg"></param>
     public override void EnterLegState(int _leg)
     {
         if (legEnterSet != null)
@@ -60,6 +75,10 @@ public class LegLimpingState : LegState
         }
     }
 
+    /// <summary>
+    /// Exit Limpoing State
+    /// </summary>
+    /// <param name="_leg"></param>
     public override void ExitLegState(int _leg)
     {
         if (legExitReset != null)

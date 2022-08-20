@@ -73,9 +73,11 @@ public struct Sound
     public AudioClip[] randomSound;
 }
 
+/// <summary>
+/// Personal Audio Manager
+/// </summary>
 public class PersonelAudioManager : MonoBehaviour
 {
-    //Script von Felix
 
     //All Sounds
     [SerializeField] private Sound[] allSounds;

@@ -9,8 +9,6 @@ public class EnemyWalkingState : EnemyState
     private float closeRange = 0.3f;
     private NavMeshAgent agent;
 
-    float time = 5;
-
     public EnemyWalkingState(IStateMachineController _controller, NavMeshAgent _agent) : base(_controller)
     {
         agent = _agent;

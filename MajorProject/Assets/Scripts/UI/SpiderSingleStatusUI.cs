@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Class for Spider Status UI
+/// </summary>
 public class SpiderSingleStatusUI : MonoBehaviour
 {
     [SerializeField] private Color green;
@@ -17,6 +20,10 @@ public class SpiderSingleStatusUI : MonoBehaviour
     [SerializeField] private Image indikatorImg;
     [SerializeField] private TMP_Text indikatorText;
 
+    /// <summary>
+    /// Set Status UI of a Single UI Instance
+    /// </summary>
+    /// <param name="_legstate"></param>
     public void SetIndikator(ELegStates _legstate)
     {
         switch (_legstate)

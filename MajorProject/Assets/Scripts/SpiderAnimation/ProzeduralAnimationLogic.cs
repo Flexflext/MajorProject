@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-
+/// <summary>
+/// Leg State Enum
+/// </summary>
 public enum ELegStates
 {
     LS_Normal,
@@ -22,6 +24,7 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     [Tooltip("Time in wich the Leg Moves from old to new Position")]
     [SerializeField] private float legMovementTime;
     public float LegMovementTime { get { return legMovementTime + Random.Range(randomExtraLegMovementTime.x, randomExtraLegMovementTime.y); } }
+    [Tooltip("Random extra time to a leg move")]
     [SerializeField] private Vector2 randomExtraLegMovementTime = Vector2.zero;
     [Tooltip("Curve in wich the leg Moves up")]
     [SerializeField] private AnimationCurve legMovementCurve;
@@ -30,62 +33,96 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     [SerializeField] private float maxLegRange;
 
     [Header("Additional Flags")]
-    [Tooltip("Use the Closeset Possible or the Farthest Posssible Position")]
+    [Tooltip("Use the closeset possible or the farthest possible position")]
     [SerializeField] private bool useFarthestPoint;
+    [Tooltip("Check if the calculated position is reachable by the leg")]
     [SerializeField] private bool additionalLegRangeCheck;
+    [Tooltip("Adjust the last limb of the chain to the Normal of the position")]
     [SerializeField] private bool adjustLastLimbToNormal;
+    [Tooltip("Use the closeset possible or the farthest possible position")]
     [SerializeField] private bool additionalLegCollisionCheck;
+    [Tooltip("Check the LegState in the Update")]
     [SerializeField] private bool alwaysCheckLegState;
+    [Tooltip("Check for the DeathState")]
     [SerializeField] private bool checkDeathState;
+    [Tooltip("Check for the DeathState in the Update")]
     [SerializeField] private bool alwaysCheckDeathState;
+    [Tooltip("Move leg after specified range, ignoring Move-Flags")]
     [SerializeField] private bool preventLegOverreach;
+    [Tooltip("Range after wich a Leg would be Sliding")]
+    [SerializeField] private float legSlideRange = 1.2f;
 
 
     [Header("Body Animation")]
+    [Tooltip("Use Body-Animation")]
     [SerializeField] private bool animateBody = true;
+    [Tooltip("Body-Animation for the local X Axis")]
     [SerializeField] private BodyAnimation xAnimation;
+    [Tooltip("Body-Animation for the local Y Axis")]
     [SerializeField] private BodyAnimation yAnimation;
+    [Tooltip("Body-Animation for the local Z Axis")]
     [SerializeField] private BodyAnimation zAnimation;
 
 
     [Header("Death Animation")]
     [Range(0f, 1f)]
+    [Tooltip("Maximum amount of possible Critcal Legs")]
     [SerializeField] private float maxPercentOfAlmostBrokenLegs = 0.5f;
+    [Tooltip("Specified critcal LegState")]
     [SerializeField] private ELegStates almostBrokenLegState = ELegStates.LS_LimpingHalfLeg;
     [Range(0f, 1f)]
+    [Tooltip("Minimum amount of needed legs in NormalState")]
     [SerializeField] private float minPercentOfNormalLegs = 0.25f;
     [Space]
+    [Tooltip("Pause till the Death-Animation is set")]
     [SerializeField] private float pauseTillDeath = 0.3f;
+    [Tooltip("Animate and shake spider on death")]
     [SerializeField] private bool deathBodyAnimate = true;
+    [Tooltip("Death-Animation for the local X Axis")]
     [SerializeField] private BodyAnimation deathXAnimation;
+    [Tooltip("Death-Animation for the local Y Axis")]
     [SerializeField] private BodyAnimation deathYAnimation;
+    [Tooltip("Death-Animation for the local Z Axis")]
     [SerializeField] private BodyAnimation deathZAnimation;
     [Space]
+    [Tooltip("Time till legs have folded")]
     [SerializeField] private float legDeathFoldTime = 1f;
+    [Tooltip("Random time added to leg fold time")]
     [SerializeField] private Vector2 legDeathFoldRndTimeAddMinMax = new Vector2(-0.15f, 0.15f);
     [Space]
     [Range(0f, 1f)]
+    [Tooltip("Percent of how far the legs fold to body")]
     [SerializeField] private float legDeathFoldPositionToBodyPercent = 0.5f;
+    [Tooltip("Random add percent of how far the legs fold to body")]
     [SerializeField] private Vector2 legDeathFoldRndPositionAddMinMax = new Vector2(-0.15f, 0.15f);
 
 
     [Header("ExtraLegAnimation")]
+    [Tooltip("Body rotation smoothing")]
     [SerializeField] private float bodySmoothing = 8;
+    [Tooltip("Multiplier of Rotation Heigth")]
     [SerializeField] private float hightAddMultiplier = 0.35f;
+    [Tooltip("Multiplier of how far the position check position is relocated backwards")]
     [SerializeField] private float originBackwardsMultiplier = 0.35f;
+    [Tooltip("Back Direction of the Body")]
     [SerializeField] private Vector3 originLocalBack = Vector3.left;
+    [Tooltip("Multiplier of how far the hint position is relocated backwards")]
     [SerializeField] private float hintBackwardsMultiplier = 0.35f;
+    [Tooltip("Body Down add per half Leg")]
     [SerializeField] private float downAddPerBrokenLeg = 0.1f;
+    [Tooltip("Maximum body down add")]
     [SerializeField] private float maxDownAddPerBrokenLeg = 0.2f;
-    [SerializeField] private float legSlideRange = 1.2f;
+    
 
     private float currentDownAddPerBrokenLeg = 0;
     public float CurrentDownAddPerBrokenLeg { get { return currentDownAddPerBrokenLeg; } set { currentDownAddPerBrokenLeg = Mathf.Clamp(value, 0, maxDownAddPerBrokenLeg); } }
 
+    [Tooltip("Limping curve multiplier")]
     [SerializeField] private float percentOfLegHeightMovement = 0.1f;
     public float PercentOfLegHeightMovement { get { return percentOfLegHeightMovement; } }
 
     [Range(0.001f, 1)]
+    [Tooltip("Multiplier for range of hurt Leg")]
     [SerializeField] private float brokenLegRangeMultiplier;
 
 
@@ -107,10 +144,15 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     [SerializeField] private LegParams[] legs;
 
     [Header("Events")]
+    [Tooltip("Event that is called when the Spider dies")]
     [SerializeField] private UnityEvent onDeathEvent;
+    [Tooltip("Event that is called when the Spider resets")]
     [SerializeField] private UnityEvent onDeathResetEvent;
+    [Tooltip("Event that is called when the Spider-leg State Changed")]
     [SerializeField] private UnityEvent<int, ELegStates> onLegStateChanged;
+    [Tooltip("Event that is called when the Spider-leg Moves")]
     [SerializeField] private UnityEvent<int> onLegMoved;
+    [Tooltip("Event that is called when the Spide-leg Takes Damage")]
     [SerializeField] private UnityEvent<int> onLegTakeDamage;
 
 
@@ -140,8 +182,6 @@ public class ProzeduralAnimationLogic : MonoBehaviour
     private Quaternion newRot = Quaternion.identity;
 
     private ELegStates currentLegStateEnum;
-
-    private LegState[] beforeDeathStates;
 
     private bool isDead;
 
@@ -287,19 +327,6 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         {
             AnimateBody();
             this.transform.localRotation = Quaternion.Lerp(transform.localRotation, newRot, bodySmoothing * Time.deltaTime);
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (!isDead)
-            {
-                SetDeath();
-
-            }
-            else
-            {
-                ResetDeath();
-            }
         }
 
         if (alwaysCheckLegState)
@@ -448,6 +475,10 @@ public class ProzeduralAnimationLogic : MonoBehaviour
 
     #endregion
 
+
+    /// <summary>
+    /// Check if Spider is still able to Move and Sets Death Animation
+    /// </summary>
     public void CheckDeath()
     {
         if (!isDead)
@@ -484,9 +515,13 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Set Death Animation
+    /// </summary>
     public void SetDeath()
     {
         if (isDead) return;
+        isDead = true;
 
         if (onDeathEvent != null)
         {
@@ -494,10 +529,12 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         }
 
         MoveAllLegs();
-        isDead = true;
         StartCoroutine(C_WaitToDie());
     }
 
+    /// <summary>
+    /// Reset the Death Animation
+    /// </summary>
     public void ResetDeath()
     {
         isDead = false;
@@ -522,11 +559,20 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Set a Leg to a specific State
+    /// </summary>
+    /// <param name="_leg"></param>
+    /// <param name="_legstate"></param>
     public void SetLegState(int _leg, ELegStates _legstate)
     {
         legs[_leg].legState = _legstate;
     }
 
+    /// <summary>
+    /// Change the State of a Leg to a more Broken One
+    /// </summary>
+    /// <param name="_leg"></param>
     public void DecreaseLegHealth(int _leg)
     {
         if (legs[_leg].legState != ELegStates.LS_Broken)
@@ -543,6 +589,10 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Return the first Leg that isnt Broken
+    /// </summary>
+    /// <returns></returns>
     public int GetFrontLeg()
     {
 
@@ -562,21 +612,41 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         return legs.Length / 2;
     }
 
+    /// <summary>
+    /// Set a Target Position of a Leg
+    /// </summary>
+    /// <param name="_pos"></param>
+    /// <param name="_idx"></param>
     public void SetLegTargetPosition(Vector3 _pos, int _idx)
     {
         legs[_idx].ikTarget.position = _pos;
     }
 
+    /// <summary>
+    /// Start or Stop the Leg Animation from a Leg
+    /// </summary>
+    /// <param name="_idx"></param>
+    /// <param name="_onoff"></param>
     public void StartStoplegAnimation(int _idx, bool _onoff)
     {
         legs[_idx].stopLegAnimationFlag = _onoff;
     }
 
+    /// <summary>
+    /// Get a Target Position of a Leg
+    /// </summary>
+    /// <param name="_idx"></param>
+    /// <returns></returns>
     public Vector3 GetLegTargetPosition(int _idx)
     {
         return legs[_idx].ikTarget.position;
     }
 
+    /// <summary>
+    /// Set if the oppesite Leg of a Leg can Move
+    /// </summary>
+    /// <param name="_leg"></param>
+    /// <param name="_toset"></param>
     public void SetLegCanMoveOppesite(int _leg, bool _toset)
     {
         legs[_leg].canUseOppesiteLegs = _toset;
@@ -711,7 +781,6 @@ public class ProzeduralAnimationLogic : MonoBehaviour
 
                         if (additionalLegRangeCheck && ((legs[i].legIKSystem.transform.position - hit.point).sqrMagnitude > ((legs[i].legIKSystem.GetMaxRangeOfChain() * legs[i].legIKSystem.GetMaxRangeOfChain()))))
                         {
-                            Debug.Log("hier huhu");
                             continue;
                         }
 
@@ -872,6 +941,13 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Check if a Leg would Slide
+    /// </summary>
+    /// <param name="_range"></param>
+    /// <param name="_maxrange"></param>
+    /// <param name="_leg"></param>
+    /// <returns></returns>
     private bool CheckSlideLeg(float _range, float _maxrange, int _leg)
     {
         if (!preventLegOverreach) return false;
@@ -1104,6 +1180,12 @@ public class ProzeduralAnimationLogic : MonoBehaviour
 
 
         Rigidbody rb = gameObject.AddComponent<Rigidbody>();
+
+        if (!rb)
+        {
+            rb = GetComponent<Rigidbody>();
+        }
+
         rb.Sleep();
 
         for (int i = 0; i < legs.Length; i++)
@@ -1121,6 +1203,10 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         rb.WakeUp();
     }
 
+    /// <summary>
+    /// Update the LegState Class of a Specific Leg
+    /// </summary>
+    /// <param name="_leg"></param>
     private void CheckAndSetLegState(int _leg)
     {
         currentLegStateEnum = legs[_leg].legState;
@@ -1139,6 +1225,9 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Generate a Curve for Body and Death Animation
+    /// </summary>
     private void GenerateDeathAndBodyAnimationCurves()
     {
         if (animateBody)
@@ -1156,6 +1245,9 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Initialize the Array of the Legs
+    /// </summary>
     private void InitializeLegsArray()
     {
         //Set the Initial Leg target Position Data
@@ -1204,6 +1296,9 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         return curve;
     }
 
+    /// <summary>
+    /// Move all Legs
+    /// </summary>
     private void MoveAllLegs()
     {
         for (int i = 0; i < legs.Length; i++)

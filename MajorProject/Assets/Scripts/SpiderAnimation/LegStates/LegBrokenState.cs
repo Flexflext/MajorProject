@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Leg State when a Leg is fully broken
+/// </summary>
 public class LegBrokenState : LegState
 {
     public LegBrokenState(ProzeduralAnimationLogic _controller, LegCallback _legenterset, LegCallback _legexitreset, ProzeduralAnimationLogic.LegParams[] _legs, UnityEvent<int, ELegStates> _onenter, UnityEvent<int> _onmove) : base(_controller, _legenterset, _legexitreset, _legs, _onenter, _onmove)
@@ -11,7 +14,7 @@ public class LegBrokenState : LegState
 
 
     /// <summary>
-    /// Move Leg Coroutine
+    /// Move Body to Leg Compensate for less Legs (Jumping-Motion)
     /// </summary>
     /// <param name="_leg"></param>
     /// <returns></returns>
@@ -65,6 +68,10 @@ public class LegBrokenState : LegState
 
     }
 
+    /// <summary>
+    /// Enter Broken State
+    /// </summary>
+    /// <param name="_leg"></param>
     public override void EnterLegState(int _leg)
     {
         //Set Enter Event to Set the Controller
@@ -80,6 +87,11 @@ public class LegBrokenState : LegState
         }
     }
 
+
+    /// <summary>
+    /// Exit Broken State
+    /// </summary>
+    /// <param name="_leg"></param>
     public override void ExitLegState(int _leg)
     {
         //Invoke Exit Set Event

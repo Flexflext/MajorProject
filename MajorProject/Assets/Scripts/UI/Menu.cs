@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Menu Class for UI
+/// </summary>
 public class Menu : MonoBehaviour
 {
     [SerializeField] private int levelSceneIndex;
@@ -30,7 +33,6 @@ public class Menu : MonoBehaviour
     {
         Time.timeScale = 1;
     }
-
 
     public void OpenMainMenu(bool _tosetto)
     {

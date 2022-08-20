@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Spider Trap Logic
+/// </summary>
 public class SpiderTrap : MonoBehaviour
 {
     [SerializeField] private int legDamage;
@@ -45,11 +48,18 @@ public class SpiderTrap : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Do Damage to Spider
+    /// </summary>
+    /// <param name="_legtodmg"></param>
+    /// <returns></returns>
     private bool DoDamage(Collider _legtodmg)
     {
+        //Get Damage Sys for Leg
         LegDamageSystem dmgSys = _legtodmg.GetComponentInParent<LegDamageSystem>();
 
 
+        //Check to Do Damage
         if (dmgSys != null)
         {
             dmgSys.TakeDamage(transform.position);
@@ -73,6 +83,11 @@ public class SpiderTrap : MonoBehaviour
         return true;
     }
 
+
+    /// <summary>
+    /// Coroutine to turn the Trap on and off
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator C_WaitTillOnOff()
     {
         yield return new WaitForSeconds(onOffTimer);
@@ -87,6 +102,11 @@ public class SpiderTrap : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Play Impact Effect at the closest Position 
+    /// </summary>
+    /// <param name="_pos"></param>
+    /// <returns></returns>
     private IEnumerator C_PlayImpactEffect(Vector3 _pos)
     {
         impactVFX.transform.position = _pos;
@@ -97,6 +117,10 @@ public class SpiderTrap : MonoBehaviour
         impactVFX.SetActive(false);
     }
 
+    /// <summary>
+    /// Turn the Laser On and Off
+    /// </summary>
+    /// <param name="_onoff"></param>
     private void TurnOnOff(bool _onoff)
     {
         laser.SetActive(_onoff);

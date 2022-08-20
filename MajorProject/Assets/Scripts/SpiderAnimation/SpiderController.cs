@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
+/// <summary>
+/// Spider Controller Class for Playground
+/// </summary>
 public class SpiderController : MonoBehaviour
 {
     private bool isGettingControlled = false;
@@ -46,6 +50,9 @@ public class SpiderController : MonoBehaviour
         animLogic.RemoveDeathResetEventListener(OnDeathReset);
     }
 
+    /// <summary>
+    /// Give Controll to the Spider
+    /// </summary>
     public void SetControll()
     {
         isGettingControlled = true;
@@ -60,6 +67,9 @@ public class SpiderController : MonoBehaviour
         gameLogic.enabled = true;
     }
 
+    /// <summary>
+    /// Give Up Controll
+    /// </summary>
     public void GiveUpControll()
     {
         controller.SetPlayerMovementInput(Vector2.zero);
@@ -78,11 +88,17 @@ public class SpiderController : MonoBehaviour
         gameLogic.enabled = false;
     }
 
+    /// <summary>
+    /// On death Event
+    /// </summary>
     private void OnDeath()
     {
         HUD.Instance.SetSpiderLegStatus(-1, ELegStates.LS_Broken);
     }
 
+    /// <summary>
+    /// On Death Reset Event
+    /// </summary>
     private void OnDeathReset()
     {
         HUD.Instance.SetSpiderLegStatus(-1, ELegStates.LS_Normal);
