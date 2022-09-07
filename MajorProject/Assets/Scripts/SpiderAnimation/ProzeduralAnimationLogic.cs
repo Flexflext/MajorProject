@@ -338,6 +338,13 @@ public class ProzeduralAnimationLogic : MonoBehaviour
         {
             CheckDeath();
         }
+
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            SetDeath();
+        }
+#endif
     }
 
     private void OnDrawGizmos()

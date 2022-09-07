@@ -263,7 +263,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh162610
+  m_Name: pb_Mesh27674
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10606,7 +10606,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh162644
+  m_Name: pb_Mesh27724
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10770,7 +10770,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh162516
+  m_Name: pb_Mesh27490
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10934,7 +10934,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh162492
+  m_Name: pb_Mesh27432
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -11510,7 +11510,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh162598
+  m_Name: pb_Mesh27662
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12432,6 +12432,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: animateBody
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: additionalLegCollisionCheck
       value: 0
       objectReference: {fileID: 0}
@@ -12465,11 +12469,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: onDeathEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: StopUserInput
+      value: SetPlayerStopControll
       objectReference: {fileID: 0}
     - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: onDeathEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
       value: SetDeath
+      objectReference: {fileID: 0}
+    - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
+      propertyPath: onDeathResetEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetPlayerStartControll
       objectReference: {fileID: 0}
     - target: {fileID: 3355469690258060838, guid: 59e8b6f5e73d4844b9e74b7b07089ac9, type: 3}
       propertyPath: onDeathEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -28537,7 +28545,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh162586
+  m_Name: pb_Mesh27650
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -28835,7 +28843,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh162534
+  m_Name: pb_Mesh27516
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
